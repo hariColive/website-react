@@ -1,12 +1,10 @@
 import HeroSection from "@/components/home/HeroSection";
 import SearchSection from "@/components/home/SearchSection";
-
 export default function HomePage() {
   return (
     <>
       <HeroSection />
       <SearchSection />
-
       <section className="mx-auto max-w-7xl px-4 py-16">
         <h2 className="text-3xl font-bold text-gray-900">
           Why Choose Colive?

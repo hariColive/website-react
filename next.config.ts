@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
     agentFeedback: true,
   },
   cacheComponents: true,
+  images: {
+    // Property photos served by the Colive CMS
+    remotePatterns: [new URL("https://www.colive.com/utility/files/**")],
+  },
   partialPrefetching: true,
   turbopack: {
     rules: {

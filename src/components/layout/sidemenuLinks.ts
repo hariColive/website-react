@@ -50,7 +50,12 @@ export const sidemenuSections: SidemenuSection[] = [
     id: "about",
     title: "About Us",
     icon: "/images/sidemenu/about.png",
-    links: placeholder(["Our Team", "Awards & Recognition", "Our Partners", "Press", "People"]),
+    links: [
+      { label: "Our Team", href: "/aboutus" },
+      { label: "Awards & Recognition", href: "/aboutus/awards-and-recognition" },
+      ...placeholder(["Our Partners", "Press"]),
+      { label: "People", href: "/aboutus/people" },
+    ],
   },
 ];
 

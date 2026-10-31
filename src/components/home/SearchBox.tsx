@@ -10,11 +10,28 @@ import { getPlaceSearchUrl, getSuggestions, type Suggestions } from "@/lib/coliv
 const MIN_QUERY_LENGTH = 3;
 
 const cityChips = [
-  { label: "Marathahalli", href: "/bangalore/pg-in-marathahalli" },
-  { label: "Whitefield", href: "/bangalore/pg-in-whitefield" },
-  { label: "Koramangala", href: "/bangalore/central/pg-in-koramangala" },
-  { label: "Pune", href: "/pune" },
-  { label: "Mumbai", href: "/pg-in-mumbai" },
+  { label: "Bangalore", location: "Bangalore", href: "/pg-in-bangalore" },
+  {
+    label: "Marathahalli",
+    location: "Marathahalli",
+    href: "/bangalore/pg-in-marathahalli",
+  },
+  {
+    label: "Whitefield",
+    location: "Whitefield",
+    href: "/bangalore/pg-in-whitefield",
+  },
+  {
+    label: "Koramangala",
+    location: "Koramangala",
+    href: "/bangalore/pg-in-koramangala",
+  },
+  { label: "Hyderabad", location: "Hyderabad", href: "/pg-in-hyderabad" },
+  { label: "Pune", location: "Pune", href: "/pg-in-pune" },
+  { label: "Mumbai", location: "Mumbai", href: "/pg-in-mumbai" },
+  { label: "Chennai", location: "Chennai", href: "/pg-in-chennai" },
+  { label: "Coimbatore", location: "Coimbatore", href: "/pg-in-coimbatore" },
+  { label: "Vellore", location: "Vellore", href: "/pg-in-vellore" },
 ];
 
 type Option =
@@ -59,7 +76,7 @@ export default function SearchBox() {
           setOptions(data ? toOptions(data) : []);
           setActiveIndex(-1);
         })
-        .catch((error) => {
+        .catch((error: unknown) => {
           if (!controller.signal.aborted) console.error(error);
         });
     }, 250);
@@ -83,7 +100,7 @@ export default function SearchBox() {
     try {
       const url = await getPlaceSearchUrl(option.description);
       if (url) router.push(url);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
     }
   };

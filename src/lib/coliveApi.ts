@@ -1,25 +1,26 @@
-// Client for the Colive backend, reached through the /api/Colive rewrite in next.config.ts.
-const PLATFORM_ID = 4;
+import { apiPost } from "@/lib/api/apiClient";
+import type { Property } from "@/components/common/properties/PropertyCard";
 
-type ApiResponse<T> = { Status: string; Message: string; Data: T } | null;
+export type Amenity = {
+  Id: number;
+  Name: string;
+  IsEnabled: boolean;
+  IsChecked: boolean;
+};
 
-async function post<T>(path: string, body: object, signal?: AbortSignal): Promise<T | null> {
-  const res = await fetch(`/api/Colive/${path}`, {
-    signal,
-    method: "POST",
-    headers: { "Content-Type": "application/json; charset=utf-8" },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) throw new Error(`${path} failed: ${res.status}`);
-
-  const json = (await res.json()) as ApiResponse<T>;
-  return json?.Status === "success" ? json.Data : null;
-}
+export type FilterMasterDetails = {
+  Filter?: {
+    Amenities?: Amenity[];
+  };
+};
 
 export type GoogleSuggestion = {
   PlaceId: string;
   Description: string;
-  DisplayDetails: { Description: string; SubDescription: string }[];
+  DisplayDetails: Array<{
+    Description: string;
+    SubDescription: string;
+  }>;
 };
 
 export type PropertySuggestion = {
@@ -33,40 +34,209 @@ export type Suggestions = {
   PropertySuggestions: PropertySuggestion[];
 };
 
-export function getSuggestions(searchQuery: string, signal?: AbortSignal) {
-  return post<Suggestions>("GetSuggestionsBasedonSearchText", {
-    PropertyModelTypeId: 1,
-    SearchQuery: searchQuery,
-    CategoryId: 1,
-    PlatFormId: PLATFORM_ID,
-    IsGoolgeSuggestions: true,
-  }, signal);
+export type PropertyDetailsData = {
+  Property?: Array<{
+    PropertyID?: number;
+    PropertyName?: string;
+    LocationHighlights?: string;
+    LocationDescription?: string;
+    Link?: string;
+  }>;
+};
+
+type SearchResponse = {
+  Property?: Property[];
+  Properties?: Property[];
+  SimilarProperties?: Property[];
+  TrendingProperties?: Property[];
+  Data?: {
+    Property?: Property[];
+    SimilarProperties?: Property[];
+    TrendingProperties?: Property[];
+  } | Property[];
+};
+
+const PLATFORM_ID = 4;
+
+export function getSuggestions(
+  searchQuery: string,
+  signal?: AbortSignal
+): Promise<Suggestions | null> {
+  return apiPost<Suggestions | null>(
+    "GetSuggestionsBasedonSearchText",
+    {
+      PropertyModelTypeId: 1,
+      SearchQuery: searchQuery,
+      CategoryId: 1,
+      PlatFormId: PLATFORM_ID,
+      IsGoolgeSuggestions: true,
+    },
+    { signal, unwrapData: true, allowNull: true }
+  );
 }
 
 type PlaceDetails = {
   Types: string[];
-  Coordinates: { Latitude: number; Longitude: number };
+  Coordinates: {
+    Latitude: number;
+    Longitude: number;
+  };
 };
 
-export function getPlaceDetails(description: string) {
-  return post<PlaceDetails>("GetDetailsByPlaceId", {
-    Description: description,
-    PlatFormId: PLATFORM_ID,
-  });
+async function getPlaceDetails(
+  description: string,
+  signal?: AbortSignal
+): Promise<PlaceDetails | null> {
+  return apiPost<PlaceDetails | null>(
+    "GetDetailsByPlaceId",
+    {
+      Description: description,
+      PlatFormId: PLATFORM_ID,
+    },
+    { signal, unwrapData: true, allowNull: true }
+  );
 }
 
-const CITIES = ["Bengaluru", "Bangalore", "Chennai", "Vellore", "Coimbatore", "Hyderabad", "Pune"];
+export async function getPlaceCoordinates(
+  description: string,
+  signal?: AbortSignal
+): Promise<PlaceDetails["Coordinates"] | null> {
+  const details = await getPlaceDetails(description, signal);
+  return details?.Coordinates ?? null;
+}
 
-// Mirrors RedirectToSearch on colive.com: city pages for known cities, /search otherwise.
-export async function getPlaceSearchUrl(description: string) {
+const CITIES = [
+  "Bengaluru",
+  "Bangalore",
+  "Chennai",
+  "Vellore",
+  "Coimbatore",
+  "Hyderabad",
+  "Pune",
+];
+
+export async function getPlaceSearchUrl(
+  description: string
+): Promise<string | null> {
   const details = await getPlaceDetails(description);
   if (!details) return null;
 
-  const { Types, Coordinates } = details;
   const radius =
-    Types.length > 1 ? ({ locality: 1, sublocality_level_1: 2 } as Record<string, number>)[Types[0]] ?? 0 : 0;
+    details.Types.length > 1
+      ? ({ locality: 1, sublocality_level_1: 2 } as Record<string, number>)[
+          details.Types[0]
+        ] ?? 0
+      : 0;
   const location = description === "Bengaluru" ? "Bangalore" : description;
-  const query = `lat=${Coordinates.Latitude}&long=${Coordinates.Longitude}&rad=${radius}&loc=${location.split(" ").join("-")}`;
+  const query = `lat=${details.Coordinates.Latitude}&long=${details.Coordinates.Longitude}&rad=${radius}&loc=${location
+    .split(" ")
+    .join("-")}`;
 
   return CITIES.includes(location) ? `/${location}?${query}` : `/search?${query}`;
+}
+
+function getColiveDate(): string {
+  const now = new Date();
+  const day = String(now.getDate()).padStart(2, "0");
+
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+  ];
+
+  return `${day}-${months[now.getMonth()]}-${now.getFullYear()}`;
+}
+
+export async function getPropertySearchDetails(
+  locationLink: string,
+  amenityIds: Array<string | number> = [],
+  signal?: AbortSignal
+): Promise<Property[]> {
+  const payload = {
+    Date: getColiveDate(),
+    LocationName: locationLink,
+    AmenityIds: amenityIds.join(","),
+    OfferId: 0,
+    RoomTypeIds: "",
+    PropertyVariantsIds: "",
+    PropertyModelTypes: "1",
+    RoomSubTypeIds: "",
+    RoomClassIds: "",
+    FurnishStatusIds: "",
+    Latitude: "",
+    Longitude: "",
+    Distance: 0,
+    RoomShareCategory: "",
+    MinValue: 0,
+    MaxValue: 0,
+    PageSize: 200,
+    PageIndex: 0,
+    CustomerID: "",
+  };
+
+  const result = await apiPost<SearchResponse | Property[]>(
+    "GetPropertyDetails_V3_Web",
+    payload,
+    { signal, unwrapData: true }
+  );
+  const wrapped = result as SearchResponse;
+  const data = wrapped.Data;
+
+  const mainProperties: Property[] = Array.isArray(result)
+    ? result
+    : Array.isArray(wrapped.Property)
+      ? wrapped.Property
+      : Array.isArray(wrapped.Properties)
+        ? wrapped.Properties
+        : Array.isArray(data)
+          ? data
+          : data?.Property ?? [];
+
+  return mainProperties;
+}
+
+export async function getFilterMasterDetails(
+  signal?: AbortSignal
+): Promise<FilterMasterDetails> {
+  return apiPost<FilterMasterDetails>(
+    "GetFilterMasterDetails",
+    {
+      PlatFormId: PLATFORM_ID,
+      PropertyModelTypeId: 1,
+    },
+    { signal, unwrapData: true }
+  );
+}
+
+export async function fetchPropertyDetails(
+  locationLink: string,
+  signal?: AbortSignal
+): Promise<PropertyDetailsData> {
+  const result = await apiPost<unknown>(
+    "GetPropertyDetailsByIdForWeb_V2",
+    {
+      LocationLink: locationLink,
+      CustomerID: "",
+    },
+    { signal, unwrapData: true }
+  );
+
+  if (!result || typeof result !== "object") {
+    throw new Error("The property details response is empty.");
+  }
+
+  const wrapped = result as {
+    Property?: PropertyDetailsData["Property"];
+    Data?: PropertyDetailsData;
+  };
+
+  if (Array.isArray(wrapped.Property)) {
+    return { Property: wrapped.Property };
+  }
+
+  if (wrapped.Data?.Property) {
+    return wrapped.Data;
+  }
+
+  return result as PropertyDetailsData;
 }

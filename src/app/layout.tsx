@@ -22,6 +22,8 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
+  // Resolves relative canonical URLs
+  metadataBase: new URL("https://www.colive.com"),
   title: "Colive | Explore India's Premier Co-living Pgs Near You",
   description:
     "Discover Coliving Pg Near You for Luxury Accommodations, Couple-friendly Spaces, and More on. Colive – India's Largest Rental Exchange Platform. Rent With Ease, and Live With Comfort",

@@ -1,0 +1,117 @@
+{
+  "title": "Paying Guest (PG) in $strCity$ for Ladies, Gents and Couples | Colive",
+  "description": "PG on rent for ladies & gents: Colive offers single / twin sharing luxury PG accomadation with food, WiFi, TV, CCTV, house keeping, etc for boys, girls couples, students and professionals.",
+  "h1": "Affordable Premium Rental PG Accommodation in $strCity$",
+  "faqs": [
+    {
+      "heading": "Frequently Asked Questions (FAQ)",
+      "initiallyVisible": 6,
+      "items": [
+        {
+          "question": "What are the advantages of opting Colive rooms over PGs in $strCity$?",
+          "answer": "<p>There are loads of advantages of picking Colive rooms over PG. First of them is that you can get a lovely room without brokerage fee. In Colive, you get stylish single, double, private and studio rooms with fashionable interiors and vibrant common spaces that you can never get in a PG. Most PGs are filled with dingy spaces and congested rooms. The next benefit is the optional food service. Most PGs charge a hefty monthly charge for food and serve food that is not up to standards. In Colive, the food is yummy and the service is optional. You will also be able to find a compatible roommate in Colive through the compatibility settings and you can know the lifestyle you are signing up for before you commit to it. Colive also provides you with advanced security services with CCTV & modern technology which are a far shot for PGs. Other benefits include a restriction-free living, friendly guest policies and also a full-refund of your security deposit. Finding a flat in $strCity$ that is near you was once difficult. But now with Colive in the city, it has become a breeze.</p>"
+        },
+        {
+          "question": "What type of rooms are available at Colive $strCity$?",
+          "answer": "<p>Unlike the PGs you find in $strCity$ usually, all Colive rooms are chic-furnished and fully-managed. They are thoughtfully designed to enhance the space and light in the room. The availability includes single sharing rooms, double sharing rooms, triple sharing rooms, semi-private rooms, studio rooms and couple rooms. Colive also has some properties that are entirely dedicated to the accommodation of women. The vacancy varies from property to property. But as there are numerous Colive properties in $strCity$ there is a high probability that there might be one near you.</p>"
+        },
+        {
+          "question": "What amenities are provided by Colive?",
+          "answer": "<p>Colive residents have a wide selection of premium amenities to unwind, relax and entertain themselves. Along with chic-furnished and fully-managed single, double, private and studio rooms, Colive also offers amenities that are a cut above the rest. Cinema Room to watch live sports, TV shows, movies & special screenings together. Terrace Lounge with Star Gazing deck & barbecue set-up specially designed for fun times. Fitness Room to sweat it out with fellow Colivers. Gaming Zone with PlayStation, table tennis, foosball, dart Board, board games & more for a daily dose of entertainment. Co-working space to work together, work from home, brainstorm and socialize. Community Kitchen that comes fully equipped with all utilities. The residents include men, women and couple from diverse backgrounds and amiable nature.</p>"
+        },
+        {
+          "question": "Who can rent rooms at Colive?",
+          "answer": "<p>Colive properties are conveniently located near major tech parks and corporate offices in $strCity$. So if you are a working professional, there is a high chance that you will find one or the other Colive property near you and the perfect accommodation without brokerage fee. The availability includes single sharing rooms, double sharing rooms, triple sharing rooms, semi-private rooms, studio rooms and couple rooms. Majority of Colive properties are co-residencies or gender neutral with men, women & couple staying in the same building. Colive also has homes for all-boys or all-girls available across all locations.</p>"
+        },
+        {
+          "question": "Can I visit before making the booking?",
+          "answer": "<p>You can visit the Colive property before booking and experience the upgraded lifestyle first hand at any time as per your convenience by booking a visit. Colive makes full disclosure about the Colive property and all details including amenities, features, inclusions, property type, room types etc are mentioned on the website & the Colive App. You can also take a virtual tour of the property. You can Schedule a Visit or Book a Tour of the Colive Property on the Website or the<a href=\"https://play.google.com/store/apps/details?id=com.colivecustomerapp.android&hl=en_IN\" target=\"_blank\" rel=\"noopener\"> Colive App.</a></p><ul><li>Log-in on the Colive website or the App with your email id or Contact No.</li><li>Explore Colive properties.</li><li>Enter city, location & sharing type.</li><li>View Property & review all essential details about the property.</li><li>Click on 'Schedule a Visit' tab and pick a date & time of your choice to complete the process.</li><li>You will receive an SMS & email from Colive confirming your visit along with the property location, date & time. On the day of the Visit, our Resident Property Manager / Area Sales Manager would cater to you and would be happy to assist you with any queries and concerns.</li></ul>"
+        },
+        {
+          "question": "How can I schedule visits to different properties?",
+          "answer": "<p>Colive has 150+ properties it would be physically impossible to visit all the properties in 1 day. You can select the properties you wish to visit and pick a preferable date & time for each property and schedule your visit. You will receive an email and SMS from Colive with all important details of your visit including Property location, date & time. You can also speak with our executive who could help you evaluate your options & schedule the visits as per your convenience. To speak to our executive, call us on 7676 000 500.</p>"
+        },
+        {
+          "question": "What is the booking amount?",
+          "answer": "<p>The reservation amount to be paid at the time of booking is Rs 2,000/- which will be adjusted in the security deposit payable at the time of check-in. This is standard and mandatory for all Colive Properties.</p>"
+        },
+        {
+          "question": "Will I get the booking amount back if I cancel the Booking?",
+          "answer": "<p>The reservation amount is only refundable in cases where the booking is not confirmed or the room booked by the customer is not available for check-in. The reservation amount is non-refundable when the booking is cancelled by the customer. Colive properties are usually in high demand & the purpose of this policy is to discourage non-serious bookings and allow genuine customers to be a part of Colive Community without much hassle.</p>"
+        }
+      ]
+    }
+  ],
+  "jsonLd": [
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "1. What are the advantages of opting Colive rooms over PGs in $strCity$?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": " There are loads of advantages of picking Colive rooms over PG. First of them is that you can get a lovely room without brokerage fee. In Colive, you get stylish single, double, private and studio rooms with fashionable interiors and vibrant common spaces that you can never get in a PG. Most PGs are filled with dingy spaces and congested rooms. The next benefit is the optional food service. Most PGs charge a hefty monthly charge for food and serve food that is not up to standards. In Colive, the food is yummy and the service is optional. You will also be able to find a compatible roommate in Colive through the compatibility settings and you can know the lifestyle you are signing up for before you commit to it. Colive also provides you with advanced security services with CCTV & modern technology which are a far shot for PGs. Other benefits include a restriction-free living, friendly guest policies and also a full-refund of your security deposit. Finding a flat in $strCity$ that is near you was once difficult. But now with Colive in the city, it has become a breeze. "
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "2. What type of rooms are available at Colive $strCity$?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": " Unlike the PGs you find in $strCity$ usually, all Colive rooms are chic-furnished and fully-managed. They are thoughtfully designed to enhance the space and light in the room. The availability includes single sharing rooms, double sharing rooms, triple sharing rooms, semi-private rooms, studio rooms and couple rooms. Colive also has some properties that are entirely dedicated to the accommodation of women. The vacancy varies from property to property. But as there are numerous Colive properties in $strCity$, there is a high probability that there might be one near you."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "3.What amenities are provided by Colive?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Colive residents have a wide selection of premium amenities to unwind, relax and entertain themselves. Along with chic-furnished and fully-managed single, double, private and studio rooms, Colive also offers amenities that are a cut above the rest. Cinema Room to watch live sports, TV shows, movies & special screenings together. Terrace Lounge with Star Gazing deck & barbecue set-up specially designed for fun times. Fitness Room to sweat it out with fellow Colivers. Gaming Zone with PlayStation, Table tennis, foosball, dart Board, board games & more for a daily dose of entertainment. Co-working space to work together, work from home, brainstorm and socialize. Community Kitchen that comes fully equipped with all utilities.The residents include men, women and couple from diverse backgrounds and amiable nature."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "4.Who can rent rooms at Colive?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Colive properties are conveniently located near major tech parks and corporate offices in $strCity$. So if you are a working professional, there is a high chance that you will find one or the other Colive property near you and the perfect accommodation without brokerage fee. The availability includes single sharing rooms, double sharing rooms, triple sharing rooms, semi-private rooms, studio rooms and couple rooms. Majority of Colive properties are co-residencies or gender neutral with men, women & couple staying in the same building. Colive also has homes for all-boys or all-girls available across all locations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "5. Can I visit before making the booking?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": " You can visit the Colive property before booking and experience the upgraded lifestyle first hand at any time as per your convenience by booking a visit. Colive makes full disclosure about the Colive property and all details including amenities, features, inclusions, property type, room types etc are mentioned on the website & the Colive App. You can also take a virtual tour of the property. You can Schedule a Visit or Book a Tour of the Colive Property on the Website or the Colive App-Log-in on the Colive website or the App with your email id or Contact No-Explore Colive properties- Enter city, location & sharing type-View Property & review all essential details about the property-Click on 'Schedule a Visit' tab and pick a date & time of your choosing to complete the process You will receive an SMS & email from Colive confirming your visit along with the property location, date & time. On the day of the Visit, our Resident Property Manager / Area Sales Manager would cater to you and would be happy to assist you with any queries and concerns."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "6. How can I schedule visits to different properties?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": " Colive has 150+ properties it would be physically impossible to visit all the properties in 1 day. You can select the properties you wish to visit and pick a preferable date & time for each property and schedule your visit. You will receive an email and SMS from Colive with all important details of your visit including Property location, date & time. You can also speak with our executive who could help you evaluate your options & schedule the visits as per your convenience. To speak to our executive, call us on 7676 000 500."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "7. What is the booking amount?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The reservatin amount to be paid at the time of booking is Rs 2,000/- which will be adjusted in the security deposit payable at the time of check-in. This is standard and mandatory for all Colive Properties."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "8. Will I get the booking amount back if I cancel the Booking?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The reservation amount is only refundable in cases where the booking is not confirmed or the room booked by the customer is not available for check-in. The reservation amount is non-refundable when the booking is cancelled by the customer. Colive properties are usually in high demand & the purpose of this policy is to discourage non-serious bookings and allow genuine customers to be a part of Colive Community without much hassle."
+          }
+        }
+      ]
+    }
+  ]
+}

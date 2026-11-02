@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import PropertyPage, { propertyMetadata } from "@/components/property/PropertyPage";
-import SearchPage, { searchMetadata } from "@/components/search/SearchPage";
+import SearchPage from "@/components/search/SearchPage";
 import { locationFromPath } from "@/lib/searchLocation";
+import { searchMetadata } from "@/lib/searchSeo";
 
 // City search pages: /pg-in-bangalore, /men-pg-in-bangalore, /pune, /bangalore/pg-in-whitefield,
 // /bangalore/central/pg-in-koramangala. Anything that isn't a known city 404s (see locationFromPath).
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: PageProps<"/[...slug]">): Pro
   if (isPropertyPath(slug)) return propertyMetadata(slug[PROPERTY_SEGMENTS - 1]);
 
   const location = await locationFromPath(slug);
-  return location ? searchMetadata(location.label) : {};
+  return location ? searchMetadata(location) : {};
 }
 
 export default function Page({ params, searchParams }: PageProps<"/[...slug]">) {

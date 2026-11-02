@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo_Black, DM_Sans, Fraunces } from "next/font/google";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import "./globals.css";
 
 import Header from "@/components/layout/Header";

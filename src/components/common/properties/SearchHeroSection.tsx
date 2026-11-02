@@ -1,7 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+<<<<<<< HEAD
 import { useEffect, useId, useState, type KeyboardEvent } from "react";
+=======
+import { useEffect, useId, useMemo, useState, type KeyboardEvent } from "react";
+>>>>>>> origin/QA-master
 
 import type { Property } from "@/components/common/properties/PropertyCard";
 import {
@@ -11,6 +15,10 @@ import {
 } from "@/lib/coliveApi";
 
 const MIN_QUERY_LENGTH = 3;
+<<<<<<< HEAD
+=======
+const SEARCH_DEBOUNCE_MS = 150;
+>>>>>>> origin/QA-master
 const CITY_OPTIONS = [
   "Bengaluru",
   "Bangalore",
@@ -73,6 +81,7 @@ function toOptions(suggestions: Suggestions | null): SearchOption[] {
   ];
 }
 
+<<<<<<< HEAD
 function getFallbackOptions(
   query: string,
   location: string,
@@ -82,12 +91,29 @@ function getFallbackOptions(
   const placeOptions: SearchOption[] = CITY_OPTIONS.filter((city) =>
     city.toLowerCase().includes(normalizedQuery)
   ).map((city) => ({
+=======
+function getLocalCityOptions(query: string): SearchOption[] {
+  const normalizedQuery = query.toLowerCase();
+  return CITY_OPTIONS.filter((city) => city.toLowerCase().includes(normalizedQuery)).map((city) => ({
+>>>>>>> origin/QA-master
     type: "place",
     key: `city-${city}`,
     location: city === "Bengaluru" ? "Bangalore" : city,
     title: city,
     subtitle: "City",
   }));
+<<<<<<< HEAD
+=======
+}
+
+function getFallbackOptions(
+  query: string,
+  location: string,
+  properties: Property[]
+): SearchOption[] {
+  const normalizedQuery = query.toLowerCase();
+  const placeOptions: SearchOption[] = getLocalCityOptions(query);
+>>>>>>> origin/QA-master
   const propertyOptions: SearchOption[] = properties
     .filter((property) =>
       [property.PropertyName, property.LocationName, property.City].some(
@@ -131,10 +157,22 @@ export default function SearchHeroSection({
 
   const trimmedQuery = query.trim();
   const hasMinimumQuery = trimmedQuery.length >= MIN_QUERY_LENGTH;
+<<<<<<< HEAD
   const showList = open && hasMinimumQuery;
 
   useEffect(() => {
     if (!hasMinimumQuery) return;
+=======
+  const localCityOptions = useMemo(
+    () => getLocalCityOptions(trimmedQuery),
+    [trimmedQuery]
+  );
+  const displayOptions = localCityOptions.length > 0 ? localCityOptions : options;
+  const showList = open && hasMinimumQuery && displayOptions.length > 0;
+
+  useEffect(() => {
+    if (!hasMinimumQuery || localCityOptions.length > 0) return;
+>>>>>>> origin/QA-master
 
     const controller = new AbortController();
     const timer = setTimeout(() => {
@@ -148,15 +186,27 @@ export default function SearchHeroSection({
             controller.signal
           );
           if (controller.signal.aborted) return;
+<<<<<<< HEAD
           let nextOptions = toOptions(suggestions);
 
           if (nextOptions.length === 0) {
             const properties = await getPropertySearchDetails(
               location,
+=======
+
+          const nextOptions = toOptions(suggestions);
+          setOptions(nextOptions);
+          setActiveIndex(-1);
+
+          if (nextOptions.length === 0) {
+            const properties = await getPropertySearchDetails(
+              trimmedQuery,
+>>>>>>> origin/QA-master
               [],
               controller.signal
             );
             if (controller.signal.aborted) return;
+<<<<<<< HEAD
             nextOptions = getFallbackOptions(
               trimmedQuery,
               location,
@@ -166,6 +216,10 @@ export default function SearchHeroSection({
 
           setOptions(nextOptions);
           setActiveIndex(-1);
+=======
+            setOptions(getFallbackOptions(trimmedQuery, location, properties));
+          }
+>>>>>>> origin/QA-master
         } catch (cause: unknown) {
           if (!controller.signal.aborted) {
             setSearchError(
@@ -181,13 +235,21 @@ export default function SearchHeroSection({
       }
 
       void loadOptions();
+<<<<<<< HEAD
     }, 250);
+=======
+    }, SEARCH_DEBOUNCE_MS);
+>>>>>>> origin/QA-master
 
     return () => {
       clearTimeout(timer);
       controller.abort();
     };
+<<<<<<< HEAD
   }, [hasMinimumQuery, location, trimmedQuery]);
+=======
+  }, [hasMinimumQuery, localCityOptions.length, location, trimmedQuery]);
+>>>>>>> origin/QA-master
 
   const submitFreeText = () => {
     if (!trimmedQuery) return;
@@ -197,11 +259,19 @@ export default function SearchHeroSection({
 
   const submitSearch = () => {
     if (showList && activeIndex >= 0) {
+<<<<<<< HEAD
       selectOption(options[activeIndex]);
       return;
     }
 
     const matchingProperty = options.find(
+=======
+      selectOption(displayOptions[activeIndex]);
+      return;
+    }
+
+    const matchingProperty = displayOptions.find(
+>>>>>>> origin/QA-master
       (option) =>
         option.type === "local-property" &&
         option.title.toLowerCase() === trimmedQuery.toLowerCase()
@@ -250,13 +320,21 @@ export default function SearchHeroSection({
 
     if (
       showList &&
+<<<<<<< HEAD
       options.length > 0 &&
+=======
+      displayOptions.length > 0 &&
+>>>>>>> origin/QA-master
       (event.key === "ArrowDown" || event.key === "ArrowUp")
     ) {
       event.preventDefault();
       const step = event.key === "ArrowDown" ? 1 : -1;
       setActiveIndex(
+<<<<<<< HEAD
         (index) => (index + step + options.length) % options.length
+=======
+        (index) => (index + step + displayOptions.length) % displayOptions.length
+>>>>>>> origin/QA-master
       );
     }
   };
@@ -284,7 +362,11 @@ export default function SearchHeroSection({
               role="combobox"
               aria-label="Search by property, location, or city"
               aria-autocomplete="list"
+<<<<<<< HEAD
               aria-expanded={showList && options.length > 0}
+=======
+              aria-expanded={showList}
+>>>>>>> origin/QA-master
               aria-controls={listId}
               aria-activedescendant={
                 showList && activeIndex >= 0
@@ -295,11 +377,23 @@ export default function SearchHeroSection({
               placeholder="Try property name, location name, city name..."
               value={query}
               onChange={(event) => {
+<<<<<<< HEAD
                 setQuery(event.target.value);
                 setOptions([]);
                 setIsLoading(false);
                 setSearchError(null);
                 setOpen(true);
+=======
+                const nextValue = event.target.value;
+                setQuery(nextValue);
+                setOpen(true);
+                if (nextValue.trim().length < MIN_QUERY_LENGTH) {
+                  setOptions([]);
+                  setIsLoading(false);
+                  setSearchError(null);
+                  setActiveIndex(-1);
+                }
+>>>>>>> origin/QA-master
               }}
               onFocus={() => setOpen(true)}
               onBlur={() => setOpen(false)}
@@ -321,14 +415,26 @@ export default function SearchHeroSection({
               id={listId}
               role="listbox"
               aria-label="Search suggestions"
+<<<<<<< HEAD
               className="absolute left-0 right-0 top-[calc(100%+8px)] z-20 max-h-80 overflow-y-auto rounded-2xl border border-gray-200 bg-white p-2 shadow-lg"
             >
               {isLoading && (
                 <li className="px-3 py-2 text-sm text-gray-500" role="status">
+=======
+              className="keywordSuggestions absolute left-0 right-0 top-[calc(100%+12px)] z-50 max-h-[360px] w-full overflow-y-auto rounded-[18px] border border-[#ececec] bg-white shadow-[0_12px_30px_rgba(17,17,17,0.08)]"
+            >
+              <li className="keyword-suggestions-heading border-b border-[#f1f1f1] px-4 py-3 text-[13px] font-semibold tracking-[0.02em] text-[#111111]">
+                Popular Right Now
+              </li>
+
+              {isLoading && (
+                <li className="px-4 py-3 text-sm text-gray-500" role="status">
+>>>>>>> origin/QA-master
                   Searching...
                 </li>
               )}
               {!isLoading && searchError && (
+<<<<<<< HEAD
                 <li className="px-3 py-2 text-sm text-red-700" role="alert">
                   {searchError}
                 </li>
@@ -367,6 +473,57 @@ export default function SearchHeroSection({
                   </span>
                 </li>
               ))}
+=======
+                <li className="px-4 py-3 text-sm text-red-700" role="alert">
+                  {searchError}
+                </li>
+              )}
+              {!isLoading && !searchError && displayOptions.length === 0 && (
+                <li className="px-4 py-3 text-sm text-gray-500">
+                  No suggestions found. Press Search to try this text.
+                </li>
+              )}
+              {displayOptions.map((option, index) => {
+                const label = option.type === "property" ? "Property" : "Location";
+                const isActive = index === activeIndex;
+
+                return (
+                  <li
+                    key={`${option.type}-${option.key}`}
+                    id={`${listId}-${index}`}
+                    role="option"
+                    aria-selected={isActive}
+                    title={[option.title, option.subtitle].filter(Boolean).join(", ")}
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => selectOption(option)}
+                    onMouseEnter={() => setActiveIndex(index)}
+                    className={`keyword-suggestion-item flex cursor-pointer items-center justify-between gap-3 border-b border-transparent px-4 py-3.5 text-[#111111] transition-colors duration-200 last:border-b-0 hover:bg-[#f5f5f5] ${
+                      isActive ? "is-active bg-[#f5f5f5]" : ""
+                    }`}
+                  >
+                    <div className="keyword-suggestion-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f5f5f5] text-[12px] text-[#4b5563]">
+                      <i className="bi bi-house-door-fill" aria-hidden="true" />
+                    </div>
+
+                    <div className="keyword-suggestion-text min-w-0 flex-1">
+                      <span className="block truncate text-[15px] font-medium leading-5 text-[#111111]">
+                        {option.title}
+                      </span>
+                      {option.subtitle && (
+                        <span className="mt-0.5 block truncate text-[12px] leading-4 text-[#767676]">
+                          {option.subtitle}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="keyword-suggestion-type shrink-0 text-[12px] font-medium uppercase tracking-[0.06em] text-[#666666]">
+                      {label}
+                    </div>
+                    <span className="sr-only">{label}</span>
+                  </li>
+                );
+              })}
+>>>>>>> origin/QA-master
             </ul>
           )}
         </div>

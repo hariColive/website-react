@@ -8,12 +8,20 @@ const ContactUs = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/QA-master
     // Connect your backend or API here to save the form data.
     setSubmitted(true);
   };
 
   return (
+<<<<<<< HEAD
    <section className="box-border! block! h-auto! min-h-0! w-full! overflow-visible! bg-[#F6F6F6]! px-4.5! py-1.25! mt-[4%]!">
+=======
+   <section className="box-border! block! h-auto! min-h-0! w-full! overflow-visible! bg-[#F6F6F6]! px-4.5! py-1.25! mt-[5%]!">
+>>>>>>> origin/QA-master
       <div className="mx-auto w-full max-w-350 px-5 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12">
 

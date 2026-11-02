@@ -1,6 +1,7 @@
 export default function PropertyLoader() {
   return (
     <div
+<<<<<<< HEAD
       className="fixed top-0 left-0 z-[10000000] m-auto flex h-full w-full items-center justify-center bg-[#ffffffba]"
       id="AjaxLoader"
       role="status"
@@ -13,6 +14,13 @@ export default function PropertyLoader() {
           className="absolute h-[55px] w-[55px] animate-[spin_2s_linear_infinite] rounded-full border-[6px] border-solid border-[#2B001F] border-t-transparent"
         />
       </div>
+=======
+      className="fixed inset-x-0 top-0 z-50 h-1 overflow-hidden bg-[#2B001F]/10"
+      role="status"
+      aria-label="Loading properties"
+    >
+      <div className="h-full w-1/3 animate-pulse bg-[#2B001F]" />
+>>>>>>> origin/QA-master
     </div>
   );
 }

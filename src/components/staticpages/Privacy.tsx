@@ -10,15 +10,23 @@ const Privacy = () => {
 
           <div className="contents">
                                 <p className="py-2.5 font-sans text-left text-[13px] font-normal leading-4.75 text-[#060C16]">
+<<<<<<< HEAD
                         
                         This document is published by virtue of a legal requirement under the provisions of the Information Technology Act, 2000 that require ‘intermediaries’ to publish the rules and regulations, privacy policy and terms for access or usage of our Platform and is primarily governed by Rule 3 (1) of the Information Technology (Intermediaries guidelines) Rules, 2011.
                     
+=======
+                        This document is published by virtue of a py-2.5 font-sans text-left text-[13px] font-normal leading-4.75 text-[#060C16] requirement under the provisions of the Information Technology Act, 2000 that require ‘intermediaries’ to publish the rules and regulations, privacy policy and terms for access or usage of our Platform and is primarily governed by Rule 3 (1) of the Information Technology (Intermediaries guidelines) Rules, 2011.
+>>>>>>> origin/QA-master
                     </p>
                     <p className="py-2.5 font-sans text-left text-[13px] font-normal leading-4.75 text-[#060C16]">
                         In this Privacy Policy ("Policy"), we describe the information that we collect about you when you visit our website and Mobile Applications (herein after Website & Mobile Applications collectively be referred to as “Platform”), and use the services available on the Platform ("Services"), and how we use and disclose that information.
                     </p>
                     <p className="py-2.5 font-sans text-left text-[13px] font-normal leading-4.75 text-[#060C16]">
+<<<<<<< HEAD
                         Company intends to protect the privacy of its users (whether or not registered) on its Platform and the privacy of their data provided by them from time to time. The privacy of our platform users, whether you are our former or existing registered user or merely a visitor to our Platform, is important to us and we are strongly committed to your right to privacy and to keeping your personal and other information secure. We encourage you to read our privacy statement to understand what types of personally identifiable information we collect and how we use this information.
+=======
+                        Company intends to protect the privacy of its users (whether or not registered)) on its Platform and the privacy of their data provided by them from time to time. The privacy of our platform users, whether you are our former or existing registered user or merely a visitor to our Platform, is important to us and we are strongly committed to your right to privacy and to keeping your personal and other information secure. We encourage you to read our privacy statement to understand what types of personally identifiable information we collect and how we use this information.
+>>>>>>> origin/QA-master
                     </p>
                     <p className="py-2.5 font-sans text-left text-[13px] font-normal leading-4.75 text-[#060C16]">
                         This Policy accessible at <a href="/privacypolicy">https://www.colive.com/privacypolicy</a> and is subject to the Colive Terms of Use, which can be accessed at <a href="/terms-and-conditions">https://www.colive.com/terms-and-conditions</a>. Your use of the Platform and/or Services and any personal information you provide on the Platform remains subject to the terms of the Policy and the Terms of Use.
@@ -145,9 +153,13 @@ const Privacy = () => {
             </p>
 
             <p className="py-2.5 font-sans text-left text-[13px] font-normal leading-4.75 text-[#060C16]">
+<<<<<<< HEAD
               
                         We reserve the right to disclose Personal Information/ User Information without your consent (express or implied) and without any liabilities to you when required or permitted by law and we have a good-faith belief that (i) such action is necessary to comply with an appropriate law enforcement investigation, current judicial proceeding, a court order or legal process served on us or (ii) to conform to the legal requirements, compliance/reporting to administrative and judicial authorities, as may be required (iii) protect and defend the rights or property of the platform owners of Colive, or the users of Colive, (iv) person(s) or company (ies) who provide certain support services to us, and (v) person(s) or company (ies) who share certain responsibilities/obligations of Colive.
                     
+=======
+              We reserve the right to disclose Personal Information/ User Information without your consent (express or implied) and without any liabilities to you when required or permitted by law and we have a good-faith belief that (i) such action is necessary to comply with an appropriate law enforcement investigation, current judicial proceeding, a court order or py-2.5 font-sans text-left text-[13px] font-normal leading-4.75 text-[#060C16] process served on us or (ii) to conform to the py-2.5 font-sans text-left text-[13px] font-normal leading-4.75 text-[#060C16] requirements, compliance/reporting to administrative and judicial authorities, as may be required (iii) protect and defend the rights or property of the platform owners of Colive, or the users of Colive, (iv) person(s) or company (ies) who provide certain support services to us, and (v) person(s) or company (ies) who share certain responsibilities/obligations of Colive.
+>>>>>>> origin/QA-master
             </p>
 
             <h4 className="pt-2.5 text-left text-base font-semibold leading-4.75 capitalize text-[#17040D]">

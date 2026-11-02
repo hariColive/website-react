@@ -414,11 +414,18 @@ useEffect(() => {
         }
       }
 
+<<<<<<< HEAD
       await Promise.all(
         Array.from(
           { length: Math.min(3, targets.length) },
           () => worker()
         )
+=======
+      const detailConcurrency = Math.min(2, Math.max(1, targets.length));
+
+      await Promise.all(
+        Array.from({ length: detailConcurrency }, () => worker())
+>>>>>>> origin/QA-master
       );
 
       completed = true;

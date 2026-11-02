@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { cacheLife } from "next/cache";
 import { FaPhoneAlt } from "react-icons/fa";
-
 import SocialLinks, { circleIconClass } from "@/components/common/SocialLinks";
 import WhatsAppFloat from "@/components/common/WhatsAppFloat";
 

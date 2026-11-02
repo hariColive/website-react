@@ -71,11 +71,36 @@ async function forwardRequest(
           : { Accept: "application/json" },
       body,
       cache: "no-store",
+<<<<<<< HEAD
       signal: AbortSignal.timeout(30_000),
+=======
+      signal: AbortSignal.timeout(120_000),
+>>>>>>> origin/QA-master
     });
 
     const responseText = await upstream.text();
 
+<<<<<<< HEAD
+=======
+    const shouldReturnEmptyResult =
+      (api === "GetSuggestionsBasedonSearchText" ||
+        api === "GetDetailsByPlaceId") &&
+      upstream.status === 403;
+
+    if (shouldReturnEmptyResult) {
+      return Response.json(
+        { Status: "success", Message: "No suggestions available.", Data: null },
+        {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Cache-Control": "no-store",
+          },
+        }
+      );
+    }
+
+>>>>>>> origin/QA-master
     return new Response(responseText || null, {
       status: upstream.status,
       headers: {

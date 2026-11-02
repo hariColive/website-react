@@ -1,13 +1,18 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useId, useState, type KeyboardEvent } from "react";
+import { useEffect, useId, useMemo, useState, type KeyboardEvent } from "react";
 import { FaArrowRight, FaMapMarkerAlt, FaSearch } from "react-icons/fa";
 
-import { getPlaceSearchUrl, getSuggestions, type Suggestions } from "@/lib/coliveApi";
+import {
+  getPlaceSearchUrl,
+  getPropertySearchDetails,
+  getSuggestions,
+  type Suggestions,
+} from "@/lib/coliveApi";
 
 const MIN_QUERY_LENGTH = 3;
+const SEARCH_DEBOUNCE_MS = 150;
 
 const cityChips = [
   { label: "Marathahalli", href: "/bangalore/pg-in-marathahalli" },
@@ -38,6 +43,22 @@ const toOptions = ({ GoogleSuggestions, PropertySuggestions }: Suggestions): Opt
   })),
 ];
 
+function getLocalCityOptions(query: string): Option[] {
+  const normalized = query.trim().toLowerCase();
+  if (!normalized) return [];
+
+  return cityChips
+    .filter(({ label }) => label.toLowerCase().includes(normalized))
+    .slice(0, 5)
+    .map(({ label }) => ({
+      type: "place",
+      key: `city-${label}`,
+      description: label,
+      title: label,
+      subtitle: "City",
+    }));
+}
+
 export default function SearchBox() {
   const router = useRouter();
   const listId = useId();
@@ -47,28 +68,66 @@ export default function SearchBox() {
   const [activeIndex, setActiveIndex] = useState(-1);
 
   const trimmed = query.trim();
-  const showList = open && trimmed.length >= MIN_QUERY_LENGTH && options.length > 0;
+  const localOptions = useMemo(() => getLocalCityOptions(trimmed), [trimmed]);
+  const displayOptions = localOptions.length > 0 ? localOptions : options;
+  const showList = open && trimmed.length >= MIN_QUERY_LENGTH && displayOptions.length > 0;
 
   useEffect(() => {
-    if (trimmed.length < MIN_QUERY_LENGTH) return;
+    if (trimmed.length < MIN_QUERY_LENGTH || localOptions.length > 0) return;
 
     const controller = new AbortController();
     const timer = setTimeout(() => {
       getSuggestions(trimmed, controller.signal)
-        .then((data) => {
-          setOptions(data ? toOptions(data) : []);
-          setActiveIndex(-1);
+        .then(async (data) => {
+          if (controller.signal.aborted) return;
+
+          const nextOptions = data ? toOptions(data) : [];
+          if (nextOptions.length > 0) {
+            setOptions(nextOptions);
+            setActiveIndex(-1);
+            return;
+          }
+
+          try {
+            const properties = await getPropertySearchDetails(
+              trimmed,
+              [],
+              controller.signal
+            );
+            if (controller.signal.aborted) return;
+
+            const propertyOptions = properties
+              .filter((property) => property.PropertyName || property.LocationName)
+              .slice(0, 5)
+              .map((property) => ({
+                type: "property" as const,
+                key: `property-${property.PropertyID ?? property.LocationName ?? property.PropertyName ?? trimmed}`,
+                link: property.Link ?? `/properties?location=${encodeURIComponent(property.City || trimmed)}`,
+                title: property.PropertyName || property.LocationName || "Colive Property",
+                subtitle: [property.LocationName, property.City]
+                  .filter(Boolean)
+                  .join(", "),
+              }));
+
+            setOptions(propertyOptions);
+            setActiveIndex(-1);
+          } catch (fallbackError: unknown) {
+            if (!controller.signal.aborted) {
+              console.error(fallbackError);
+              setOptions([]);
+            }
+          }
         })
         .catch((error) => {
           if (!controller.signal.aborted) console.error(error);
         });
-    }, 250);
+    }, SEARCH_DEBOUNCE_MS);
 
     return () => {
       clearTimeout(timer);
       controller.abort();
     };
-  }, [trimmed]);
+  }, [trimmed, localOptions.length]);
 
   const submitFreeText = () => {
     if (trimmed) router.push(`/search?loc=${encodeURIComponent(trimmed)}`);
@@ -91,14 +150,14 @@ export default function SearchBox() {
   const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      if (showList && activeIndex >= 0) selectOption(options[activeIndex]);
+      if (showList && activeIndex >= 0) selectOption(displayOptions[activeIndex]);
       else submitFreeText();
     } else if (event.key === "Escape") {
       setOpen(false);
     } else if (showList && (event.key === "ArrowDown" || event.key === "ArrowUp")) {
       event.preventDefault();
       const step = event.key === "ArrowDown" ? 1 : -1;
-      setActiveIndex((index) => (index + step + options.length) % options.length);
+      setActiveIndex((index) => (index + step + displayOptions.length) % displayOptions.length);
     }
   };
 
@@ -119,8 +178,13 @@ export default function SearchBox() {
           placeholder="Try Whitefield, Couple room, Meals, Gilbert..."
           value={query}
           onChange={(event) => {
-            setQuery(event.target.value);
+            const nextValue = event.target.value;
+            setQuery(nextValue);
             setOpen(true);
+            if (nextValue.trim().length < MIN_QUERY_LENGTH) {
+              setOptions([]);
+              setActiveIndex(-1);
+            }
           }}
           onFocus={() => setOpen(true)}
           onBlur={() => setOpen(false)}
@@ -142,34 +206,51 @@ export default function SearchBox() {
           id={listId}
           role="listbox"
           aria-label="Search suggestions"
-          className={`absolute top-[calc(100%+10px)] right-0 left-0 z-20 max-h-80 overflow-y-auto rounded-[18px] border border-gray-200 bg-white p-2 text-left shadow-[0_12px_32px_rgba(0,0,0,0.1)] ${showList ? "" : "hidden"}`}
+          className={`keywordSuggestions absolute top-[calc(100%+12px)] right-0 left-0 z-50 max-h-[360px] overflow-y-auto rounded-[18px] border border-[#ececec] bg-white shadow-[0_12px_30px_rgba(17,17,17,0.08)] ${showList ? "" : "hidden"}`}
         >
-          {options.map((option, index) => (
-            <li
-              key={option.key}
-              id={`${listId}-${index}`}
-              role="option"
-              aria-selected={index === activeIndex}
-              title={`${option.title}, ${option.subtitle}`}
-              // Prevent the input blur from closing the list before the click lands
-              onMouseDown={(event) => event.preventDefault()}
-              onClick={() => selectOption(option)}
-              onMouseEnter={() => setActiveIndex(index)}
-              className={`flex cursor-pointer items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-sm text-[#111] ${index === activeIndex ? "bg-zinc-100" : ""}`}
-            >
-              {option.type === "property" && (
-                <Image src="/images/home/building.svg" alt="" width={18} height={18} className="size-4.5 shrink-0" />
-              )}
-              <span className="min-w-0 flex-1 truncate">
-                {option.type === "place" ? <b>{option.title}</b> : option.title}
-                {option.type === "place" ? (
-                  `, ${option.subtitle}`
-                ) : (
-                  <span className="ml-1.5 text-[12.5px] text-gray-400">{option.subtitle}</span>
-                )}
-              </span>
-            </li>
-          ))}
+          <li className="keyword-suggestions-heading border-b border-[#f1f1f1] px-4 py-3 text-[13px] font-semibold tracking-[0.02em] text-[#111111]">
+            Popular Right Now
+          </li>
+
+          {displayOptions.map((option, index) => {
+            const label = option.type === "property" ? "Property" : "Location";
+            const isActive = index === activeIndex;
+
+            return (
+              <li
+                key={option.key}
+                id={`${listId}-${index}`}
+                role="option"
+                aria-selected={isActive}
+                title={`${option.title}, ${option.subtitle}`}
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={() => selectOption(option)}
+                onMouseEnter={() => setActiveIndex(index)}
+                className={`keyword-suggestion-item flex cursor-pointer items-center justify-between gap-3 border-b border-transparent px-4 py-3.5 text-[#111111] transition-colors duration-200 last:border-b-0 hover:bg-[#f5f5f5] ${
+                  isActive ? "is-active bg-[#f5f5f5]" : ""
+                }`}
+              >
+                <div className="keyword-suggestion-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f5f5f5] text-[12px] text-[#4b5563]">
+                  <i className="bi bi-house-door-fill" aria-hidden="true" />
+                </div>
+
+                <div className="keyword-suggestion-text min-w-0 flex-1">
+                  <span className="block truncate text-[15px] font-medium leading-5 text-[#111111]">
+                    {option.title}
+                  </span>
+                  {option.subtitle && (
+                    <span className="mt-0.5 block truncate text-[12px] leading-4 text-[#767676]">
+                      {option.subtitle}
+                    </span>
+                  )}
+                </div>
+
+                <div className="keyword-suggestion-type shrink-0 text-[12px] font-medium uppercase tracking-[0.06em] text-[#666666]">
+                  {label}
+                </div>
+              </li>
+            );
+          })}
         </ul>
       </div>
 

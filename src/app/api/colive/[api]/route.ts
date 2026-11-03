@@ -2,7 +2,7 @@ import {
   COLIVE_ENDPOINTS,
   isColiveEndpointName,
 } from "@/lib/server/coliveEndpoints";
-import { getColiveEndpointBaseUrl } from "@/lib/server/apiConfig";
+import { getColiveEndpointUrl } from "@/lib/server/apiConfig";
 
 type RouteContext = {
   params: Promise<{ api: string }>;
@@ -35,7 +35,7 @@ async function forwardRequest(
 
   let url: URL;
   try {
-    url = new URL(endpoint.path, getColiveEndpointBaseUrl(endpoint.service));
+    url = getColiveEndpointUrl(endpoint.path, endpoint.service);
   } catch (error) {
     console.error("Colive API configuration error:", error);
     return Response.json(

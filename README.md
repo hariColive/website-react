@@ -51,11 +51,11 @@ Configure these values in `.env.local` or the deployment environment:
 | `COLIVE_LIVE_API_URL` | Optional LIVE CRM origin; defaults to `https://api.colive.com`. |
 | `COLIVE_LIVE_WEB_API_URL` | Optional LIVE website-service origin; defaults to `https://www.colive.com`. |
 
-The QA website-service base is `https://qa.colive.com`; the existing endpoint
-paths append `/api/Colive/...`. `COLIVE_QA_API_URL` is still required for CRM
-search and property-detail endpoints because their QA host was not provided.
-These variables are read by the server route and are not exposed to browser
-code.
+The QA CRM origin is `https://api.colive.com`; CRM requests use `/web/qa/...`
+when `COLIVE_ENV=QA` and `/web/live/...` when `COLIVE_ENV=LIVE`. The QA
+website-service base is `https://qa.colive.com`; its endpoint paths append
+`/api/Colive/...`. These variables are read by the server route and are not
+exposed to browser code.
 
 To add an API, register its approved path and supported method in
 `src/lib/server/coliveEndpoints.ts`, add its types and API-specific function in

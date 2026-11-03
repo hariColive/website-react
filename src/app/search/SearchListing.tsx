@@ -549,7 +549,7 @@ const visibleProperties = sortedProperties.slice(0, visibleCount);
       />
     </div>
 
-    <div className="hidden h-fit w-full grid-cols-1 gap-y-8 rounded-lg bg-white min-[769px]:grid min-[769px]:grid-cols-[minmax(0,1fr)_minmax(0,3fr)] min-[769px]:gap-x-[30px]">
+    <div className="grid h-fit w-full grid-cols-1 gap-y-8 rounded-lg bg-white min-[769px]:grid-cols-[minmax(0,1fr)_minmax(0,3fr)] min-[769px]:gap-x-[30px]">
       {/* Desktop filter sidebar */}
       <SearchPropertyFilters
         variant="desktop"

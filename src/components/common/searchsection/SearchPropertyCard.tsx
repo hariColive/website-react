@@ -39,11 +39,24 @@ function getDescription(property: Property): string {
 function getImage(property: Property): string {
   const image = property.Image || property.ImageName;
 
-  if (image && (/^https?:\/\//i.test(image) || image.startsWith("/"))) {
-    return image;
-  }
+  if (!image) return "/images/property-placeholder.jpg";
 
-  return "/images/property-placeholder.jpg";
+  if (image.startsWith("/")) return image;
+
+  try {
+    const imageUrl = new URL(image);
+    if (!["http:", "https:"].includes(imageUrl.protocol)) {
+      return "/images/property-placeholder.jpg";
+    }
+
+    if (imageUrl.hostname.toLowerCase() === "qa.colive.com") {
+      imageUrl.hostname = "www.colive.com";
+    }
+
+    return imageUrl.toString();
+  } catch {
+    return "/images/property-placeholder.jpg";
+  }
 }
 
 function formatPrice(price?: number | string): string {

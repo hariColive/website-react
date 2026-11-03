@@ -57,3 +57,17 @@ export function getColiveEndpointBaseUrl(service: ColiveService): string {
   if (environment === "LIVE") return "https://www.colive.com";
   return "https://qa.colive.com";
 }
+
+export function getColiveEndpointUrl(
+  path: string,
+  service: ColiveService
+): URL {
+  const environment = getEnvironment();
+  const baseUrl = getColiveEndpointBaseUrl(service);
+  const endpointPath =
+    service === "crm"
+      ? path.replace(/^\/web\/(?:live|qa)\//, `/web/${environment.toLowerCase()}/`)
+      : path;
+
+  return new URL(endpointPath, baseUrl);
+}

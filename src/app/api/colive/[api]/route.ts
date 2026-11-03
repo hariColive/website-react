@@ -76,6 +76,24 @@ async function forwardRequest(
 
     const responseText = await upstream.text();
 
+    const shouldReturnEmptyResult =
+      (api === "GetSuggestionsBasedonSearchText" ||
+        api === "GetDetailsByPlaceId") &&
+      upstream.status === 403;
+
+    if (shouldReturnEmptyResult) {
+      return Response.json(
+        { Status: "success", Message: "No suggestions available.", Data: null },
+        {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Cache-Control": "no-store",
+          },
+        }
+      );
+    }
+
     return new Response(responseText || null, {
       status: upstream.status,
       headers: {

@@ -21,8 +21,18 @@ export const COLIVE_ENDPOINTS = {
     methods: ["POST"],
   },
   GetSuggestionsBasedonSearchText: {
-    path: "/api/Colive/GetSuggestionsBasedonSearchText",
-    service: "web",
+    path: "/web/live/CRMapi/PropertyCRM/GetSuggestionsBasedonSearch",
+    service: "crm",
+    methods: ["POST"],
+  },
+  GetReelsDetails: {
+    path: "/web/live/CRMapi/PropertyCRM/GetReelsDetails",
+    service: "crm",
+    methods: ["POST"],
+  },
+  GetEvents: {
+    path: "/web/live/CRMapi/PropertyCRM/EventListSelectAllAndById",
+    service: "crm",
     methods: ["POST"],
   },
   GetDetailsByPlaceId: {

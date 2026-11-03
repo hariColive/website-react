@@ -56,6 +56,67 @@ type SearchResponse = {
   } | Property[];
 };
 
+export type PropertySearchResult = {
+  PropertyID?: number;
+  PropertyName?: string;
+  LocationName?: string;
+  City?: string;
+  Link?: string;
+  PropertyLink?: string;
+  Description?: string;
+  Highlights?: string;
+  LocationHighlights?: string;
+  LocationDescription?: string;
+  Latitude?: number | string;
+  Longitude?: number | string;
+  Price?: number | string;
+  RoomType?: string;
+  RoomTypeName?: string;
+  RoomSubType?: string;
+};
+
+export type ReelsItem = {
+  ReelsId?: number;
+  FileName?: string;
+  Description?: string;
+  CategoryId?: number;
+  IsPublish?: number;
+  Image?: string;
+  ReelsFile?: string;
+  CategoryName?: string;
+  LocationName?: string;
+  LocationLink?: string;
+};
+
+export type ReelsResponse = {
+  ReelsList?: ReelsItem[];
+};
+
+export type EventItem = {
+  EventId?: number | string;
+  EventCode?: string;
+  EventName?: string;
+  Title?: string;
+  Description?: string;
+  EventDescription?: string;
+  Image?: string;
+  EventImage?: string;
+  EventDate?: string;
+  EventTime?: string;
+  Date?: string;
+  Time?: string;
+  StartDate?: string;
+  EndDate?: string;
+  Link?: string;
+  EventUrl?: string;
+  IsCompleted?: boolean | number;
+};
+
+export type EventListResponse = {
+  EventList?: EventItem[];
+  Data?: EventItem[] | { EventList?: EventItem[] };
+};
+
 const PLATFORM_ID = 4;
 
 export function getSuggestions(
@@ -83,7 +144,7 @@ type PlaceDetails = {
   };
 };
 
-async function getPlaceDetails(
+export async function getPlaceDetails(
   description: string,
   signal?: AbortSignal
 ): Promise<PlaceDetails | null> {
@@ -239,4 +300,43 @@ export async function fetchPropertyDetails(
   }
 
   return result as PropertyDetailsData;
+}
+
+export async function getReelsDetails(
+  categoryId: number = 0,
+  signal?: AbortSignal
+): Promise<ReelsItem[]> {
+  const result = await apiPost<ReelsResponse>(
+    "GetReelsDetails",
+    {
+      CategoryId: categoryId,
+      PlatFormId: PLATFORM_ID,
+    },
+    { signal, unwrapData: true }
+  );
+
+  return result?.ReelsList ?? [];
+}
+
+export async function getEventsDetails(
+  eventCode: string = "",
+  signal?: AbortSignal
+): Promise<EventItem[]> {
+  const result = await apiPost<EventListResponse>(
+    "GetEvents",
+    {
+      EventCode: eventCode,
+      PlatFormId: PLATFORM_ID,
+    },
+    { signal, unwrapData: true }
+  );
+
+  if (!result) return [];
+
+  const list =
+    result.EventList ??
+    (Array.isArray(result.Data) ? result.Data : result.Data?.EventList) ??
+    [];
+
+  return Array.isArray(list) ? list : [];
 }

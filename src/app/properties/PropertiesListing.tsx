@@ -343,87 +343,89 @@ useEffect(() => {
 
     const controller = new AbortController();
     const requestedDetailsForEffect = requestedDetails.current;
-    let completed = false;
     const targets = properties
       .slice(0, visibleCount)
       .map((property, index) => ({ property, index }))
       .filter(({ property, index }) => {
-        if (!property.Link || requestedDetailsForEffect.has(index)) return false;
+        const hasDescription =
+          Boolean(property.Highlights) ||
+          Boolean(property.LocationHighlights) ||
+          Boolean(property.LocationDescription) ||
+          Boolean(property.Description);
+
+        if (
+          hasDescription ||
+          !property.Link ||
+          requestedDetailsForEffect.has(index)
+        ) {
+          return false;
+        }
+
         requestedDetailsForEffect.add(index);
         return true;
-      });
+      })
+      .slice(0, 2);
+
+    if (targets.length === 0) return;
 
     async function enrichVisibleProperties() {
-      let nextTarget = 0;
       const updates = new Map<number, PropertyWithDescription>();
 
-      async function worker() {
-        while (!controller.signal.aborted && nextTarget < targets.length) {
-          const target = targets[nextTarget++];
-          const property = target.property;
-          const locationLink = property.Link;
+      for (const target of targets) {
+        const property = target.property;
+        const locationLink = property.Link;
 
-          if (!locationLink) continue;
+        if (!locationLink) continue;
 
-          try {
-            const details = await fetchPropertyDetails(
-              locationLink,
-              controller.signal
-            );
-            const detailProperty =
-              details.Property?.find(
-                (item) => item.PropertyID === property.PropertyID
-              ) ?? details.Property?.[0];
-            const locationHighlights =
-              detailProperty?.LocationHighlights ||
-              property.LocationHighlights ||
-              "";
-            const locationDescription =
-              detailProperty?.LocationDescription ||
-              property.LocationDescription ||
-              "";
+        try {
+          const details = await fetchPropertyDetails(
+            locationLink,
+            controller.signal
+          );
+          const detailProperty =
+            details.Property?.find(
+              (item) => item.PropertyID === property.PropertyID
+            ) ?? details.Property?.[0];
+          const locationHighlights =
+            detailProperty?.LocationHighlights ||
+            property.LocationHighlights ||
+            "";
+          const locationDescription =
+            detailProperty?.LocationDescription ||
+            property.LocationDescription ||
+            "";
 
-            updates.set(
-              target.index,
-              withFallbackDescription({
-                ...property,
-                LocationHighlights: locationHighlights,
-                LocationDescription: locationDescription,
-                Highlights:
-                  locationHighlights ||
-                  locationDescription ||
-                  property.Highlights ||
-                  property.Description ||
-                  "",
-              })
-            );
-          } catch (cause: unknown) {
-            if (
-              cause instanceof Error &&
-              cause.name === "AbortError"
-            ) {
-              return;
-            }
-
-            requestedDetailsForEffect.delete(target.index);
-            console.warn(
-              `Could not load optional details for ${property.PropertyName || "a property"}; showing search result data.`,
-              cause
-            );
+          updates.set(
+            target.index,
+            withFallbackDescription({
+              ...property,
+              LocationHighlights: locationHighlights,
+              LocationDescription: locationDescription,
+              Highlights:
+                locationHighlights ||
+                locationDescription ||
+                property.Highlights ||
+                property.Description ||
+                "",
+            })
+          );
+        } catch (cause: unknown) {
+          if (
+            cause instanceof Error &&
+            cause.name === "AbortError"
+          ) {
+            return;
           }
+
+          requestedDetailsForEffect.delete(target.index);
+          console.warn(
+            `Could not load optional details for ${property.PropertyName || "a property"}; showing search result data.`,
+            cause
+          );
         }
       }
 
-      await Promise.all(
-        Array.from(
-          { length: Math.min(3, targets.length) },
-          () => worker()
-        )
-      );
-
-      completed = true;
       if (controller.signal.aborted) return;
-
       if (updates.size === 0) return;
 
       setProperties((current) =>
@@ -435,11 +437,9 @@ useEffect(() => {
 
     return () => {
       controller.abort();
-      if (!completed) {
-        targets.forEach(({ index }) =>
-          requestedDetailsForEffect.delete(index)
-        );
-      }
+      targets.forEach(({ index }) =>
+        requestedDetailsForEffect.delete(index)
+      );
     };
   }, [isLoading, properties, visibleCount]);
 

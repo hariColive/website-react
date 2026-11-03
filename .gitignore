@@ -40,3 +40,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# Visual Studio files
+.vs/
+# Visual Studio files
+.vs/

@@ -1,20 +1,7 @@
-// Client for the Colive backend, reached through the /api/Colive rewrite in next.config.ts.
+// Typed Colive API functions for client components, called through apiClient and the /api/colive/[api] route.
+import { apiPost } from "./api/apiClient";
+
 const PLATFORM_ID = 4;
-
-type ApiResponse<T> = { Status: string; Message: string; Data: T } | null;
-
-async function post<T>(path: string, body: object, signal?: AbortSignal): Promise<T | null> {
-  const res = await fetch(`/api/Colive/${path}`, {
-    signal,
-    method: "POST",
-    headers: { "Content-Type": "application/json; charset=utf-8" },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) throw new Error(`${path} failed: ${res.status}`);
-
-  const json = (await res.json()) as ApiResponse<T>;
-  return json?.Status === "success" ? json.Data : null;
-}
 
 export type GoogleSuggestion = {
   PlaceId: string;
@@ -34,7 +21,7 @@ export type Suggestions = {
 };
 
 export function getSuggestions(searchQuery: string, signal?: AbortSignal) {
-  return post<Suggestions>("GetSuggestionsBasedonSearchText", {
+  return apiPost<Suggestions>("GetSuggestionsBasedonSearchText", {
     PropertyModelTypeId: 1,
     SearchQuery: searchQuery,
     CategoryId: 1,
@@ -49,7 +36,7 @@ type PlaceDetails = {
 };
 
 export function getPlaceDetails(description: string) {
-  return post<PlaceDetails>("GetDetailsByPlaceId", {
+  return apiPost<PlaceDetails>("GetDetailsByPlaceId", {
     Description: description,
     PlatFormId: PLATFORM_ID,
   });

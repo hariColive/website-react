@@ -1,8 +1,9 @@
 // Server-side client for the property (factsheet) page, on the same CRM API as the search page.
 import { cacheLife } from "next/cache";
 
-import { formatApiDate, htmlToText, post } from "./propertySearch";
+import { formatApiDate, htmlToText } from "./propertySearch";
 import { toSlug } from "./searchFilters";
+import { colivePost } from "./server/coliveFetch";
 
 type ApiImage = { ImageType: string; Image: string; DetailedImage: string; ImageAltText: string };
 
@@ -114,7 +115,7 @@ export async function getPropertyDetails(link: string): Promise<PropertyDetails 
   cacheLife("hours");
 
   if (!isPropertyLink(link)) return null;
-  const data = await post<{ Property: ApiProperty[] }>("GetPropertyDetailsByIdForWeb_V2", { LocationLink: link, CustomerID: "" });
+  const data = await colivePost<{ Property: ApiProperty[] }>("GetPropertyDetailsByIdForWeb_V2", { LocationLink: link, CustomerID: "" });
   const property = data?.Property[0];
   return property ? toDetails(property, link) : null;
 }
@@ -127,7 +128,7 @@ export async function getRoomPlans(propertyId: number): Promise<RoomPlan[]> {
   "use cache";
   cacheLife("minutes");
 
-  const data = await post<ApiOccupancy[]>("GetAvailableOccupancyTypeByPropertyId_Factsheet", { PropertyID: propertyId });
+  const data = await colivePost<ApiOccupancy[]>("GetAvailableOccupancyTypeByPropertyId_Factsheet", { PropertyID: propertyId });
   return (data ?? []).map((room) => ({
     roomTypeId: room.RoomTypeId,
     label: ROOM_LABELS[room.RoomTypeId] ?? room.RoomType,
@@ -142,7 +143,7 @@ export async function getVisitSlots(propertyId: number, date: string): Promise<V
   cacheLife("minutes");
 
   const [year, month, day] = date.split("-").map(Number);
-  const data = await post<{ TimeId: number; TimeString: string }[]>("GetScheduleVisitDays", {
+  const data = await colivePost<{ TimeId: number; TimeString: string }[]>("GetScheduleVisitDays", {
     Date: formatApiDate(new Date(year, month - 1, day)),
     PropertyID: propertyId,
   });

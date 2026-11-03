@@ -7,8 +7,11 @@ const nextConfig: NextConfig = {
   },
   cacheComponents: true,
   images: {
-    // Property photos served by the Colive CMS
-    remotePatterns: [new URL("https://www.colive.com/utility/files/**")],
+    // Property photos served by the Colive CMS; a few older properties still use the site's static assets
+    remotePatterns: [
+      new URL("https://www.colive.com/utility/files/**"),
+      new URL("https://www.colive.com/assets/images/**"),
+    ],
   },
   partialPrefetching: true,
   turbopack: {
@@ -18,16 +21,6 @@ const nextConfig: NextConfig = {
         as: "*.css",
       },
     },
-  },
-  // Proxy the Colive backend so the browser calls it same-origin
-  // (its CORS response sends a duplicate Access-Control-Allow-Origin, which browsers reject).
-  rewrites() {
-    return [
-      {
-        source: "/api/Colive/:path*",
-        destination: `${process.env.COLIVE_API_BASE ?? "https://www.colive.com"}/api/Colive/:path*`,
-      },
-    ];
   },
 };
 

@@ -3,22 +3,7 @@
 import { cacheLife } from "next/cache";
 
 import { displayPrice, toSlug } from "./searchFilters";
-
-const API_BASE = process.env.COLIVE_CRM_API_BASE ?? "https://api.colive.com/web/live/CRMapi/PropertyCRM";
-
-type ApiResponse<T> = { Status: string; Message: string; Data: T } | null;
-
-export async function post<T>(path: string, body: object): Promise<T | null> {
-  const res = await fetch(`${API_BASE}/${path}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json; charset=utf-8" },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) throw new Error(`${path} failed: ${res.status}`);
-
-  const json = (await res.json()) as ApiResponse<T>;
-  return json?.Status === "success" ? json.Data : null;
-}
+import { colivePost } from "./server/coliveFetch";
 
 type ApiProperty = {
   PropertyID: number;
@@ -111,8 +96,8 @@ export async function searchProperties(query: SearchQuery) {
   "use cache";
   cacheLife("minutes");
 
-  const data = await post<{ Property: ApiProperty[]; SimilarProperties: ApiProperty[] }>(
-    "GetPropertyDetails_V3_Web",
+  const data = await colivePost<{ Property: ApiProperty[]; SimilarProperties: ApiProperty[] }>(
+    "GetPropertyDetails",
     toRequest(query),
   );
   const properties = (data?.Property ?? []).map(toSummary);
@@ -148,7 +133,7 @@ export async function getLocationHighlights(link: string) {
   "use cache";
   cacheLife("days");
 
-  const data = await post<{ Property: { LocationHighlights: string | null }[] }>("GetPropertyDetailsByIdForWeb_V2", {
+  const data = await colivePost<{ Property: { LocationHighlights: string | null }[] }>("GetPropertyDetailsByIdForWeb_V2", {
     LocationLink: link,
     CustomerID: "",
   });
@@ -159,7 +144,7 @@ export async function getFilterMaster(): Promise<FilterMaster> {
   "use cache";
   cacheLife("hours");
 
-  const data = await post<{ Filter: { Amenities: ApiFilterOption[]; Locations: ApiLocation[] } }>(
+  const data = await colivePost<{ Filter: { Amenities: ApiFilterOption[]; Locations: ApiLocation[] } }>(
     "GetFilterMasterDetails",
     toRequest({ location: "" }),
   );

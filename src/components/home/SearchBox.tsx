@@ -15,7 +15,6 @@ const MIN_QUERY_LENGTH = 3;
 const SEARCH_DEBOUNCE_MS = 150;
 
 const cityChips = [
-  { label: "Bangalore", location: "Bangalore", href: "/pg-in-bangalore" },
   {
     label: "Marathahalli",
     location: "Marathahalli",
@@ -31,12 +30,8 @@ const cityChips = [
     location: "Koramangala",
     href: "/bangalore/pg-in-koramangala",
   },
-  { label: "Hyderabad", location: "Hyderabad", href: "/pg-in-hyderabad" },
   { label: "Pune", location: "Pune", href: "/pg-in-pune" },
   { label: "Mumbai", location: "Mumbai", href: "/pg-in-mumbai" },
-  { label: "Chennai", location: "Chennai", href: "/pg-in-chennai" },
-  { label: "Coimbatore", location: "Coimbatore", href: "/pg-in-coimbatore" },
-  { label: "Vellore", location: "Vellore", href: "/pg-in-vellore" },
 ];
 
 type Option =
@@ -119,7 +114,7 @@ export default function SearchBox() {
               .map((property) => ({
                 type: "property" as const,
                 key: `property-${property.PropertyID ?? property.LocationName ?? property.PropertyName ?? trimmed}`,
-                link: property.Link ?? `/properties?location=${encodeURIComponent(property.City || trimmed)}`,
+                link: property.Link ?? `/search?location=${encodeURIComponent(property.City || trimmed)}`,
                 title: property.PropertyName || property.LocationName || "Colive Property",
                 subtitle: [property.LocationName, property.City]
                   .filter(Boolean)
@@ -147,7 +142,7 @@ export default function SearchBox() {
   }, [trimmed, localOptions.length]);
 
   const submitFreeText = () => {
-    if (trimmed) router.push(`/search?loc=${encodeURIComponent(trimmed)}`);
+    if (trimmed) router.push(`/search?location=${encodeURIComponent(trimmed)}`);
   };
 
   const selectOption = async (option: Option) => {

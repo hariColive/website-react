@@ -11,7 +11,7 @@ export type AmenityOption = {
   name: string;
 };
 
-type PropertyFiltersProps = {
+type SearchPropertyFiltersProps = {
   variant: "desktop" | "mobile";
   roomTypes: RoomFilter[];
   minRent: number | undefined;
@@ -195,7 +195,7 @@ function RentRangeControl({
   );
 }
 
-export default function PropertyFilters({
+export default function SearchPropertyFilters({
   variant,
   roomTypes,
   minRent,
@@ -214,7 +214,7 @@ export default function PropertyFilters({
   onAmenitiesChange,
   onClearAll,
   onApplyFilters,
-}: PropertyFiltersProps) {
+}: SearchPropertyFiltersProps) {
   const [mobilePanel, setMobilePanel] = useState<"filter" | "sort" | null>(
     null
   );

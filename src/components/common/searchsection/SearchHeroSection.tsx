@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useState, type KeyboardEvent } from "react";
 
-import type { Property } from "@/components/common/properties/PropertyCard";
+import type { Property } from "@/components/common/searchsection/SearchPropertyCard";
 import {
   getPropertySearchDetails,
   getSuggestions,
@@ -192,7 +192,7 @@ export default function SearchHeroSection({
   const submitFreeText = () => {
     if (!trimmedQuery) return;
     setOpen(false);
-    router.push(`/properties?location=${encodeURIComponent(trimmedQuery)}`);
+    router.push(`/search?location=${encodeURIComponent(trimmedQuery)}`);
   };
 
   const submitSearch = () => {
@@ -224,7 +224,7 @@ export default function SearchHeroSection({
 
     if (option.type === "local-property") {
       router.push(
-        `/properties?location=${encodeURIComponent(
+        `/search?location=${encodeURIComponent(
           option.location
         )}&propertyId=${option.propertyId}`
       );
@@ -232,7 +232,7 @@ export default function SearchHeroSection({
     }
 
     router.push(
-      `/properties?location=${encodeURIComponent(option.location)}`
+      `/search?location=${encodeURIComponent(option.location)}`
     );
   };
 

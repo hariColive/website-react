@@ -58,7 +58,7 @@ function formatPrice(price?: number | string): string {
     : `₹${price} /mo`;
 }
 
-export default function PropertyCard({ property }: PropertyCardProps) {
+export default function SearchPropertyCard({ property }: PropertyCardProps) {
   const description = getDescription(property);
   const image = getImage(property);
 

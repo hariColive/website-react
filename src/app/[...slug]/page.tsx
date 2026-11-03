@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 
-import SearchHeroSection from "@/components/common/properties/SearchHeroSection";
-import PropertiesListing from "@/app/properties/PropertiesListing";
+import SearchHeroSection from "@/components/common/searchsection/SearchHeroSection";
+import SearchListing from "@/app/search/SearchListing";
 import { RENTAL_LOCATIONS } from "@/lib/rentalLocations";
 
 async function RentalLocationContent({
@@ -18,7 +18,7 @@ async function RentalLocationContent({
   return (
     <>
       <SearchHeroSection location={location} />
-      <PropertiesListing location={location} />
+      <SearchListing location={location} />
     </>
   );
 }

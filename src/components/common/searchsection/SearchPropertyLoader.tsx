@@ -1,4 +1,4 @@
-export default function PropertyLoader() {
+export default function SearchPropertyLoader() {
   return (
     <div
       className="fixed top-0 left-0 z-[10000000] m-auto flex h-full w-full items-center justify-center bg-[#ffffffba]"

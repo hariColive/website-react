@@ -3,15 +3,15 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import PropertyCard, {
+import SearchPropertyCard, {
   type Property,
-} from "@/components/common/properties/PropertyCard";
-import PropertyFilters, {
+} from "@/components/common/searchsection/SearchPropertyCard";
+import SearchPropertyFilters, {
   type AmenityOption,
   type RoomFilter,
   type PropertySort,
-} from "@/components/common/properties/PropertyFilters";
-import PropertyLoader from "@/components/common/properties/PropertyLoader";
+} from "@/components/common/searchsection/SearchPropertyFilters";
+import SearchPropertyLoader from "@/components/common/searchsection/SearchPropertyLoader";
 import {
   getPropertySearchDetails,
   getFilterMasterDetails,
@@ -141,7 +141,7 @@ function PropertySkeleton() {
   );
 }
 
-export default function PropertiesListing({
+export default function SearchListing({
   location = "Bangalore",
   propertyId,
 }: {
@@ -506,11 +506,11 @@ const sortedProperties = [...filteredProperties].sort((a, b) => {
 const visibleProperties = sortedProperties.slice(0, visibleCount);
   return (
 <main className="min-h-screen bg-white px-[33px] pb-10 pt-[30px] max-[768px]:px-4 max-[768px]:pt-5">
-{(isLoading || radiusCoordinatesLoading) && <PropertyLoader />}
+{(isLoading || radiusCoordinatesLoading) && <SearchPropertyLoader />}
 <div className="w-full">
     {/* Mobile filters and sorting */}
     <div className="mb-5 min-[769px]:hidden">
-      <PropertyFilters
+      <SearchPropertyFilters
         variant="mobile"
         roomTypes={roomTypes}
         minRent={minRent}
@@ -551,7 +551,7 @@ const visibleProperties = sortedProperties.slice(0, visibleCount);
 
     <div className="hidden h-fit w-full grid-cols-1 gap-y-8 rounded-lg bg-white min-[769px]:grid min-[769px]:grid-cols-[minmax(0,1fr)_minmax(0,3fr)] min-[769px]:gap-x-[30px]">
       {/* Desktop filter sidebar */}
-      <PropertyFilters
+      <SearchPropertyFilters
         variant="desktop"
         roomTypes={roomTypes}
         minRent={minRent}
@@ -645,7 +645,7 @@ const visibleProperties = sortedProperties.slice(0, visibleCount);
                       key={property.PropertyID ?? property.Link ?? index}
                       className="min-w-0"
                     >
-                      <PropertyCard property={property} />
+                      <SearchPropertyCard property={property} />
                     </div>
                   ))}
                 </section>

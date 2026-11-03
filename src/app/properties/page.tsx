@@ -1,58 +1,42 @@
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
-import SearchHeroSection from "@/components/common/properties/SearchHeroSection";
-import PropertiesListing from "./PropertiesListing";
-import { getRentalLocationPath } from "@/lib/rentalLocations";
-type PropertiesPageProps = {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+
+type LegacyPropertiesPageProps = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-async function PropertiesPageContent({
+async function RedirectLegacyProperties({
   searchParams,
-}: PropertiesPageProps) {
+}: LegacyPropertiesPageProps) {
   const params = await searchParams;
-  const locationValue = params.location;
-  const location = Array.isArray(locationValue)
-    ? locationValue[0]?.trim()
-    : locationValue?.trim();
-  const propertyIdValue = params.propertyId;
-  const propertyIdText = Array.isArray(propertyIdValue)
-    ? propertyIdValue[0]
-    : propertyIdValue;
-  const propertyId = propertyIdText ? Number(propertyIdText) : undefined;
-  const selectedPropertyId =
-    propertyId !== undefined && Number.isInteger(propertyId) && propertyId > 0
-      ? propertyId
-      : undefined;
+  const query = new URLSearchParams();
 
-  if (location && selectedPropertyId === undefined) {
-    const rentalPath = getRentalLocationPath(location);
-    if (rentalPath) redirect(rentalPath);
+  for (const [key, value] of Object.entries(params)) {
+    if (Array.isArray(value)) {
+      value.forEach((item) => query.append(key, item));
+    } else if (value !== undefined) {
+      query.set(key, value);
+    }
   }
 
-  return (
-    <>
-      <SearchHeroSection location={location || "Bangalore"} />
-      <PropertiesListing
-        location={location || "Bangalore"}
-        propertyId={selectedPropertyId}
-      />
-    </>
-  );
+  const queryString = query.toString();
+  return redirect(queryString ? `/search?${queryString}` : "/search");
 }
 
-export default function PropertiesPage({
+export default function LegacyPropertiesPage({
   searchParams,
-}: PropertiesPageProps) {
+}: LegacyPropertiesPageProps) {
   return (
     <Suspense
       fallback={
         <main className="min-h-screen bg-[#f8f8f8] px-4 py-10 sm:px-6 lg:px-10">
-          <div className="mx-auto max-w-7xl text-gray-500">Loading properties...</div>
+          <div className="mx-auto max-w-7xl text-gray-500">
+            Loading search...
+          </div>
         </main>
       }
     >
-      <PropertiesPageContent searchParams={searchParams} />
+      <RedirectLegacyProperties searchParams={searchParams} />
     </Suspense>
   );
 }

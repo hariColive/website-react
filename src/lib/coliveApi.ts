@@ -1,5 +1,5 @@
 import { apiPost } from "@/lib/api/apiClient";
-import type { Property } from "@/components/common/properties/PropertyCard";
+import type { Property } from "@/components/common/searchsection/SearchPropertyCard";
 
 export type Amenity = {
   Id: number;

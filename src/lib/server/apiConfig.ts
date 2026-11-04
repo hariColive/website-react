@@ -1,73 +1,43 @@
-import type { ColiveEndpointDefinition } from "./coliveEndpoints";
 
-type ColiveEnvironment = "QA" | "LIVE";
-type ColiveService = ColiveEndpointDefinition["service"];
+import "server-only";
 
-function getEnvironment(): ColiveEnvironment {
-  const value = process.env.COLIVE_ENV?.trim().toUpperCase() || "LIVE";
-  if (value !== "QA" && value !== "LIVE") {
-    throw new Error("COLIVE_ENV must be either QA or LIVE.");
-  }
-  return value;
-}
+export type ColiveEnv = "QA" | "LIVE";
+export type ColiveService = "crm" | "web";
 
-function normalizeBaseUrl(value: string | undefined, variable: string): string {
-  if (!value?.trim()) {
-    throw new Error(`${variable} must be configured.`);
-  }
+export const COLIVE_ENV: ColiveEnv =
+  process.env.COLIVE_ENV?.trim().toUpperCase() === "LIVE"
+    ? "LIVE"
+    : "QA";
 
-  let url: URL;
-  try {
-    url = new URL(value.trim());
-  } catch {
-    throw new Error(`${variable} must be a valid absolute URL.`);
-  }
+const BASE_URLS: Record<
+  ColiveEnv,
+  Record<ColiveService, string | undefined>
+> = {
+  QA: {
+    crm: process.env.COLIVE_QA_API_URL,
+    web:
+      process.env.COLIVE_QA_WEB_URL ??
+      process.env.COLIVE_LIVE_WEB_URL ??
+      "https://www.colive.com/",
+  },
+  LIVE: {
+    crm:
+      process.env.COLIVE_LIVE_API_URL ??
+      "https://api.colive.com/web/live/",
+    web:
+      process.env.COLIVE_LIVE_WEB_URL ??
+      "https://www.colive.com/",
+  },
+};
 
-  if (!["http:", "https:"].includes(url.protocol)) {
-    throw new Error(`${variable} must use HTTP or HTTPS.`);
-  }
+export function getBaseUrl(service: ColiveService) {
+  const url = BASE_URLS[COLIVE_ENV][service];
 
-  if (url.username || url.password) {
-    throw new Error(`${variable} must not contain credentials.`);
-  }
-
-  return url.toString().replace(/\/+$/, "");
-}
-
-export function getColiveEndpointBaseUrl(service: ColiveService): string {
-  const environment = getEnvironment();
-
-  if (service === "crm") {
-    const variable =
-      environment === "QA" ? "COLIVE_QA_API_URL" : "COLIVE_LIVE_API_URL";
-    const configuredValue = process.env[variable];
-
-    if (configuredValue) return normalizeBaseUrl(configuredValue, variable);
-    if (environment === "LIVE") return "https://api.colive.com";
-    throw new Error(`${variable} must be configured when COLIVE_ENV=QA.`);
+  if (!url) {
+    throw new Error(
+      `No ${service} API URL configured for COLIVE_ENV=${COLIVE_ENV}; see .env.example`
+    );
   }
 
-  const variable =
-    environment === "QA"
-      ? "COLIVE_QA_WEB_API_URL"
-      : "COLIVE_LIVE_WEB_API_URL";
-  const configuredValue = process.env[variable];
-
-  if (configuredValue) return normalizeBaseUrl(configuredValue, variable);
-  if (environment === "LIVE") return "https://www.colive.com";
-  return "https://qa.colive.com";
-}
-
-export function getColiveEndpointUrl(
-  path: string,
-  service: ColiveService
-): URL {
-  const environment = getEnvironment();
-  const baseUrl = getColiveEndpointBaseUrl(service);
-  const endpointPath =
-    service === "crm"
-      ? path.replace(/^\/web\/(?:live|qa)\//, `/web/${environment.toLowerCase()}/`)
-      : path;
-
-  return new URL(endpointPath, baseUrl);
+  return url.endsWith("/") ? url : `${url}/`;
 }

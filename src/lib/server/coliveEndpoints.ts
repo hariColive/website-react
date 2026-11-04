@@ -1,51 +1,84 @@
-export type ColiveEndpointDefinition = {
-  path: string;
-  service: "crm" | "web";
-  methods: readonly ("GET" | "POST")[];
+
+import "server-only";
+
+import type { ColiveEnv, ColiveService } from "./apiConfig";
+
+type Endpoint = {
+  method: "GET" | "POST";
+  service: ColiveService;
+  path: string | Record<ColiveEnv, string>;
 };
 
 export const COLIVE_ENDPOINTS = {
+  // Property search
+  GetPropertyDetails: {
+    method: "POST",
+    service: "crm",
+    path: {
+      QA: "CRMapi/PropertyCRM/GetPropertyDetailsV3Web",
+      LIVE: "CRMapi/PropertyCRM/GetPropertyDetails_V3_Web",
+    },
+  },
+
   GetFilterMasterDetails: {
-    path: "/web/live/CRMapi/PropertyCRM/GetFilterMasterDetails",
+    method: "POST",
     service: "crm",
-    methods: ["POST"],
+    path: "CRMapi/PropertyCRM/GetFilterMasterDetails",
   },
-  GetPropertyDetails_V3_Web: {
-    path: "/web/live/CRMapi/PropertyCRM/GetPropertyDetails_V3_Web",
-    service: "crm",
-    methods: ["POST"],
-  },
+
+  // Property factsheet
   GetPropertyDetailsByIdForWeb_V2: {
-    path: "/web/live/CRMapi/PropertyCRM/GetPropertyDetailsByIdForWeb_V2",
+    method: "POST",
     service: "crm",
-    methods: ["POST"],
+    path: "CRMapi/PropertyCRM/GetPropertyDetailsByIdForWeb_V2",
   },
+
+  GetAvailableOccupancyTypeByPropertyId_Factsheet: {
+    method: "POST",
+    service: "crm",
+    path: "CRMapi/PropertyCRM/GetAvailableOccupancyTypeByPropertyId_Factsheet",
+  },
+
+  GetScheduleVisitDays: {
+    method: "POST",
+    service: "crm",
+    path: "CRMapi/PropertyCRM/GetScheduleVisitDays",
+  },
+
+  // Home page location suggestions
   GetSuggestionsBasedonSearchText: {
-    path: "/web/live/CRMapi/PropertyCRM/GetSuggestionsBasedonSearch",
-    service: "crm",
-    methods: ["POST"],
-  },
-  GetReelsDetails: {
-    path: "/web/live/CRMapi/PropertyCRM/GetReelsDetails",
-    service: "crm",
-    methods: ["POST"],
-  },
-  GetEvents: {
-    path: "/web/live/CRMapi/PropertyCRM/EventListSelectAllAndById",
-    service: "crm",
-    methods: ["POST"],
-  },
-  GetDetailsByPlaceId: {
-    path: "/api/Colive/GetDetailsByPlaceId",
+    method: "POST",
     service: "web",
-    methods: ["POST"],
+    path: "api/Colive/GetSuggestionsBasedonSearchText",
   },
-} as const satisfies Record<string, ColiveEndpointDefinition>;
 
-export type ColiveEndpointName = keyof typeof COLIVE_ENDPOINTS;
+  GetDetailsByPlaceId: {
+    method: "POST",
+    service: "web",
+    path: "api/Colive/GetDetailsByPlaceId",
+  },
 
-export function isColiveEndpointName(
+  // Community
+  GetReelsDetails: {
+    method: "POST",
+    service: "crm",
+    path: "CRMapi/PropertyCRM/GetReelsDetails",
+  },
+
+  GetEvents: {
+    method: "POST",
+    service: "crm",
+    path: "CRMapi/PropertyCRM/EventListSelectAllAndById",
+  },
+} satisfies Record<string, Endpoint>;
+
+export type ColiveEndpoint = keyof typeof COLIVE_ENDPOINTS;
+
+export const isColiveEndpoint = (
   name: string
-): name is ColiveEndpointName {
-  return Object.prototype.hasOwnProperty.call(COLIVE_ENDPOINTS, name);
-}
+): name is ColiveEndpoint => Object.hasOwn(COLIVE_ENDPOINTS, name);
+
+export const getEndpointPath = (
+  endpoint: Endpoint,
+  env: ColiveEnv
+) => (typeof endpoint.path === "string" ? endpoint.path : endpoint.path[env]);

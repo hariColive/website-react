@@ -1,5 +1,8 @@
+
 import { apiPost } from "@/lib/api/apiClient";
 import type { Property } from "@/components/common/searchsection/SearchPropertyCard";
+
+const PLATFORM_ID = 4;
 
 export type Amenity = {
   Id: number;
@@ -117,25 +120,6 @@ export type EventListResponse = {
   Data?: EventItem[] | { EventList?: EventItem[] };
 };
 
-const PLATFORM_ID = 4;
-
-export function getSuggestions(
-  searchQuery: string,
-  signal?: AbortSignal
-): Promise<Suggestions | null> {
-  return apiPost<Suggestions | null>(
-    "GetSuggestionsBasedonSearchText",
-    {
-      PropertyModelTypeId: 1,
-      SearchQuery: searchQuery,
-      CategoryId: 1,
-      PlatFormId: PLATFORM_ID,
-      IsGoolgeSuggestions: true,
-    },
-    { signal, unwrapData: true, allowNull: true }
-  );
-}
-
 type PlaceDetails = {
   Types: string[];
   Coordinates: {
@@ -144,17 +128,34 @@ type PlaceDetails = {
   };
 };
 
-export async function getPlaceDetails(
+export function getSuggestions(
+  searchQuery: string,
+  signal?: AbortSignal
+): Promise<Suggestions | null> {
+  return apiPost<Suggestions>(
+    "GetSuggestionsBasedonSearchText",
+    {
+      PropertyModelTypeId: 1,
+      SearchQuery: searchQuery,
+      CategoryId: 1,
+      PlatFormId: PLATFORM_ID,
+      IsGoolgeSuggestions: true,
+    },
+    signal
+  );
+}
+
+export function getPlaceDetails(
   description: string,
   signal?: AbortSignal
 ): Promise<PlaceDetails | null> {
-  return apiPost<PlaceDetails | null>(
+  return apiPost<PlaceDetails>(
     "GetDetailsByPlaceId",
     {
       Description: description,
       PlatFormId: PLATFORM_ID,
     },
-    { signal, unwrapData: true, allowNull: true }
+    signal
   );
 }
 
@@ -188,12 +189,17 @@ export async function getPlaceSearchUrl(
           details.Types[0]
         ] ?? 0
       : 0;
-  const location = description === "Bengaluru" ? "Bangalore" : description;
+
+  const location =
+    description === "Bengaluru" ? "Bangalore" : description;
+
   const query = `lat=${details.Coordinates.Latitude}&long=${details.Coordinates.Longitude}&rad=${radius}&loc=${location
     .split(" ")
     .join("-")}`;
 
-  return CITIES.includes(location) ? `/${location}?${query}` : `/search?${query}`;
+  return CITIES.includes(location)
+    ? `/${location}?${query}`
+    : `/search?${query}`;
 }
 
 function getColiveDate(): string {
@@ -236,37 +242,44 @@ export async function getPropertySearchDetails(
   };
 
   const result = await apiPost<SearchResponse | Property[]>(
-    "GetPropertyDetails_V3_Web",
+    "GetPropertyDetails",
     payload,
-    { signal, unwrapData: true }
+    signal
   );
-  const wrapped = result as SearchResponse;
-  const data = wrapped.Data;
 
-  const mainProperties: Property[] = Array.isArray(result)
-    ? result
-    : Array.isArray(wrapped.Property)
-      ? wrapped.Property
-      : Array.isArray(wrapped.Properties)
-        ? wrapped.Properties
-        : Array.isArray(data)
-          ? data
-          : data?.Property ?? [];
+  if (!result) return [];
 
-  return mainProperties;
+  if (Array.isArray(result)) return result;
+
+  const data = result.Data;
+
+  if (Array.isArray(result.Property)) return result.Property;
+  if (Array.isArray(result.Properties)) return result.Properties;
+  if (Array.isArray(data)) return data;
+
+  return (
+    data?.Property ??
+    result.SimilarProperties ??
+    result.TrendingProperties ??
+    data?.SimilarProperties ??
+    data?.TrendingProperties ??
+    []
+  );
 }
 
 export async function getFilterMasterDetails(
   signal?: AbortSignal
 ): Promise<FilterMasterDetails> {
-  return apiPost<FilterMasterDetails>(
+  const result = await apiPost<FilterMasterDetails>(
     "GetFilterMasterDetails",
     {
       PlatFormId: PLATFORM_ID,
       PropertyModelTypeId: 1,
     },
-    { signal, unwrapData: true }
+    signal
   );
+
+  return result ?? {};
 }
 
 export async function fetchPropertyDetails(
@@ -279,7 +292,7 @@ export async function fetchPropertyDetails(
       LocationLink: locationLink,
       CustomerID: "",
     },
-    { signal, unwrapData: true }
+    signal
   );
 
   if (!result || typeof result !== "object") {
@@ -312,7 +325,7 @@ export async function getReelsDetails(
       CategoryId: categoryId,
       PlatFormId: PLATFORM_ID,
     },
-    { signal, unwrapData: true }
+    signal
   );
 
   return result?.ReelsList ?? [];
@@ -328,7 +341,7 @@ export async function getEventsDetails(
       EventCode: eventCode,
       PlatFormId: PLATFORM_ID,
     },
-    { signal, unwrapData: true }
+    signal
   );
 
   if (!result) return [];

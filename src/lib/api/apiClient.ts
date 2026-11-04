@@ -1,10 +1,13 @@
+
+import type { ColiveEndpoint } from "@/lib/server/coliveEndpoints";
+
 type ApiEnvelope<T> = {
   Status?: string;
   Message?: string;
   Data?: T | null;
 };
 
-type RequestOptions = {
+export type RequestOptions = {
   signal?: AbortSignal;
   unwrapData?: boolean;
   allowNull?: boolean;
@@ -15,44 +18,19 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
 
-async function request<T>(
-  endpoint: string,
-  method: "GET" | "POST",
-  options: RequestOptions = {},
-  payload?: Record<string, unknown>
-): Promise<T> {
-  const query = new URLSearchParams();
-
-  if (method === "GET" && options.query) {
-    for (const [key, value] of Object.entries(options.query)) {
-      if (value !== undefined) query.set(key, String(value));
-    }
-  }
-
-  const queryString = query.toString();
-  const path = `/api/colive/${encodeURIComponent(endpoint)}`;
-  const response = await fetch(`${path}${queryString ? `?${queryString}` : ""}`, {
-    method,
-    headers:
-      method === "POST"
-        ? {
-            "Content-Type": "application/json; charset=utf-8",
-            Accept: "application/json",
-          }
-        : { Accept: "application/json" },
-    body: method === "POST" ? JSON.stringify(payload ?? {}) : undefined,
-    signal: options.signal,
-    cache: "no-store",
-  });
+// Used by browser and server-side API clients.
+export async function readApiData<T>(
+  response: Response,
+  endpoint: string
+): Promise<T | null> {
   const responseText = await response.text();
 
-  let json: ApiEnvelope<T> | T | null;
+  let json: unknown;
+
   try {
-    json = responseText ? (JSON.parse(responseText) as ApiEnvelope<T> | T) : null;
+    json = responseText ? JSON.parse(responseText) : null;
   } catch {
-    throw new Error(
-      `${endpoint} returned invalid JSON (HTTP ${response.status}).`
-    );
+    throw new Error(`${endpoint} returned invalid JSON (HTTP ${response.status}).`);
   }
 
   if (!response.ok) {
@@ -63,48 +41,91 @@ async function request<T>(
     );
   }
 
-  if (json === null) {
-    if (options.allowNull) return null as T;
-    throw new Error(`${endpoint} returned an empty response.`);
-  }
+  if (json === null) return null;
 
   const envelope = isRecord(json) ? json : undefined;
+
   if (
     typeof envelope?.Status === "string" &&
     !["success", "ok"].includes(envelope.Status.toLowerCase())
   ) {
-    throw new Error(
-      (typeof envelope.Message === "string" && envelope.Message) ||
-        `${endpoint} was unsuccessful.`
-    );
+    return null;
   }
 
-  if (options.unwrapData && envelope && "Data" in envelope) {
-    if (envelope.Data === undefined || envelope.Data === null) {
-      if (options.allowNull) return null as T;
-      throw new Error(`${endpoint} returned an empty response.`);
-    }
-    return envelope.Data as T;
-  }
-
-  if (options.unwrapData && options.allowNull) {
-    return null as T;
+  if (envelope && "Data" in envelope) {
+    return (envelope.Data ?? null) as T | null;
   }
 
   return json as T;
 }
 
+async function request<T>(
+  endpoint: ColiveEndpoint,
+  method: "GET" | "POST",
+  options: RequestOptions = {},
+  payload?: object
+): Promise<T | null> {
+  const query = new URLSearchParams();
+
+  if (method === "GET" && options.query) {
+    for (const [key, value] of Object.entries(options.query)) {
+      if (value !== undefined) query.set(key, String(value));
+    }
+  }
+
+  const queryString = query.toString();
+  const path = `/api/colive/${encodeURIComponent(endpoint)}`;
+
+  const response = await fetch(
+    `${path}${queryString ? `?${queryString}` : ""}`,
+    {
+      method,
+      headers:
+        method === "POST"
+          ? {
+              "Content-Type": "application/json; charset=utf-8",
+              Accept: "application/json",
+            }
+          : { Accept: "application/json" },
+      body: method === "POST" ? JSON.stringify(payload ?? {}) : undefined,
+      signal: options.signal,
+      cache: "no-store",
+    }
+  );
+
+  const result = await readApiData<T>(response, endpoint);
+
+  if (result === null && !options.allowNull) {
+    throw new Error(`${endpoint} returned no data.`);
+  }
+
+  return result;
+}
+
+// Supports both Dev-Hari's signal argument and the existing options argument.
 export function apiGet<T>(
-  endpoint: string,
-  options: RequestOptions = {}
-): Promise<T> {
+  endpoint: ColiveEndpoint,
+  optionsOrParams: RequestOptions | Record<string, string> = {},
+  signal?: AbortSignal
+): Promise<T | null> {
+  const options: RequestOptions =
+    signal || "signal" in optionsOrParams || "query" in optionsOrParams
+      ? { ...(optionsOrParams as RequestOptions), signal }
+      : { query: optionsOrParams as Record<string, string> };
+
   return request<T>(endpoint, "GET", options);
 }
 
 export function apiPost<T>(
-  endpoint: string,
-  payload: Record<string, unknown>,
-  options: RequestOptions = {}
-): Promise<T> {
+  endpoint: ColiveEndpoint,
+  payload: object = {},
+  optionsOrSignal: RequestOptions | AbortSignal = {}
+): Promise<T | null> {
+  const options: RequestOptions =
+    typeof AbortSignal !== "undefined" &&
+    optionsOrSignal instanceof AbortSignal
+      ? { signal: optionsOrSignal }
+      : (optionsOrSignal as RequestOptions);
+
   return request<T>(endpoint, "POST", options, payload);
 }

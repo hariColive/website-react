@@ -1,8 +1,9 @@
+
 import {
   COLIVE_ENDPOINTS,
-  isColiveEndpointName,
+  isColiveEndpoint,
 } from "@/lib/server/coliveEndpoints";
-import { getColiveEndpointUrl } from "@/lib/server/apiConfig";
+import { fetchColive } from "@/lib/server/coliveFetch";
 
 type RouteContext = {
   params: Promise<{ api: string }>;
@@ -10,89 +11,69 @@ type RouteContext = {
 
 async function forwardRequest(
   request: Request,
-  context: RouteContext,
-  method: "GET" | "POST"
+  context: RouteContext
 ) {
   const { api } = await context.params;
 
-  if (!isColiveEndpointName(api)) {
+  if (!isColiveEndpoint(api)) {
     return Response.json(
-      { Status: "error", Message: "Unknown Colive API endpoint." },
+      {
+        Status: "error",
+        Message: "Unknown Colive API endpoint.",
+        Data: null,
+      },
       { status: 404 }
     );
   }
 
-  const endpoint = COLIVE_ENDPOINTS[api];
-  if (!endpoint.methods.some((allowedMethod) => allowedMethod === method)) {
+  if (COLIVE_ENDPOINTS[api].method !== "POST") {
     return Response.json(
-      { Status: "error", Message: "Method not allowed for this endpoint." },
       {
-        status: 405,
-        headers: { Allow: endpoint.methods.join(", ") },
-      }
+        Status: "error",
+        Message: "Method not allowed for this endpoint.",
+        Data: null,
+      },
+      { status: 405 }
     );
   }
 
-  let url: URL;
+  const body = await request.text();
+
   try {
-    url = getColiveEndpointUrl(endpoint.path, endpoint.service);
-  } catch (error) {
-    console.error("Colive API configuration error:", error);
+    JSON.parse(body);
+  } catch {
     return Response.json(
-      { Status: "error", Message: "Colive API is not configured." },
-      { status: 500 }
+      {
+        Status: "error",
+        Message: "Request body must be valid JSON.",
+        Data: null,
+      },
+      { status: 400 }
     );
   }
 
-  let body: string | undefined;
-  if (method === "POST") {
-    body = await request.text();
-    try {
-      JSON.parse(body);
-    } catch {
-      return Response.json(
-        { Status: "error", Message: "Request body must be valid JSON." },
-        { status: 400 }
-      );
-    }
-  } else {
-    url.search = new URL(request.url).search;
-  }
-
   try {
-    const upstream = await fetch(url, {
-      method,
-      headers:
-        method === "POST"
-          ? {
-              "Content-Type": "application/json; charset=utf-8",
-              Accept: "application/json",
-            }
-          : { Accept: "application/json" },
-      body,
-      cache: "no-store",
-      signal: AbortSignal.timeout(30_000),
-    });
+    const upstream = await fetchColive(api, { body });
 
-    const responseText = await upstream.text();
-
-    const shouldReturnEmptyResult =
+    if (
       (api === "GetSuggestionsBasedonSearchText" ||
         api === "GetDetailsByPlaceId") &&
-      upstream.status === 403;
-
-    if (shouldReturnEmptyResult) {
+      upstream.status === 403
+    ) {
       return Response.json(
-        { Status: "success", Message: "No suggestions available.", Data: null },
+        {
+          Status: "success",
+          Message: "No suggestions available.",
+          Data: null,
+        },
         {
           status: 200,
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            "Cache-Control": "no-store",
-          },
+          headers: { "Cache-Control": "no-store" },
         }
       );
     }
+
+    const responseText = await upstream.text();
 
     return new Response(responseText || null, {
       status: upstream.status,
@@ -106,6 +87,7 @@ async function forwardRequest(
     const timedOut =
       error instanceof Error &&
       (error.name === "TimeoutError" || error.name === "AbortError");
+
     console.error(`Colive API request failed (${api}):`, error);
 
     return Response.json(
@@ -114,16 +96,13 @@ async function forwardRequest(
         Message: timedOut
           ? "The Colive API request timed out."
           : "Unable to reach the Colive API.",
+        Data: null,
       },
       { status: timedOut ? 504 : 502 }
     );
   }
 }
 
-export function GET(request: Request, context: RouteContext) {
-  return forwardRequest(request, context, "GET");
-}
-
 export function POST(request: Request, context: RouteContext) {
-  return forwardRequest(request, context, "POST");
+  return forwardRequest(request, context);
 }

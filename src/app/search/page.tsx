@@ -1,58 +1,33 @@
-import { Suspense } from "react";
-import { redirect } from "next/navigation";
-import SearchHeroSection from "@/components/common/searchsection/SearchHeroSection";
-import SearchListing from "./SearchListing";
-import { getRentalLocationPath } from "@/lib/rentalLocations";
-type PropertiesPageProps = {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-};
 
-async function SearchPageContent({
+import type { Metadata } from "next";
+
+import SearchPage from "@/components/search/SearchPage";
+import { toSearchParams } from "@/lib/searchFilters";
+import { locationFromQuery } from "@/lib/searchLocation";
+import { searchMetadata } from "@/lib/searchSeo";
+
+// /search?loc=Whitefield, Bangalore&lat=..&long=..&rad=..
+export async function generateMetadata({
   searchParams,
-}: PropertiesPageProps) {
-  const params = await searchParams;
-  const locationValue = params.location;
-  const location = Array.isArray(locationValue)
-    ? locationValue[0]?.trim()
-    : locationValue?.trim();
-  const propertyIdValue = params.propertyId;
-  const propertyIdText = Array.isArray(propertyIdValue)
-    ? propertyIdValue[0]
-    : propertyIdValue;
-  const propertyId = propertyIdText ? Number(propertyIdText) : undefined;
-  const selectedPropertyId =
-    propertyId !== undefined && Number.isInteger(propertyId) && propertyId > 0
-      ? propertyId
-      : undefined;
-
-  if (location && selectedPropertyId === undefined) {
-    const rentalPath = getRentalLocationPath(location);
-    if (rentalPath) redirect(rentalPath);
-  }
-
-  return (
-    <>
-      <SearchHeroSection location={location || "Bangalore"} />
-      <SearchListing
-        location={location || "Bangalore"}
-        propertyId={selectedPropertyId}
-      />
-    </>
+}: PageProps<"/search">): Promise<Metadata> {
+  const location = locationFromQuery(
+    toSearchParams(await searchParams)
   );
+
+  return location ? searchMetadata(location) : {};
 }
 
-export default function SearchPage({
+export default function Page({
   searchParams,
-}: PropertiesPageProps) {
+}: PageProps<"/search">) {
+  const location = searchParams.then((params) =>
+    locationFromQuery(toSearchParams(params))
+  );
+
   return (
-    <Suspense
-      fallback={
-        <main className="min-h-screen bg-[#f8f8f8] px-4 py-10 sm:px-6 lg:px-10">
-          <div className="mx-auto max-w-7xl text-gray-500">Loading properties...</div>
-        </main>
-      }
-    >
-      <SearchPageContent searchParams={searchParams} />
-    </Suspense>
+    <SearchPage
+      location={location}
+      searchParams={searchParams}
+    />
   );
 }

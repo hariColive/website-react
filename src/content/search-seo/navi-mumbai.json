@@ -1,0 +1,171 @@
+{
+  "title": "50+ Best PGs in Mumbai for Gents, Ladies & Professionals",
+  "h1": "Paying Guest in Navi Mumbai: Affordable PGs for Students & Professionals",
+  "overview": {
+    "intro": "<h2>Overview</h2><h2>Best PG in Navi Mumbai with Modern Amenities</h2><p>Colive PG in Navi Mumbai houses are designed for students, working professionals, and couples who value convenience and comfort. Every property offers fully furnished rooms, high-speed Wi-Fi, secure access, and community-driven facilities. Whether you are near Vashi, Nerul, or Kharghar, Colive ensures a premium living experience.</p>",
+    "more": "<hr><h2>Paying Guest Facilities in Navi Mumbai</h2><p>Colive PGs in Navi Mumbai come with premium amenities:</p><div><ul><li>Fully furnished rooms with beds, wardrobes, and study desks.</li><li>High-speed internet and Wi-Fi connectivity for work and study.</li><li>24/7 CCTV surveillance and round-the-clock security staff.</li><li>Power backup for an uninterrupted lifestyle.</li><li>Housekeeping for a clean and hassle-free stay.</li><li>Dining services with nutritious meals.</li><li>Social common areas for relaxation and community events.</li></ul><hr></div><h2>Why Choose Colive PG in Navi Mumbai?</h2><p>Colive stands out in the PG segment because our homes are strategically located near major colleges, tech hubs, and entertainment centers:</p><div><ul><li>Prime locations near DY Patil University, ITM Business School, and SIES College.</li><li>Proximity to Mindspace Airoli, Mahape IT Park, and CBD Belapur for professionals.</li><li>Connectivity via Harbour Line, Trans-Harbour Line, Mumbai Metro, and Palm Beach Road.</li><li>Vibrant lifestyle near Inorbit Mall, Seawoods Grand Central, and DY Patil Stadium.</li></ul></div><hr><h2>Colive Awards & Recognitions</h2><p>🏆 Udyog Rattan Award (for Founder, by Institute of Economic Studies)</p><p>🏆 Recognized among Top 5 Startups Helping Millennials Go Smarter in 2020 – Asian Age</p><p>🏆 Featured as one of the Most Popular Apps Among Millennials – Hans India</p><p>🏆 Highlighted by Deccan Herald for transforming the rental industry</p><p>🏆 Featured in <a href=\"https://www.business-standard.com/companies/start-ups/bain-sattva-launch-100m-co-living-platform-colive-raises-20m-125090501138_1.html\" target=\"_blank\" rel=\"noopener\">Business Standard</a> and <a href=\"https://inc42.com/buzz/coliving-startup-colive-raises-20-mn-to-expand-footprint/\" target=\"_blank\" rel=\"noopener\">Inc42</a> for innovation and leadership in co-living</p><p><a href=\"/awards-recognition/\" target=\"_blank\" rel=\"noopener\">See full list of Colive Awards & Recognition</a></p><hr>"
+  },
+  "faqs": [
+    {
+      "heading": "FAQ's",
+      "initiallyVisible": 5,
+      "items": [
+        {
+          "question": "What amenities are available at Colive PG in Navi Mumbai?",
+          "answer": "<p>Colive PGs in Navi Mumbai provide fully furnished rooms, high-speed Wi-Fi, laundry, housekeeping, power backup, nutritious meals, and secure access with 24/7 monitoring</p>"
+        },
+        {
+          "question": "Are there safe PG options for women in Navi Mumbai?",
+          "answer": "<p>Yes, Colive offers ladies PG in Navi Mumbai with female staff, CCTV surveillance, and secure entry, located near colleges like DY Patil University and ITM.</p>"
+        },
+        {
+          "question": "How much does a PG in Navi Mumbai cost monthly?",
+          "answer": "<p>Monthly rent starts from ₹7,100 for triple sharing, ₹8,800 for twin sharing, ₹15,500 for private rooms, and ₹17,200 for couple-friendly options.​</p>"
+        },
+        {
+          "question": "Which are the best locations for PGs in Navi Mumbai?",
+          "answer": "<p>Popular localities include Vashi, Nerul, Belapur, Airoli, and Kharghar—close to colleges, tech hubs, and metro/railway stations.</p>"
+        },
+        {
+          "question": "How can I reach PGs in Navi Mumbai from Mumbai Airport or CST?",
+          "answer": "<p>From Mumbai Airport, Navi Mumbai PGs are accessible via cabs and buses (approx. 1.5 hours). From CST, local trains on the Harbour Line connect directly to Vashi and Nerul.</p>"
+        }
+      ]
+    }
+  ],
+  "jsonLd": [
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "name": "Colive PG in Navi Mumbai",
+          "url": "https://www.colive.com/mumbai/pg-in-navi-mumbai/",
+          "description": "Explore Colive PGs in Navi Mumbai offering single, twin, and triple sharing rooms with premium amenities for students, working professionals, and couples near Vashi, Nerul, Airoli, and Kharghar."
+        },
+        {
+          "@type": "Organization",
+          "name": "Colive",
+          "url": "https://www.colive.com",
+          "logo": "https://www.colive.com/assets/images/header/colive-logo.png",
+          "sameAs": [
+            "https://www.instagram.com/colive.in/",
+            "https://in.linkedin.com/company/colive-yourfam",
+            "https://www.facebook.com/Colive.in/",
+            "https://www.youtube.com/channel/UC97k6haFp6RU_0puYWvlJuw"
+          ]
+        },
+        {
+          "@type": "LocalBusiness",
+          "name": "Colive PG in Navi Mumbai",
+          "image": "https://www.colive.com/assets/images/home/section1/Columbus.webp",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Service Area: Navi Mumbai",
+            "addressLocality": "Navi Mumbai",
+            "addressRegion": "Maharashtra",
+            "postalCode": "",
+            "addressCountry": "IN"
+          },
+          "telephone": "+91 7676000500",
+          "openingHours": "24/7"
+        },
+        {
+          "@type": "RealEstateListing",
+          "name": "Colive 1303 Godrej Jade Tower 2, Panvel — PG in Navi Mumbai",
+          "mainEntityOfPage": "https://www.colive.com/mumbai/pg-in-panvel/colive-1303-godrej-jade-tower-2/colive_ppm_57238",
+          "description": "Colive 1303 Godrej Jade Tower 2 in Panvel offers fully-furnished rooms with Wi-Fi, housekeeping, community areas, and secure access for students and professionals in Navi Mumbai.",
+          "datePosted": "2025-10-03"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "PG in Mumbai",
+              "item": "https://www.colive.com/pg-in-mumbai/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "PG in Navi Mumbai",
+              "item": "https://www.colive.com/mumbai/pg-in-navi-mumbai/"
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What amenities are available at Colive PG in Navi Mumbai?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Colive PGs in Navi Mumbai provide fully furnished rooms, high-speed Wi-Fi, laundry, housekeeping, power backup, nutritious meals, and secure access with 24/7 monitoring."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are there safe PG options for women in Navi Mumbai?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, Colive offers ladies PG in Navi Mumbai with female staff, CCTV surveillance, and secure entry, located near colleges like DY Patil University and ITM."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How much does a PG in Navi Mumbai cost monthly?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Monthly rent starts from ₹7,100 for triple sharing, ₹8,800 for twin sharing, ₹15,500 for private rooms, and ₹17,200 for couple-friendly options."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which are the best locations for PGs in Navi Mumbai?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Popular localities include Vashi, Nerul, Belapur, Airoli, and Kharghar—close to colleges, tech hubs, and metro/railway stations."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How can I reach PGs in Navi Mumbai from Mumbai Airport or CST?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "From Mumbai Airport, Navi Mumbai PGs are accessible via cabs and buses (approx. 1.5 hours). From CST, local trains on the Harbour Line connect directly to Vashi and Nerul."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "hreflang": [
+    {
+      "hreflang": "en-in",
+      "href": "https://www.colive.com/mumbai/pg-in-navi-mumbai/"
+    },
+    {
+      "hreflang": "en-in",
+      "href": "https://www.colive.com/pg-in-bangalore/"
+    },
+    {
+      "hreflang": "en-in",
+      "href": "https://www.colive.com/pg-in-chennai/"
+    },
+    {
+      "hreflang": "en-in",
+      "href": "https://www.colive.com/pg-in-hyderabad/"
+    },
+    {
+      "hreflang": "en-in",
+      "href": "https://www.colive.com/pg-in-pune/"
+    },
+    {
+      "hreflang": "x-default",
+      "href": "https://www.colive.com/pg-in-bangalore/"
+    }
+  ]
+}

@@ -7,10 +7,20 @@ import { readApiData } from "@/lib/api/apiClient";
 import { COLIVE_ENV, getBaseUrl } from "./apiConfig";
 import { COLIVE_ENDPOINTS, getEndpointPath, type ColiveEndpoint } from "./coliveEndpoints";
 
-export function fetchColive(name: ColiveEndpoint, { body, search = "" }: { body?: string; search?: string } = {}) {
-  const endpoint = COLIVE_ENDPOINTS[name];
-  const base = getBaseUrl(endpoint.service);
-  const url = new URL(getEndpointPath(endpoint, COLIVE_ENV), base);
+type BackendEndpoint = {
+  method: "GET" | "POST";
+  service: "crm";
+  path: string;
+  url?: string;
+};
+
+export function fetchBackend(
+  endpoint: BackendEndpoint,
+  { body, search = "" }: { body?: string; search?: string } = {},
+) {
+  const url = endpoint.url
+    ? new URL(endpoint.url)
+    : new URL(endpoint.path, getBaseUrl(endpoint.service));
   url.search = search;
 
   return fetch(url, {
@@ -18,6 +28,14 @@ export function fetchColive(name: ColiveEndpoint, { body, search = "" }: { body?
     headers: { "Content-Type": "application/json; charset=utf-8" },
     body: endpoint.method === "POST" ? body : undefined,
   });
+}
+
+export function fetchColive(name: ColiveEndpoint, { body, search = "" }: { body?: string; search?: string } = {}) {
+  const endpoint = COLIVE_ENDPOINTS[name];
+  return fetchBackend(
+    { ...endpoint, path: getEndpointPath(endpoint, COLIVE_ENV) },
+    { body, search },
+  );
 }
 
 export async function colivePost<T>(name: ColiveEndpoint, payload: object): Promise<T | null> {

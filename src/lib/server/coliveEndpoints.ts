@@ -21,7 +21,10 @@ export const COLIVE_ENDPOINTS = {
       LIVE: "CRMapi/PropertyCRM/GetPropertyDetails_V3_Web",
     },
   },
-  GetFilterMasterDetails: { method: "POST", service: "crm", path: "CRMapi/PropertyCRM/GetFilterMasterDetails" },
+  GetFilterMasterDetails: {
+     method: "POST",
+     service: "crm", 
+     path: "CRMapi/PropertyCRM/GetFilterMasterDetails" },
   // Factsheet (property page) and the location highlights on search cards
   GetPropertyDetailsByIdForWeb_V2: {
     method: "POST",
@@ -35,8 +38,8 @@ export const COLIVE_ENDPOINTS = {
   },
   GetScheduleVisitDays: { method: "POST", service: "crm", path: "CRMapi/PropertyCRM/GetScheduleVisitDays" },
   // Home page place search
-  GetSuggestionsBasedonSearchText: { method: "POST", service: "web", path: "api/Colive/GetSuggestionsBasedonSearchText" },
-  GetDetailsByPlaceId: { method: "POST", service: "web", path: "api/Colive/GetDetailsByPlaceId" },
+  GetSuggestionsBasedonSearch: { method: "POST", service: "crm", path: "CRMapi/PropertyCRM/GetSuggestionsBasedonSearch" },
+  GetLocationDetailsByPlaceId: { method: "POST", service: "crm", path: "CRMapi/PropertyCRM/GetLocationDetailsByPlaceId" },
 } satisfies Record<string, Endpoint>;
 
 export type ColiveEndpoint = keyof typeof COLIVE_ENDPOINTS;

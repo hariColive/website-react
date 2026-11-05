@@ -1,11 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight, FaImages, FaStar, FaTimes } from "react-icons/fa";
 import { Md360 } from "react-icons/md";
 
 import type { PropertyDetails } from "@/lib/propertyDetails";
+
+import PropertyImage from "./PropertyImage";
 
 type PropertyGalleryProps = Pick<PropertyDetails, "name" | "images" | "tourUrl" | "isGold">;
 
@@ -36,7 +37,13 @@ export default function PropertyGallery({ name, images, tourUrl, isGold }: Prope
     };
   }, [isOpen, count]);
 
-  if (!main) return <div className="aspect-3/2 bg-gray-100" />;
+  if (!main) {
+    return (
+      <div className="relative aspect-3/2 overflow-hidden bg-gray-100">
+        <PropertyImage alt={name} fill preload sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -44,7 +51,7 @@ export default function PropertyGallery({ name, images, tourUrl, isGold }: Prope
         <div>
           <div className="relative aspect-3/2 overflow-hidden bg-gray-100">
             <button type="button" onClick={() => setOpen(0)} className="absolute inset-0 cursor-zoom-in" aria-label="View photos">
-              <Image src={main.thumb} alt={main.alt} fill preload sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
+              <PropertyImage src={main.thumb} alt={main.alt} fill preload sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
             </button>
 
             {isGold && (
@@ -80,7 +87,7 @@ export default function PropertyGallery({ name, images, tourUrl, isGold }: Prope
                   onClick={() => setOpen(index + 1)}
                   className="relative aspect-3/2 cursor-zoom-in overflow-hidden bg-gray-100"
                 >
-                  <Image src={image.thumb} alt={image.alt} fill sizes="25vw" className="object-cover" />
+                  <PropertyImage src={image.thumb} alt={image.alt} fill sizes="25vw" className="object-cover" />
                   {isLast && (
                     <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/55 text-base font-bold text-white">
                       <FaImages aria-hidden="true" className="text-2xl" />
@@ -99,18 +106,18 @@ export default function PropertyGallery({ name, images, tourUrl, isGold }: Prope
           <button type="button" onClick={() => setOpen(null)} aria-label="Close" className="absolute top-4 right-4 p-2 text-2xl text-white">
             <FaTimes aria-hidden="true" />
           </button>
-          <button type="button" onClick={() => step(-1)} aria-label="Previous photo" className="absolute left-2 p-3 text-3xl text-white md:left-6">
+          <button type="button" onClick={() => step(-1)} aria-label="Previous photo" className="absolute left-2 p-3 text-3xl text-white md:left-6 hover:cursor-pointer">
             <FaChevronLeft aria-hidden="true" />
           </button>
 
           <figure className="relative h-[75vh] w-[85vw]">
-            <Image src={images[open].src} alt={images[open].alt} fill sizes="85vw" className="object-contain" />
+            <PropertyImage src={images[open].src} alt={images[open].alt} fill sizes="85vw" className="object-contain" />
             <figcaption className="absolute -bottom-9 w-full text-center text-sm text-white/80">
               {images[open].type} · {open + 1} / {images.length}
             </figcaption>
           </figure>
 
-          <button type="button" onClick={() => step(1)} aria-label="Next photo" className="absolute right-2 p-3 text-3xl text-white md:right-6">
+          <button type="button" onClick={() => step(1)} aria-label="Next photo" className="absolute right-2 p-3 text-3xl text-white md:right-6 hover:cursor-pointer">
             <FaChevronRight aria-hidden="true" />
           </button>
         </div>

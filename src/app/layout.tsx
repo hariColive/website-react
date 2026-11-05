@@ -27,7 +27,13 @@ export const metadata: Metadata = {
   title: "Colive | Explore India's Premier Co-living Pgs Near You",
   description:
     "Discover Coliving Pg Near You for Luxury Accommodations, Couple-friendly Spaces, and More on. Colive – India's Largest Rental Exchange Platform. Rent With Ease, and Live With Comfort",
-    keywords: "PG for Boys, PG for Couples, PG for Girls, PG for Male, PG for Ladies, PG in Bangalore, PG in Delhi, PG in Pune, PG in Mumbai"
+    keywords: "PG for Boys, PG for Couples, PG for Girls, PG for Male, PG for Ladies, PG in Bangalore, PG in Delhi, PG in Pune, PG in Mumbai",
+  // Inherited by every page (page metadata doesn't override icons)
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({

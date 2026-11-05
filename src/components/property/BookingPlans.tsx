@@ -22,12 +22,13 @@ export default function BookingPlans({ rooms }: { rooms: RoomPlan[] }) {
 
       <ul className="flex flex-col gap-5">
         {rooms.map((room) => (
-          <li key={room.roomTypeId} className="grid gap-3 sm:grid-cols-[170px_minmax(0,1fr)] sm:gap-6">
+          <li key={room.key}className="grid gap-3 sm:grid-cols-[170px_minmax(0,1fr)] sm:gap-6">
             <div className="flex flex-col items-center justify-center rounded-lg bg-gray-200/80 px-4 py-5 text-center">
               <span className="mb-2 text-2xl text-[#111]">
                 <RoomIcon roomTypeId={room.roomTypeId} />
               </span>
               <p className="text-base text-[#111]">{room.label}</p>
+              {room.subType && <p className="text-xs text-gray-600">{room.subType}</p>}
               <p className="text-[11px] tracking-[0.2em] text-gray-600 uppercase">{room.occupancy}</p>
             </div>
 

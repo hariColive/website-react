@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       new URL("https://www.colive.com/utility/files/**"),
       new URL("https://www.colive.com/assets/images/**"),
+      new URL("https://qa.colive.com/utilities/files/**"),
     ],
   },
   partialPrefetching: true,

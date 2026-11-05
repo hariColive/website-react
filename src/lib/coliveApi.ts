@@ -21,7 +21,7 @@ export type Suggestions = {
 };
 
 export function getSuggestions(searchQuery: string, signal?: AbortSignal) {
-  return apiPost<Suggestions>("GetSuggestionsBasedonSearchText", {
+  return apiPost<Suggestions>("GetSuggestionsBasedonSearch", {
     PropertyModelTypeId: 1,
     SearchQuery: searchQuery,
     CategoryId: 1,
@@ -36,7 +36,7 @@ type PlaceDetails = {
 };
 
 export function getPlaceDetails(description: string) {
-  return apiPost<PlaceDetails>("GetDetailsByPlaceId", {
+  return apiPost<PlaceDetails>("GetLocationDetailsByPlaceId", {
     Description: description,
     PlatFormId: PLATFORM_ID,
   });

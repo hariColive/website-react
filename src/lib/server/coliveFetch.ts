@@ -15,11 +15,7 @@ export function fetchColive(name: ColiveEndpoint, { body, search = "" }: { body?
 
   return fetch(url, {
     method: endpoint.method,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      // The website API answers "Forbidden" unless the request comes from its own origin
-      ...(endpoint.service === "web" && { Origin: new URL(base).origin }),
-    },
+    headers: { "Content-Type": "application/json; charset=utf-8" },
     body: endpoint.method === "POST" ? body : undefined,
   });
 }

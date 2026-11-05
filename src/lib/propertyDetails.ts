@@ -35,6 +35,9 @@ type ApiProperty = {
 type ApiOccupancy = {
   RoomTypeId: number;
   RoomType: string;
+  RoomSubTypeId: number;
+  RoomSubType: string;
+  RoomClassId: number;
   BookingPlan: { PlanName: string; FinalAmount: number }[];
 };
 
@@ -62,8 +65,12 @@ export type PropertyDetails = {
 };
 
 export type RoomPlan = {
+  // A property can list one room type several times (Twin "Studio" and Twin "Studio with kitchenette"),
+  // so a plan is identified by type, sub-type and bath class, as on colive.com.
+  key: string;
   roomTypeId: number;
   label: string;
+  subType: string;
   occupancy: string;
   plans: { name: string; amount: number }[];
 };
@@ -130,8 +137,10 @@ export async function getRoomPlans(propertyId: number): Promise<RoomPlan[]> {
 
   const data = await colivePost<ApiOccupancy[]>("GetAvailableOccupancyTypeByPropertyId_Factsheet", { PropertyID: propertyId });
   return (data ?? []).map((room) => ({
+    key: `${room.RoomTypeId}-${room.RoomSubTypeId}-${room.RoomClassId}`,
     roomTypeId: room.RoomTypeId,
     label: ROOM_LABELS[room.RoomTypeId] ?? room.RoomType,
+    subType: room.RoomSubType?.trim() ?? "",
     occupancy: FULL_ROOM_TYPES.includes(room.RoomTypeId) ? "Full Room" : "Shared Room",
     plans: room.BookingPlan.map((plan) => ({ name: plan.PlanName, amount: plan.FinalAmount })),
   }));

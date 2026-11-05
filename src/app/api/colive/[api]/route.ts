@@ -2,7 +2,7 @@ import { COLIVE_ENDPOINTS, isColiveEndpoint } from "@/lib/server/coliveEndpoints
 import { fetchColive } from "@/lib/server/coliveFetch";
 
 // One proxy for browser calls to any registered Colive API: POST /api/colive/GetSuggestionsBasedonSearchText.
-// Forwards to QA or LIVE per COLIVE_ENV; unregistered names (or the wrong method) get a 404.
+// Forwards to the QA backend (see apiConfig.ts); unregistered names (or the wrong method) get a 404.
 async function forward(request: Request, api: string) {
   if (!isColiveEndpoint(api) || COLIVE_ENDPOINTS[api].method !== request.method) {
     return Response.json({ Status: "failed", Message: "Invalid API", Data: null }, { status: 404 });

@@ -1,4 +1,4 @@
-// Server-side client for the Colive CRM property API. Results are cached per search with `use cache`,
+  // Server-side client for the Colive CRM property API. Results are cached per search with `use cache`,
 // so the same city/filter combination isn't refetched on every request.
 import { cacheLife } from "next/cache";
 

@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { FaUsers } from "react-icons/fa";
 
+import PropertyImage from "@/components/property/PropertyImage";
 import type { PropertySummary } from "@/lib/propertySearch";
 import { formatRupees } from "@/lib/searchFilters";
 
@@ -31,16 +31,14 @@ export default function PropertyCard({ property, href, priority = false }: Prope
       </span>
 
       <div className="relative aspect-34/25 overflow-hidden bg-gray-200">
-        {property.image && (
-          <Image
-            src={property.image}
-            alt={property.name}
-            fill
-            preload={priority}
-            sizes="(min-width: 1024px) 34vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-          />
-        )}
+        <PropertyImage
+          src={property.image}
+          alt={property.name}
+          fill
+          preload={priority}
+          sizes="(min-width: 1024px) 34vw, (min-width: 640px) 50vw, 100vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        />
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[55%] bg-linear-to-t from-black/70 to-transparent" />
 
         {property.trendingTag && (

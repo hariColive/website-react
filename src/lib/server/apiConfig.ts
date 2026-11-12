@@ -4,7 +4,7 @@ import "server-only";
 export type ColiveEnv = "QA" | "LIVE";
 
 // "crm" is the CRM API (api.colive.com/web/<env>/CRMapi/...); "site" is the legacy website, which still handles
-// form posts such as the home page lead form (/api/Offers/LeadCapture)
+// form posts such as the home page lead form (see formEndpoints.ts)
 export type ColiveService = "crm" | "site";
 
  //export const COLIVE_ENV: ColiveEnv = "LIVE";

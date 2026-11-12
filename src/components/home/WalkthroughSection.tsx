@@ -1,6 +1,4 @@
-import { Suspense } from "react";
-
-import { WalkthroughForm, WalkthroughResult } from "./WalkthroughForm";
+import { WalkthroughForm } from "./WalkthroughForm";
 
 export default function WalkthroughSection() {
   return (
@@ -16,10 +14,7 @@ export default function WalkthroughSection() {
         hub for you.
       </p>
 
-      {/* The success message depends on the URL, which is only known per request; the plain form is prerendered */}
-      <Suspense fallback={<WalkthroughForm />}>
-        <WalkthroughResult />
-      </Suspense>
+      <WalkthroughForm />
 
       <p className="mt-5 text-[15px] text-black/55">By submitting you agree to be contacted on WhatsApp by Colive.</p>
     </section>

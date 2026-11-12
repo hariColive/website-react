@@ -1,4 +1,4 @@
-// Shared by the walkthrough form and its /api/Offers/LeadCapture route. Same rule as colive.com: 7-15 digits,
+// Shared by the walkthrough form and the leadCapture entry in src/lib/server/formEndpoints.ts. Same rule as colive.com: 7-15 digits,
 // optionally with a leading + and spaces or dashes.
 export const LEAD_PHONE_PATTERN = /^\+?[\d\s-]{7,15}$/;
 

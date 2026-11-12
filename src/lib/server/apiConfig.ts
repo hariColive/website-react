@@ -3,8 +3,9 @@ import "server-only";
 
 export type ColiveEnv = "QA" | "LIVE";
 
-// "crm" is the CRM API (api.colive.com/web/<env>/CRMapi/...)
-export type ColiveService = "crm";
+// "crm" is the CRM API (api.colive.com/web/<env>/CRMapi/...); "site" is the legacy website, which still handles
+// form posts such as the home page lead form (/api/Offers/LeadCapture)
+export type ColiveService = "crm" | "site";
 
  //export const COLIVE_ENV: ColiveEnv = "LIVE";
  export const COLIVE_ENV: ColiveEnv = "QA";
@@ -12,9 +13,11 @@ export type ColiveService = "crm";
 const BASE_URLS: Record<ColiveEnv, Record<ColiveService, string | undefined>> = {
   QA: {
     crm: process.env.COLIVE_QA_API_URL ?? "https://api.colive.com/web/qa/",
+    site: process.env.COLIVE_QA_SITE_URL ?? "https://qa.colive.com/",
   },
   LIVE: {
     crm: process.env.COLIVE_LIVE_API_URL ?? "https://api.colive.com/web/live/",
+    site: process.env.COLIVE_LIVE_SITE_URL ?? "https://www.colive.com/",
   },
 };
 

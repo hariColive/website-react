@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { getPropertyLocationHighlights } from "@/lib/coliveApi";
 
 // Shared across cards so re-rendered results (filters, sort) don't refetch what's already loaded
 const requests = new Map<string, Promise<string>>();
@@ -8,9 +9,7 @@ const requests = new Map<string, Promise<string>>();
 function loadHighlights(link: string) {
   let request = requests.get(link);
   if (!request) {
-    request = fetch(`/api/property-highlights/${encodeURIComponent(link)}`)
-      .then((res) => (res.ok ? res.json() : { highlights: "" }))
-      .then((data: { highlights: string }) => data.highlights)
+    request = getPropertyLocationHighlights(link)
       .catch(() => {
         requests.delete(link);
         return "";

@@ -24,7 +24,7 @@ export default function CommunityEventCard({
   return (
     <article className="h-full overflow-hidden rounded-[5px] border border-[#E0E0E0] bg-white shadow-[0px_4px_40px_0px_rgba(0,0,0,0.1)]">
       <img
-        src={image || "/assets/images/party/PartyBannerImage-Web.webp"}
+        src={image || "/images/party/partyImages/party1.png"}
         alt={eventTitle}
         loading="lazy"
         className="h-[339px] w-full rounded-t-[5px] object-cover"
@@ -44,24 +44,34 @@ export default function CommunityEventCard({
 
         <div className="mt-4 flex items-center gap-[10px] text-[14px] text-black">
           <div className="flex items-center gap-[10px]">
-            <img
-              src="/assets/images/party/CalenderImg.png"
-              alt=""
-              className="h-4 w-4 object-contain"
+            <svg
               aria-hidden="true"
-            />
+              className="h-4 w-4 shrink-0"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <rect x="3" y="5" width="18" height="16" rx="2" />
+              <path d="M16 3v4M8 3v4M3 10h18" />
+            </svg>
             <p className="leading-[22px]">{date || "Date TBD"}</p>
           </div>
         </div>
 
         <div className="mt-2 flex items-center gap-[10px] text-[14px] text-black">
           <div className="flex items-center gap-[10px]">
-            <img
-              src="/assets/images/party/TimeImg.png"
-              alt=""
-              className="h-4 w-4 object-contain"
+            <svg
               aria-hidden="true"
-            />
+              className="h-4 w-4 shrink-0"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 7v5l3 2" />
+            </svg>
             <p className="leading-[22px]">{time || "Time TBD"}</p>
           </div>
         </div>

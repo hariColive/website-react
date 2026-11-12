@@ -3,7 +3,7 @@
 import { useEffect, useId, useState, type FormEvent } from "react";
 import { FaCalendarCheck } from "react-icons/fa";
 
-import type { VisitSlot } from "@/lib/propertyDetails";
+import { getVisitSlots, type VisitSlot } from "@/lib/coliveApi";
 
 const MOBILE_PATTERN = /^[6-9]\d{9}$/;
 const EMAIL_PATTERN = /^\S+@\S+\.\S+$/;
@@ -36,10 +36,9 @@ export default function ScheduleVisitForm({ propertyId, propertyName }: { proper
 
   useEffect(() => {
     const controller = new AbortController();
-    fetch(`/api/visit-slots?propertyId=${propertyId}&date=${date}`, { signal: controller.signal })
-      .then((res) => (res.ok ? res.json() : { slots: [] }))
-      .then((data: { slots: VisitSlot[] }) => {
-        setSlots(data.slots);
+    getVisitSlots(propertyId, date, controller.signal)
+      .then((nextSlots) => {
+        setSlots(nextSlots);
         setSlotId("");
       })
       .catch((error) => {

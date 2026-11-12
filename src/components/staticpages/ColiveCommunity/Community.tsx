@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import CommunityEventCard from "@/components/staticpages/ColiveCommunity/CommunityEventCard";
@@ -33,10 +33,10 @@ type PartyPageProps = {
 };
 
 const partyImages = [
-  "/assets/images/party/partyImages/party1.png",
-  "/assets/images/party/partyImages/party2.png",
-  "/assets/images/party/partyImages/party3.png",
-  "/assets/images/party/partyImages/party4.png",
+  "/images/party/partyImages/party1.png",
+  "/images/party/partyImages/party2.png",
+  "/images/party/partyImages/party3.png",
+  "/images/party/partyImages/party4.png",
 ];
 
 const testimonials = [
@@ -122,6 +122,7 @@ export default function PartyPage({
   reels = [],
 }: PartyPageProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const [eventTab, setEventTab] = useState<"upcoming" | "completed">(
     "upcoming"
   );
@@ -137,6 +138,20 @@ export default function PartyPage({
     completedEvents.length > 0 ? completedEvents : fetchedCompletedEvents;
 
   useEffect(() => {
+    const showReelsFromHash = () => {
+      if (pathname !== "/reels" && window.location.hash !== "#reels") return;
+      setGalleryTab("reels");
+      window.requestAnimationFrame(() => {
+        document.getElementById("reels")?.scrollIntoView();
+      });
+    };
+
+    showReelsFromHash();
+    window.addEventListener("hashchange", showReelsFromHash);
+    return () => window.removeEventListener("hashchange", showReelsFromHash);
+  }, [pathname]);
+
+  useEffect(() => {
     if (reels.length > 0) return;
 
     const controller = new AbortController();
@@ -150,7 +165,7 @@ export default function PartyPage({
             thumbnail:
               item.Image ||
               item.ReelsFile ||
-              "/assets/images/party/PartyBannerImage-Web.webp",
+              "/images/party/partyImages/party1.png",
             videoUrl: item.ReelsFile || "#",
             title: item.FileName || item.LocationName || "Colive reel",
           }))
@@ -182,7 +197,7 @@ export default function PartyPage({
           image:
             event.Image ||
             event.EventImage ||
-            "/assets/images/party/PartyBannerImage-Web.webp",
+            "/images/party/partyImages/party1.png",
           date: event.EventDate || event.Date || event.StartDate,
           time: event.EventTime || event.Time,
           link: event.Link || event.EventUrl,
@@ -219,7 +234,7 @@ export default function PartyPage({
 
       <section
         onClick={() => router.push("/hubs")}
-        className="mt-[70px] h-[600px] cursor-pointer bg-[url('/assets/images/party/PartyBannerImage-Web.webp')] bg-cover bg-no-repeat md:h-[620px] max-md:bg-[url('/assets/images/party/PartyBannerImage-Mob.webp')] max-md:bg-bottom"
+        className="mt-[20px] h-[600px] cursor-pointer bg-[url('/images/party/PartyBannerImage-Web.webp')] bg-cover bg-no-repeat md:h-[620px] max-md:bg-[url('/images/party/PartyBannerImage-Mob.webp')] max-md:bg-bottom"
       >
         <div className="mx-auto w-[calc(100%-50px)] max-w-none lg:w-[calc(100%-100px)]">
           <div className="pt-[60px] md:pt-[100px]">
@@ -325,7 +340,7 @@ export default function PartyPage({
 
       {/* 3. HOME AWAY FROM HOME */}
 
-      <section className="py-[5%] md:pb-[4%] md:pt-0">
+      <section id="reels" className="scroll-mt-24 py-[5%] md:pb-[4%] md:pt-0">
         <div className="mx-auto w-[calc(100%-50px)] lg:w-[calc(100%-100px)]">
           <h2 className="mb-5 text-center text-[20px] font-semibold text-black md:mb-[30px] md:text-[35px]">
             Home Away From Home
@@ -384,7 +399,7 @@ export default function PartyPage({
 
                 <div className="mt-5 flex justify-center md:absolute md:right-0 md:top-[15px] md:mt-0">
                   <a
-                    href="/assets/images/party/partyImages/party6.png"
+                    href="/images/party/partyImages/party6.png"
                     data-fancybox="gallery"
                     className="flex items-center gap-[15px] text-[14px] font-normal text-[#F31175] md:text-[18px]"
                   >
@@ -446,7 +461,7 @@ export default function PartyPage({
             className="hidden md:block"
           >
             <img
-              src="/assets/images/party/suggestionsBanner-Web.webp"
+              src="/images/party/suggestionsBanner-Web.webp"
               alt="Party suggestions"
               className="h-auto w-full"
               loading="lazy"
@@ -458,7 +473,7 @@ export default function PartyPage({
             className="block md:hidden"
           >
             <img
-              src="/assets/images/party/suggestionsBanner-Mob.webp"
+              src="/images/party/suggestionsBanner-Mob.webp"
               alt="Party suggestions"
               className="h-auto w-full"
               loading="lazy"
@@ -469,13 +484,13 @@ export default function PartyPage({
 
       {/* 5. JOIN US */}
 
-      <section className="mt-[5%] h-[500px] bg-[url('/assets/images/party/joinUsImageMob.webp')] bg-cover bg-center bg-no-repeat px-5 py-[8.5%] md:h-[525px] md:bg-[url('/assets/images/party/joinUsImageWeb.webp')] md:px-0 md:py-[3.5%]">
+      <section className="mt-[5%] h-[500px] bg-[url('/images/party/joinUsImageMob.webp')] bg-cover bg-center bg-no-repeat px-5 py-[8.5%] md:h-[525px] md:bg-[url('/images/party/joinUsImageWeb.webp')] md:px-0 md:py-[3.5%]">
         <div className="mx-auto w-full lg:w-[calc(100%-100px)]">
           <div className="mb-5 md:mb-[25px]">
             <h6 className="mb-[3px] flex items-center gap-[15px] text-[14px] font-medium text-[#F2006C] md:text-[18px]">
               Weekly Premium Parties:
               <img
-                src="/assets/images/party/PremiumParties.png"
+                src="/images/party/PremiumParties.png"
                 alt="Premium parties"
                 className="relative top-[-5px] w-[25px] md:w-auto"
               />
@@ -490,7 +505,7 @@ export default function PartyPage({
             <h6 className="mb-[3px] flex items-center gap-[15px] text-[14px] font-medium text-[#F2006C] md:text-[18px]">
               Dynamic Atmosphere:
               <img
-                src="/assets/images/party/DynamicAtmo.png"
+                src="/images/party/DynamicAtmo.png"
                 alt="Dynamic atmosphere"
                 className="relative top-[-5px] w-[25px] md:w-auto"
               />
@@ -506,7 +521,7 @@ export default function PartyPage({
             <h6 className="mb-[3px] flex items-center gap-[15px] text-[14px] font-medium text-[#F2006C] md:text-[18px]">
               Community Connection:
               <img
-                src="/assets/images/party/CommunityConnection.png"
+                src="/images/party/CommunityConnection.png"
                 alt="Community connection"
                 className="relative top-[-5px] w-[25px] md:w-auto"
               />
@@ -521,7 +536,7 @@ export default function PartyPage({
             <h6 className="mb-[3px] flex items-center gap-[15px] text-[14px] font-medium text-[#F2006C] md:text-[18px]">
               Join Us This Weekend:
               <img
-                src="/assets/images/party/Cheers.png"
+                src="/images/party/cheers.png"
                 alt="Cheers"
                 className="relative top-[-5px] w-[25px] md:w-auto"
               />
@@ -542,7 +557,7 @@ export default function PartyPage({
 
       {/* 6. REACH OUT US */}
 
-      <section className="bg-[url('/assets/images/party/reachoutBanner-Mob.png')] bg-cover bg-no-repeat px-5 py-[7%] md:bg-[url('/assets/images/party/reachoutBanner-Web.png')] md:px-0 md:py-[5%]">
+      <section className="bg-[url('/images/party/reachoutBanner-Mob.png')] bg-cover bg-no-repeat px-5 py-[7%] md:bg-[url('/images/party/reachoutBanner-Web.png')] md:px-0 md:py-[5%]">
         <div className="mx-auto w-full lg:w-[calc(100%-100px)]">
           <h2 className="text-center text-[20px] font-medium text-black md:text-[35px]">
             To know more details about Colive properties,{" "}
@@ -557,7 +572,7 @@ export default function PartyPage({
               className="flex h-[45px] w-[170px] items-center justify-center gap-[10px] rounded-[5px] border-2 border-[#2BAD2F] bg-[#2BAD2F] text-[14px] font-medium text-white transition hover:opacity-90 md:h-[50px] md:w-[190px] md:text-[18px]"
             >
               <img
-                src="/assets/images/party/whatsappImg.png"
+                src="/images/party/whatsappImg.png"
                 alt="WhatsApp"
                 className="w-5"
               />
@@ -569,7 +584,7 @@ export default function PartyPage({
               className="flex h-[45px] w-[170px] items-center justify-center gap-[10px] rounded-[5px] border-2 border-black text-[14px] font-medium text-black transition hover:bg-black hover:text-white md:h-[50px] md:w-[190px] md:text-[18px]"
             >
               <img
-                src="/assets/images/party/callNowImg.png"
+                src="/images/party/callNowImg.png"
                 alt="Call"
                 className="w-[23px]"
               />
@@ -594,10 +609,10 @@ export default function PartyPage({
                 className="relative h-[365px] min-w-full snap-start p-0 md:h-[400px] md:min-w-[33.333%] md:p-5"
               >
                 <div className="relative h-full min-h-[350px] rounded-[5px] bg-white p-5 shadow-sm md:min-w-[350px]">
-                  <div className="mb-3 h-20 w-20 bg-[url('/assets/images/home/category-icon.png')] bg-[-1050px_-560px] bg-no-repeat" />
+                  <div className="mb-3 h-20 w-20 bg-[url('/public/images/home/category-icon.png')] bg-[-1050px_-560px] bg-no-repeat" />
 
                   <img
-                    src="/assets/images/party/ratingImage.png"
+                    src="/images/party/ratingImage.png"
                     alt="Customer rating"
                     className="w-[115px] md:w-[140px]"
                   />
@@ -626,7 +641,7 @@ export default function PartyPage({
                 className="block h-full"
               >
                 <img
-                  src="/assets/images/party/videoTestimonial1.png"
+                  src="/images/party/videoTestimonial1.png"
                   alt="Video testimonial"
                   className="h-full w-full rounded-[5px] object-cover"
                 />
@@ -641,7 +656,7 @@ export default function PartyPage({
                 className="block h-full"
               >
                 <img
-                  src="/assets/images/party/videoTestimonial2.png"
+                  src="/images/party/videoTestimonial2.png"
                   alt="Video testimonial"
                   className="h-full w-full rounded-[5px] object-cover"
                 />

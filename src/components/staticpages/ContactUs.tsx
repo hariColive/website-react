@@ -1,30 +1,60 @@
 "use client";
+
 import Image from "next/image";
 import React, { useState } from "react";
-import Contact from "../forms/Contact";
+import ThankYouModal from "@/components/common/ThankYouModal";
+import { submitContactForm } from "@/lib/formApi";
+import Contact, { type ContactFormData } from "../forms/Contact";
 
 const ContactUs = () => {
-  const [submitted, setSubmitted] = useState(false);
+  const [isThankYouModalOpen, setIsThankYouModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [formKey, setFormKey] = useState(0);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // Connect your backend or API here to save the form data.
-    setSubmitted(true);
+  const handleSubmit = async (values: ContactFormData) => {
+    if (isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError("");
+
+    try {
+      await submitContactForm(values);
+
+      setFormKey((current) => current + 1);
+      setIsThankYouModalOpen(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Unable to submit your message. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-   <section className="box-border! block! h-auto! min-h-0! w-full! overflow-visible! bg-[#F6F6F6]! px-4.5! py-1.25! mt-[4%]!">
-      <div className="mx-auto w-full max-w-350 px-5 sm:px-8 lg:px-12">
+    <section className="mt-[4%] box-border block h-auto min-h-0 w-full overflow-visible bg-[#F6F6F6] px-[18px] py-[5px]">
+      <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12">
-
-          {/* Contact Form */}
           <div className="order-2 md:order-1">
-            <div className="mx-auto w-full max-w-140 rounded-md bg-color-background p-5  sm:p-8">
-            <Contact/>
+            <div className="mx-auto w-full max-w-[560px] rounded-md bg-color-background p-5 sm:p-8">
+              <Contact
+                key={formKey}
+                onSubmit={handleSubmit}
+                isSubmitting={isSubmitting}
+              />
+              {submitError ? (
+                <p className="mt-4 rounded border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                  {submitError}
+                </p>
+              ) : null}
             </div>
           </div>
 
-          {/* Contact Information */}
           <div className="order-1 min-w-0 md:order-2">
             <div className="px-2 pt-2 md:px-0">
               <h1 className="mb-3 text-[30px] font-semibold leading-tight text-gray-900 sm:text-[36px] lg:text-[40px]">
@@ -68,7 +98,6 @@ const ContactUs = () => {
               </a>
             </div>
 
-            {/* Statistics */}
             <div className="mt-8 grid grid-cols-3 divide-x divide-gray-400 py-5 sm:mt-10 sm:grid-cols-4">
               <div className="min-w-0 px-2 sm:px-4">
                 <h3 className="text-xl font-semibold text-gray-900 sm:text-2xl">
@@ -107,17 +136,25 @@ const ContactUs = () => {
               </div>
             </div>
 
-            {/* Contact Image */}
             <div className="mt-4 hidden md:block">
-              <img
+              <Image
                 src="/images/contact/image.png"
                 alt="Couple"
-                className="h-auto max-h-90 w-full rounded object-contain object-left"
+                width={1200}
+                height={800}
+                className="h-auto max-h-[360px] w-full rounded object-contain object-left"
               />
             </div>
           </div>
         </div>
       </div>
+      <ThankYouModal
+        isOpen={isThankYouModalOpen}
+        onClose={() => {
+          setIsThankYouModalOpen(false);
+          setSubmitError("");
+        }}
+      />
     </section>
   );
 };

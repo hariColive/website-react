@@ -16,7 +16,10 @@ const BASE_URLS: Record<
   QA: {
     crm: process.env.COLIVE_QA_API_URL,
     web:
+      process.env.COLIVE_WEBSITE_API_BASE_URL ??
+      process.env.COLIVE_QA_WEBSITE_API_BASE_URL ??
       process.env.COLIVE_QA_WEB_URL ??
+      process.env.COLIVE_LIVE_WEBSITE_API_BASE_URL ??
       process.env.COLIVE_LIVE_WEB_URL ??
       "https://www.colive.com/",
   },
@@ -25,7 +28,11 @@ const BASE_URLS: Record<
       process.env.COLIVE_LIVE_API_URL ??
       "https://api.colive.com/web/live/",
     web:
+      process.env.COLIVE_WEBSITE_API_BASE_URL ??
+      process.env.COLIVE_LIVE_WEBSITE_API_BASE_URL ??
       process.env.COLIVE_LIVE_WEB_URL ??
+      process.env.COLIVE_QA_WEBSITE_API_BASE_URL ??
+      process.env.COLIVE_QA_WEB_URL ??
       "https://www.colive.com/",
   },
 };

@@ -1,6 +1,7 @@
 
 import { apiPost } from "@/lib/api/apiClient";
 import type { Property } from "@/components/common/searchsection/SearchPropertyCard";
+import { htmlToText } from "@/lib/htmlToText";
 
 const PLATFORM_ID = 4;
 
@@ -313,6 +314,41 @@ export async function fetchPropertyDetails(
   }
 
   return result as PropertyDetailsData;
+}
+
+export async function getPropertyLocationHighlights(
+  locationLink: string,
+  signal?: AbortSignal
+): Promise<string> {
+  const details = await fetchPropertyDetails(locationLink, signal);
+  return htmlToText(details.Property?.[0]?.LocationHighlights ?? "");
+}
+
+export type VisitSlot = { id: number; time: string };
+
+export async function getVisitSlots(
+  propertyId: number,
+  isoDate: string,
+  signal?: AbortSignal
+): Promise<VisitSlot[]> {
+  const [year, month, day] = isoDate.split("-").map(Number);
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+  ];
+  const date = `${day}-${months[month - 1]}-${year}`;
+  const result = await apiPost<
+    Array<{ TimeId: number; TimeString: string }>
+  >(
+    "GetScheduleVisitDays",
+    { Date: date, PropertyID: propertyId },
+    signal
+  );
+
+  return (result ?? []).map((slot) => ({
+    id: slot.TimeId,
+    time: slot.TimeString,
+  }));
 }
 
 export async function getReelsDetails(

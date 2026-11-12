@@ -45,7 +45,7 @@ export const COLIVE_ENDPOINTS = {
     path: "CRMapi/PropertyCRM/GetScheduleVisitDays",
   },
 
-  // Home page location suggestions
+  // Location suggestions
   GetSuggestionsBasedonSearchText: {
     method: "POST",
     service: "web",

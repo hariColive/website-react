@@ -3,7 +3,10 @@
 import { cacheLife } from "next/cache";
 
 import { displayPrice, toSlug } from "./searchFilters";
+import { htmlToText } from "./htmlToText";
 import { colivePost } from "./server/coliveFetch";
+
+export { htmlToText } from "./htmlToText";
 
 type ApiProperty = {
   PropertyID: number;
@@ -112,22 +115,6 @@ export async function searchProperties(query: SearchQuery) {
     similar: (data?.SimilarProperties ?? []).map(toSummary),
   };
 }
-
-const ENTITIES: Record<string, string> = { nbsp: " ", amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", rsquo: "’", lsquo: "‘", ndash: "–", mdash: "—" };
-
-// LocationHighlights is CMS rich text (often pasted from Word, with inline styles); the cards only need the words.
-export const htmlToText = (html: string) =>
-  html
-    // Inline tags join their text (EMC<sup>2</sup> -> EMC2); block tags separate words
-    .replace(/<\/?(span|sup|sub|b|strong|i|em|u|a|font)\b[^>]*>/gi, "")
-    .replace(/<[^>]*>/g, " ")
-    .replace(/&(#x?[0-9a-f]+|\w+);/gi, (entity, code: string) => {
-      if (code[0] !== "#") return ENTITIES[code.toLowerCase()] ?? entity;
-      return String.fromCodePoint(code[1].toLowerCase() === "x" ? parseInt(code.slice(2), 16) : Number(code.slice(1)));
-    })
-    .replace(/\s+([,.;:!?])/g, "$1")
-    .replace(/\s+/g, " ")
-    .trim();
 
 export async function getLocationHighlights(link: string) {
   "use cache";

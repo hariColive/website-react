@@ -52,10 +52,12 @@ Configure these values in `.env.local` or the deployment environment:
 | `COLIVE_LIVE_WEB_API_URL` | Optional LIVE website-service origin; defaults to `https://www.colive.com`. |
 
 The QA CRM origin is `https://api.colive.com`; CRM requests use `/web/qa/...`
-when `COLIVE_ENV=QA` and `/web/live/...` when `COLIVE_ENV=LIVE`. The QA
-website-service base is `https://qa.colive.com`; its endpoint paths append
-`/api/Colive/...`. These variables are read by the server route and are not
-exposed to browser code.
+when `COLIVE_ENV=QA` and `/web/live/...` when `COLIVE_ENV=LIVE`. The website-service
+base is configured separately so the Next.js server can call approved backend
+endpoints such as `/api/Colive/ContactUsInsert` without exposing upstream URLs to the browser.
+The environment can use `COLIVE_WEBSITE_API_BASE_URL` directly, or the
+`COLIVE_QA_WEB_URL` / `COLIVE_LIVE_WEB_URL` names already used by the project.
+These variables are read by the server route and are not exposed to browser code.
 
 To add an API, register its approved path and supported method in
 `src/lib/server/coliveEndpoints.ts`, add its types and API-specific function in
@@ -63,3 +65,15 @@ To add an API, register its approved path and supported method in
 Existing Colive functions use the shared client in `src/lib/api/apiClient.ts`.
 The registry only permits known endpoint names; do not pass upstream URLs from
 the browser.
+
+Form submissions use the server-only allowlist in
+`src/lib/server/formApis.ts` and the dynamic route `POST /api/forms/[form]`.
+The browser passes a registered form key (currently `contact`), never an
+upstream URL. Browser submission helpers live in `src/lib/formApi.ts`; use
+`submitFormApi` for a registered form or add a typed convenience function such
+as `submitContactForm`. To add another form API, add its fixed Website API path
+and payload validation/mapping to `FORM_APIS`, then add its form name and
+convenience function in `src/lib/formApi.ts`. The shared handler forwards the
+request using the configured website API base and returns a sanitized result.
+`POST /api/contact` remains available as a compatibility alias for the contact
+form.

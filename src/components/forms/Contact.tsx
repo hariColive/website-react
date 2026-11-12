@@ -3,8 +3,21 @@
 
 import React, { useState } from "react";
 
-const Contact = () => {
-  const [formData, setFormData] = useState({
+export type ContactFormData = {
+  name: string;
+  mobile: string;
+  email: string;
+  select: string;
+  message: string;
+};
+
+type ContactProps = {
+  onSubmit: (values: ContactFormData) => void | Promise<void>;
+  isSubmitting?: boolean;
+};
+
+const Contact = ({ onSubmit, isSubmitting = false }: ContactProps) => {
+  const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     mobile: "",
     email: "",
@@ -17,15 +30,20 @@ const Contact = () => {
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
-    setFormData({
-      ...formData,
+    setFormData((current) => ({
+      ...current,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+
+    if (isSubmitting) {
+      return;
+    }
+
+    await onSubmit(formData);
   };
 
   const labelStyle =
@@ -41,7 +59,6 @@ const Contact = () => {
         className="m-0 block h-auto w-full overflow-visible"
       >
         <fieldset className="m-0 block min-w-0 border-0 p-0">
-          {/* Name */}
           <div className="relative mb-[20px]">
             <label htmlFor="name" className={labelStyle}>
               Name
@@ -58,10 +75,10 @@ const Contact = () => {
               onChange={handleChange}
               className={inputStyle}
               required
+              disabled={isSubmitting}
             />
           </div>
 
-          {/* Mobile Number */}
           <div className="relative mb-[20px]">
             <label htmlFor="mobile" className={labelStyle}>
               Mobile Number
@@ -87,11 +104,11 @@ const Contact = () => {
                 autoComplete="tel-national"
                 className="block h-full min-w-0 flex-1 rounded-none border-0 bg-transparent px-0 py-0 pl-[5px] text-[14px] font-normal leading-normal text-[#172536] shadow-none outline-none"
                 required
+                disabled={isSubmitting}
               />
             </div>
           </div>
 
-          {/* E-mail */}
           <div className="relative mb-[20px]">
             <label htmlFor="email" className={labelStyle}>
               E-mail
@@ -104,10 +121,10 @@ const Contact = () => {
               value={formData.email}
               onChange={handleChange}
               className={inputStyle}
+              disabled={isSubmitting}
             />
           </div>
 
-          {/* Select */}
           <div className="relative mb-[20px]">
             <label htmlFor="select" className={labelStyle}>
               Select
@@ -123,6 +140,7 @@ const Contact = () => {
               onChange={handleChange}
               className={`${inputStyle} cursor-pointer appearance-none pr-[35px]`}
               required
+              disabled={isSubmitting}
             >
               <option value="" disabled>
                 Please Select
@@ -150,7 +168,6 @@ const Contact = () => {
             </svg>
           </div>
 
-          {/* Write a Message */}
           <div className="relative mb-[16px]">
             <label htmlFor="message" className={labelStyle}>
               Write a Message
@@ -164,15 +181,16 @@ const Contact = () => {
               value={formData.message}
               onChange={handleChange}
               className="box-border block h-[110px] w-full resize-y rounded-[3px] border border-[#DADADA] bg-white px-[12px] py-[9px] text-[14px] font-normal leading-normal text-[#172536] shadow-none outline-none placeholder:text-[#737373] focus:border-[#2B001F]"
+              disabled={isSubmitting}
             />
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
-            className="m-0 mb-0 block h-[42px] w-full cursor-pointer rounded-[3px] border-2 border-[#2B001F] bg-[#2B001F] p-[5px] text-center text-[14px] font-normal leading-normal text-white shadow-none hover:bg-[#2B001F] focus:outline-none"
+            disabled={isSubmitting}
+            className="m-0 mb-0 block h-[42px] w-full cursor-pointer rounded-[3px] border-2 border-[#2B001F] bg-[#2B001F] p-[5px] text-center text-[14px] font-normal leading-normal text-white shadow-none hover:bg-[#2B001F] focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
           >
-            Submit
+            {isSubmitting ? "Submitting..." : "Submit"}
           </button>
         </fieldset>
       </form>

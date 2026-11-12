@@ -36,7 +36,7 @@ export default function CommunityReelCard({
           className="group relative block"
         >
           <img
-            src={thumbnail || "/assets/images/party/PartyBannerImage-Web.webp"}
+            src={thumbnail || "/images/party/partyImages/party1.png"}
             alt={reelTitle}
             loading="lazy"
             className="h-[400px] w-full rounded-[20px] object-cover md:h-[450px]"

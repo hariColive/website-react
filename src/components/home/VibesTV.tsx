@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -14,10 +14,9 @@ const navButtonClass =
 
 const videoFrameClass = "relative aspect-12/7 overflow-hidden rounded-xl bg-black";
 
-const embedUrl = (videoId: string) =>
-  `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1&rel=0&modestbranding=1&playsinline=1`;
-
 function VibesSlider() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
   return (
     <Swiper
       modules={[Navigation, Pagination]}
@@ -26,18 +25,21 @@ function VibesSlider() {
       speed={800}
       navigation={{ prevEl: ".vibes-prev", nextEl: ".vibes-next" }}
       pagination={{ el: ".vibes-pagination", clickable: true }}
+      onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
     >
-      {VIDEO_IDS.map((id) => (
+      {VIDEO_IDS.map((id, index) => (
         <SwiperSlide key={id}>
           <div className={`${videoFrameClass} [&_iframe]:absolute [&_iframe]:inset-0`}>
-            <iframe
-              src={embedUrl(id)}
-              title={`Colive Vibes TV video ${id}`}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-              className="absolute inset-0 h-full w-full border-0"
-            />
+            {index === activeIndex && (
+              <iframe
+                src={`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1&playsinline=1`}
+                title={`Colive Vibes TV video ${index + 1}`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full border-0"
+              />
+            )}
           </div>
         </SwiperSlide>
       ))}
@@ -71,7 +73,6 @@ export default function VibesTV() {
         </div>
 
         <div className="mt-10 rounded-3xl bg-white p-3 pb-7 shadow-[0_10px_60px_rgba(0,0,0,0.08)] md:mt-15 md:p-5 md:pb-9">
-          {/* Swiper reads the clock while rendering, which can't be prerendered; stream it in behind an empty frame */}
           <Suspense fallback={<div className={videoFrameClass} />}>
             <VibesSlider />
           </Suspense>

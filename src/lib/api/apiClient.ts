@@ -35,12 +35,15 @@ export async function apiPost<T>(endpoint: ColiveEndpoint, payload: object = {},
   return readApiData<T>(res, endpoint);
 }
 
-export async function apiPostForm<T>(
-  endpoint: FormEndpoint,
-  payload: object,
-  signal?: AbortSignal,
-) {
-  const route = endpoint === "ContactUsInsert" ? "/api/contact" : `/api/forms/${endpoint}`;
-  const res = await postJson(route, payload, signal);
-  return readApiResponse<T>(res, endpoint);
+// Posts a form through /api/forms/[endpoint]. The route answers { success, message } JSON for both success and
+// failure (including 4xx/5xx), so the body is returned as-is rather than thrown on a non-2xx status.
+export async function apiPostForm<T>(endpoint: FormEndpoint, payload: object, signal?: AbortSignal) {
+  const url = endpoint === "ContactUsInsert" ? "/api/contact" : `/api/forms/${endpoint}`;
+  const res = await fetch(url, {
+    signal,
+    method: "POST",
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+    body: JSON.stringify(payload),
+  });
+  return (await res.json()) as T;
 }

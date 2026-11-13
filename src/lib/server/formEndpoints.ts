@@ -15,9 +15,13 @@ export const FORM_ENDPOINTS = {
     method: "POST",
     service: "crm",
     path: "CRMapi/PropertyCRM/ContactUsInsert",
-    url: process.env.COLIVE_CONTACT_API_URL,
   },
-} satisfies Record<FormEndpoint, Endpoint>;
+  walkthroughLead: {
+    method: "POST",
+    service: "crm",
+    path: "CRMapi/PropertyCRM/LandingPageLeadInsert",
+  },
+} satisfies Record<FormEndpoint, Omit<Endpoint, "url">>;
 
 export const isFormEndpoint = (name: string): name is FormEndpoint =>
   Object.hasOwn(FORM_ENDPOINTS, name);

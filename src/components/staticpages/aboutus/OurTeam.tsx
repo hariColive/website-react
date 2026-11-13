@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const stats = [
@@ -103,7 +104,7 @@ const OurTeam = () => {
               <div className="!my-auto lg:!ml-[10%]">
                 <h2 className="!pr-[10%] !text-[60px] !font-bold !leading-tight min-[768px]:max-[992px]:!text-[50px] max-[767px]:!text-[25px]">We changed the way <br className="min-[768px]:max-[992px]:!hidden" />India <span className={pinkText}>lives</span></h2>
                 <p className="!my-[2%] !mr-[15%] !text-justify !text-[20px] max-[767px]:!mr-0 max-[767px]:!text-[12px]">With 1 million+ users &amp; 400,000+ units on our platform, we&apos;ve taught India how to expect more from the essentials of living, be it the 6S of Colive or the benefits we provide within Club Colive.</p>
-                <a href="/club/" className="!text-[#2B001F] !inline-flex !items-center">Read more</a>
+                <Link href="/club/" className="!text-[#2B001F] !inline-flex !items-center">Read more</Link>
               </div>
             </div>
           </div>
@@ -131,7 +132,7 @@ const OurTeam = () => {
             <div className="lg:!col-span-8"><div className="!my-auto lg:!ml-[10%]">
               <h2 className="!pr-[10%] !text-[60px] !font-bold !leading-tight min-[768px]:max-[992px]:!text-[50px] max-[767px]:!text-[25px]">We changed the way <br className="min-[768px]:max-[992px]:!hidden" />India <span className={pinkText}>rents</span></h2>
               <p className="!my-[2%] !mr-[15%] !text-justify !text-[20px] max-[767px]:!mr-0 max-[767px]:!text-[12px]">We&apos;ve built an AI-enabled engine that simplifies rentals &amp; allows potential tenants to bid directly on the homes they like, with budgets they&apos;re comfortable paying.</p>
-              <a href="/rentx/" className="!text-[#2B001F] !inline-flex !items-center">Read more</a>
+              <Link href="/rentx/" className="!text-[#2B001F] !inline-flex !items-center">Read more</Link>
             </div></div>
           </div>
         </div>
@@ -157,7 +158,7 @@ const OurTeam = () => {
               <div className="!order-2 lg:!col-span-8 lg:!order-1 lg:!pl-[5%]">
                 <h3 className="!py-[3%] !text-center !text-[45px] !font-semibold max-[767px]:!text-[18px]">Suresh Rangarajan Kidambi</h3>
                 <p className="!my-[2%] !text-justify !text-[22px] max-[767px]:!text-[12px]">Suresh Rangarajan Kidambi (SRK) exudes the image of an absolute trendsetter, leveraging his unique combination of internet, financial services &amp; real estate experience, to create intelligent &amp; disruptive products in the asset-rental spaces</p>
-                <a href="/founder/" className={pinkText}>Read more</a>
+                <Link href="/founder/" className={pinkText}>Read more</Link>
               </div>
               <div className="!order-1 lg:!col-span-4 lg:!order-2"><img src="/images/about/SRK.png" className="!mx-auto !h-auto !max-w-full" alt="Suresh Rangarajan Kidambi" /></div>
             </div>

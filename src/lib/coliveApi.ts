@@ -20,6 +20,42 @@ export type Suggestions = {
   PropertySuggestions: PropertySuggestion[];
 };
 
+export type ReelsItem = {
+  ReelsId?: string | number;
+  LocationLink?: string | null;
+  Image?: string | null;
+  ReelsFile?: string | null;
+  FileName?: string | null;
+  LocationName?: string | null;
+};
+
+type ReelsResponse = {
+  ReelsList?: ReelsItem[] | null;
+};
+
+export type EventItem = {
+  EventId?: string | number;
+  EventCode?: string | null;
+  Title?: string | null;
+  EventName?: string | null;
+  Description?: string | null;
+  EventDescription?: string | null;
+  Image?: string | null;
+  EventImage?: string | null;
+  EventDate?: string | null;
+  Date?: string | null;
+  StartDate?: string | null;
+  EventTime?: string | null;
+  Time?: string | null;
+  Link?: string | null;
+  EventUrl?: string | null;
+};
+
+type EventListResponse = {
+  EventList?: EventItem[] | null;
+  Data?: EventItem[] | { EventList?: EventItem[] | null } | null;
+};
+
 export function getSuggestions(searchQuery: string, signal?: AbortSignal) {
   return apiPost<Suggestions>("GetSuggestionsBasedonSearch", {
     PropertyModelTypeId: 1,
@@ -28,6 +64,45 @@ export function getSuggestions(searchQuery: string, signal?: AbortSignal) {
     PlatFormId: PLATFORM_ID,
     IsGoolgeSuggestions: true,
   }, signal);
+}
+
+export async function getReelsDetails(
+  categoryId: number = 0,
+  signal?: AbortSignal
+): Promise<ReelsItem[]> {
+  const result = await apiPost<ReelsResponse>(
+    "GetReelsDetails",
+    {
+      CategoryId: categoryId,
+      PlatFormId: PLATFORM_ID,
+    },
+    signal
+  );
+
+  return result?.ReelsList ?? [];
+}
+
+export async function getEventsDetails(
+  eventCode: string = "",
+  signal?: AbortSignal
+): Promise<EventItem[]> {
+  const result = await apiPost<EventListResponse>(
+    "GetEvents",
+    {
+      EventCode: eventCode,
+      PlatFormId: PLATFORM_ID,
+    },
+    signal
+  );
+
+  if (!result) return [];
+
+  const list =
+    result.EventList ??
+    (Array.isArray(result.Data) ? result.Data : result.Data?.EventList) ??
+    [];
+
+  return Array.isArray(list) ? list : [];
 }
 
 type PlaceDetails = {

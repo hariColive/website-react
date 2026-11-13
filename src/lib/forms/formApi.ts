@@ -1,6 +1,12 @@
 import { apiPostForm } from "@/lib/api/apiClient";
 
-import type { ContactFormRequest, ContactFormValues, FormApiResponse } from "./formTypes";
+import type {
+  ContactFormRequest,
+  ContactFormValues,
+  FormApiResponse,
+  WalkthroughLeadRequest,
+  WalkthroughLeadResponse,
+} from "./formTypes";
 
 export function submitContactForm(values: ContactFormValues) {
   const payload: ContactFormRequest = {
@@ -14,3 +20,7 @@ export function submitContactForm(values: ContactFormValues) {
 
   return apiPostForm<FormApiResponse>("ContactUsInsert", payload);
 }
+
+export const submitWalkthroughLead = (payload: WalkthroughLeadRequest) => {
+  return apiPostForm<WalkthroughLeadResponse>("walkthroughLead", payload);
+};

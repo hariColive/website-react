@@ -1,4 +1,4 @@
-export type FormEndpoint = "ContactUsInsert";
+export type FormEndpoint = "ContactUsInsert" | "walkthroughLead";
 
 export type ContactFormRequest = {
   Name: string;
@@ -22,3 +22,17 @@ export type FormApiResponse<T = unknown> = {
   Message: string;
   Data?: T;
 };
+export interface WalkthroughLeadRequest {
+  first_name: string;
+  customer_mobile: string;
+  [key: string]: string;
+  leadSource: string;
+  LandingPageId: string;
+  Mobile_Number_Validated: string;
+  redirectURL: string;
+}
+
+export interface WalkthroughLeadResponse {
+  success: boolean;
+  message?: string;
+}

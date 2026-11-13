@@ -40,6 +40,8 @@ export const COLIVE_ENDPOINTS = {
   // Home page place search
   GetSuggestionsBasedonSearch: { method: "POST", service: "crm", path: "CRMapi/PropertyCRM/GetSuggestionsBasedonSearch" },
   GetLocationDetailsByPlaceId: { method: "POST", service: "crm", path: "CRMapi/PropertyCRM/GetLocationDetailsByPlaceId" },
+  GetReelsDetails: { method: "POST", service: "crm", path: "CRMapi/PropertyCRM/GetReelsDetails" },
+  GetEvents: { method: "POST", service: "crm", path: "CRMapi/PropertyCRM/EventListSelectAllAndById" },
 } satisfies Record<string, Endpoint>;
 
 export type ColiveEndpoint = keyof typeof COLIVE_ENDPOINTS;

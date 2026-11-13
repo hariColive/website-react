@@ -127,7 +127,6 @@ const People = () => {
             <p className="!mb-[50px] !mt-0 !text-[#cfcfcf] max-[575px]:!mb-5">
               Rewards &amp; Recognition on Colive’s 10th Anniversary
             </p>
-
 <div className="relative mx-auto w-full max-w-[800px]">
   <div className="overflow-hidden">
     <div className="flex items-center justify-center">

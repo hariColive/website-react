@@ -6,8 +6,8 @@ export type ColiveEnv = "QA" | "LIVE";
 // "crm" is the CRM API (api.colive.com/web/<env>/CRMapi/...)
 export type ColiveService = "crm";
 
- export const COLIVE_ENV: ColiveEnv = "LIVE";
- //export const COLIVE_ENV: ColiveEnv = "QA";
+ //export const COLIVE_ENV: ColiveEnv = "LIVE";
+ export const COLIVE_ENV: ColiveEnv = "QA";
 
 const BASE_URLS: Record<ColiveEnv, Record<ColiveService, string | undefined>> = {
   QA: {

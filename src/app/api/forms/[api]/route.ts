@@ -29,7 +29,7 @@ export async function POST(request: Request, { params }: RouteContext<"/api/form
   }
 
   const destination = FORM_DESTINATIONS[api];
-  const invalid = destination.validate?.(payload);
+  const invalid = "validate" in destination ? destination.validate?.(payload) : null;
   if (invalid) return reply(false, invalid, 400);
 
   try {

@@ -23,7 +23,7 @@ export const FORM_ENDPOINTS = {
   ContactUsInsert: contactEndpoint,
 };
 
-export const FORM_DESTINATIONS: Record<FormEndpoint, FormDestination> = {
+export const FORM_DESTINATIONS = {
   ContactUsInsert: {
     ...contactEndpoint,
     encoding: "json",
@@ -48,7 +48,7 @@ export const FORM_DESTINATIONS: Record<FormEndpoint, FormDestination> = {
         ? "Please enter a valid name and WhatsApp number"
         : null,
   },
-};
+} satisfies Record<FormEndpoint, FormDestination>;
 
 export const isFormEndpoint = (name: string): name is FormEndpoint =>
   Object.hasOwn(FORM_DESTINATIONS, name);

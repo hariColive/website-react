@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React from "react";
 
 declare global {
@@ -493,9 +494,9 @@ export default function VasPage() {
           <SectionTitle>Live Counter</SectionTitle>
           <h6 className="px-[5%] text-center text-[25px] leading-[35px] text-black max-[767px]:text-[14px] max-[767px]:leading-[19px]">
             Indulge in delicious chinese wok cuisines at The{" "}
-            <a href="/" className="cursor-pointer text-black">
+            <Link href="/" className="cursor-pointer text-black">
               Colive
-            </a>{" "}
+            </Link>{" "}
             Cafe. Explore a <br className="max-[767px]:hidden" /> wide range of
             Veg/Non-veg noodles and fried rice
           </h6>

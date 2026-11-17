@@ -6,6 +6,7 @@ import type {
   FormApiResponse,
   FormResponse,
   LeadCaptureRequest,
+  ScheduleVisitRequest,
   WalkthroughLeadRequest,
   WalkthroughLeadResponse,
 } from "./formTypes";
@@ -25,6 +26,10 @@ export function submitContactForm(values: ContactFormValues) {
 
 export const submitWalkthroughLead = (payload: WalkthroughLeadRequest) => {
   return apiPostForm<WalkthroughLeadResponse>("walkthroughLead", payload);
+};
+
+export const submitScheduleVisit = (payload: ScheduleVisitRequest) => {
+  return apiPostForm<FormResponse>("ScheduleVisitsInsert", payload);
 };
 
 // Same fields and fixed values the legacy colive.com home page form posts

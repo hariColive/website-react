@@ -3,6 +3,7 @@
 import { useEffect, useId, useState, type FormEvent } from "react";
 import { FaCalendarCheck } from "react-icons/fa";
 
+import { submitScheduleVisit } from "@/lib/forms/formApi";
 import type { VisitSlot } from "@/lib/propertyDetails";
 
 const MOBILE_PATTERN = /^[6-9]\d{9}$/;
@@ -21,6 +22,13 @@ function defaultVisitDay() {
 const displayDay = (isoDay: string) =>
   new Date(`${isoDay}T00:00:00`).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
 
+const formatApiDay = (isoDay: string) => {
+  const [year, month, day] = isoDay.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+  const monthName = date.toLocaleString("en-US", { month: "short" });
+  return `${day}-${monthName}-${year}`;
+};
+
 type Errors = Partial<Record<"name" | "mobile" | "email" | "slot", string>>;
 
 const inputClass = "w-full border border-gray-300 bg-white px-3 py-2.5 text-sm text-[#111] outline-none focus:border-[#111]";
@@ -33,6 +41,8 @@ export default function ScheduleVisitForm({ propertyId, propertyName }: { proper
   const [slotId, setSlotId] = useState("");
   const [errors, setErrors] = useState<Errors>({});
   const [booked, setBooked] = useState<{ date: string; time: string } | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   useEffect(() => {
     const controller = new AbortController();
@@ -49,7 +59,7 @@ export default function ScheduleVisitForm({ propertyId, propertyName }: { proper
     return () => controller.abort();
   }, [propertyId, date]);
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const name = String(form.get("name") ?? "").trim();
@@ -60,14 +70,34 @@ export default function ScheduleVisitForm({ propertyId, propertyName }: { proper
     if (!name) nextErrors.name = "Please enter your name";
     if (!MOBILE_PATTERN.test(mobile)) nextErrors.mobile = "Please enter a valid 10-digit mobile number";
     if (!EMAIL_PATTERN.test(email)) nextErrors.email = "Please enter a valid e-mail";
-    if (!slotId) nextErrors.slot = "Please select a time slot";
-    setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) return;
-
-    // Matches the current colive.com property page, which confirms on screen without saving the visit.
-    // Wire this to the CRM's visit-insert endpoint before going live.
     const slot = slots?.find((option) => String(option.id) === slotId);
-    setBooked({ date: displayDay(date), time: slot?.time ?? "" });
+    if (!slot) nextErrors.slot = "Please select a time slot";
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0 || !slot) return;
+
+    setIsSubmitting(true);
+    setSubmitError("");
+    try {
+      const response = await submitScheduleVisit({
+        LocationId: String(propertyId),
+        PickupDate: formatApiDay(date),
+        TimeId: slot.id,
+        Name: name,
+        Phone: mobile,
+        Email: email,
+      });
+      if (!response.success) {
+        setSubmitError(response.message || "We couldn't schedule your visit. Please try again.");
+        return;
+      }
+
+      setBooked({ date: displayDay(date), time: slot.time });
+    } catch (error) {
+      console.error(error);
+      setSubmitError("We couldn't schedule your visit. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (booked) {
@@ -137,7 +167,12 @@ export default function ScheduleVisitForm({ propertyId, propertyName }: { proper
           type="date"
           value={date}
           min={toIsoDay(new Date())}
-          onChange={(event) => event.target.value && setDate(event.target.value)}
+          onChange={(event) => {
+            if (!event.target.value) return;
+            setDate(event.target.value);
+            setSlots(null);
+            setSlotId("");
+          }}
           aria-label="Visit date"
           className={inputClass}
         />
@@ -161,9 +196,14 @@ export default function ScheduleVisitForm({ propertyId, propertyName }: { proper
         <p className="-mt-1 text-xs text-gray-600">No time slots available for this day. Please pick the next day.</p>
       )}
       {error("slot")}
+      {submitError && <p role="alert" className="text-sm text-red-600">{submitError}</p>}
 
-      <button type="submit" className="mt-2 cursor-pointer bg-[#111] py-2.5 text-white transition-colors hover:bg-[#333]">
-        Schedule Visit
+      <button
+        type="submit"
+        disabled={isSubmitting || !slots?.length}
+        className="mt-2 cursor-pointer bg-[#111] py-2.5 text-white transition-colors hover:bg-[#333] disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        {isSubmitting ? "Scheduling…" : "Schedule Visit"}
       </button>
     </form>
   );

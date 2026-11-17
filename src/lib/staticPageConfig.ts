@@ -12,6 +12,10 @@ import ExperienceManagerPage from "@/components/staticpages/ColiveCommunity/Expe
 import ClubColiveHubPage from "@/components/staticpages/ColiveCommunity/ClubColivePage";
 import CoupleSpecialsPage from "@/components/staticpages/ColiveCommunity/CoupleSpecialsPage";
 import VasPage from "@/components/staticpages/ColiveCommunity/VasPage";
+import HIPPage from "@/components/staticpages/ColiveCommunity/HIPPage";
+import Offers from "@/components/staticpages/offer/Offers";
+import BSTPage from "@/components/staticpages/ColiveCommunity/BSTPage";
+import EducityPage from "@/components/staticpages/ColiveCommunity/EducityPage";
 
 
 const staticPageConfig: Record<string, ComponentType> = {
@@ -28,6 +32,9 @@ const staticPageConfig: Record<string, ComponentType> = {
   club:ClubColiveHubPage,
   "cuddle/packages":CoupleSpecialsPage,
   vas:VasPage,
+  hip:HIPPage,
+  educity:EducityPage,
+  bst:BSTPage,
 };
 
 export default staticPageConfig;

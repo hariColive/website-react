@@ -75,10 +75,8 @@ function EnquiryForm() {
 
 export default function HIPPage() {
   return <main className="relative overflow-x-hidden font-['Inter-Regular',Arial,sans-serif] text-black">
-    {/* Replace these placeholders with the existing shared site header component. */}
-    <div id="site-header" data-include="commonheader/header" className="header include" />
     <section className="section1">
-      <div className="mt-[10%] bg-[url('/assets/images/hip/Banner-web.webp')] bg-[length:100%_100%] bg-no-repeat max-[768px]:mt-[50px] max-[768px]:bg-[url('/assets/images/hip/Banner-Mob.webp')] max-[768px]:bg-[length:100%_auto]">
+      <div className="mt-[10%] bg-[url('/images/hip/Banner-web.webp')] bg-[length:100%_100%] bg-no-repeat max-[768px]:mt-[50px] max-[768px]:bg-[url('/images/hip/Banner-Mob.webp')] max-[768px]:bg-[length:100%_auto]">
         <div className="mx-auto w-[calc(100%-100px)] max-[768px]:w-[calc(100%-50px)]">
           <div className="grid grid-cols-12">
             <div className="col-span-8 flex flex-col justify-center max-[768px]:col-span-12 max-[768px]:px-0">
@@ -95,10 +93,10 @@ export default function HIPPage() {
     <section className="my-[3%]">
       <div className="mx-auto w-[calc(100%-100px)] max-[768px]:w-full">
         <div className="grid grid-cols-12 items-center">
-          <div className="col-span-5 max-[768px]:col-span-12"><picture><source srcSet="/assets/images/hip/Introduction.webp" type="image/webp" /><img src="/assets/images/hip/Introduction.png" alt="introduction" className="h-auto w-full" /></picture></div>
-          <div className="col-span-7 flex flex-col justify-center max-[768px]:col-span-12 max-[768px]:mx-auto max-[768px]:-mt-[5%] max-[768px]:w-[calc(100%-50px)] max-[768px]:rounded-[5px] max-[768px]:bg-white max-[768px]:px-4 max-[768px]:pb-[5%] max-[768px]:shadow-[0_4px_40px_rgba(0,0,0,0.10)]">
+          <div className="col-span-5 max-[768px]:col-span-12"><picture><source srcSet="/images/hip/Introduction.webp" type="image/webp" /><img src="/images/hip/Introduction.png" alt="introduction" className="h-auto w-full" /></picture></div>
+          <div className="col-span-7 p-[5%] flex flex-col justify-center max-[768px]:col-span-12 max-[768px]:mx-auto max-[768px]:-mt-[5%] max-[768px]:w-[calc(100%-50px)] max-[768px]:rounded-[5px] max-[768px]:bg-white max-[768px]:px-4 max-[768px]:pb-[5%] max-[768px]:shadow-[0_4px_40px_rgba(0,0,0,0.10)]">
             <h2 className="pb-[3%] text-[40px] font-semibold max-[768px]:pb-2 max-[768px]:pt-3 max-[768px]:text-center max-[768px]:text-[20px]">HIP <span className="text-[#F2006C]">Introduction </span></h2>
-            <p className="text-justify text-[20px] leading-[40px] max-[768px]:text-[13px] max-[768px]:leading-[22px]">Discover a revolution in urban living with Colive, India's leading rental accommodation provider. Our cutting-edge Colive Hybrid Integrated Pods offer a seamless blend of co-living and work-from-home spaces designed to elevate the lifestyles of modern professionals</p>
+            <p className="text-justify text-[20px] leading-[40px] max-[768px]:text-[13px] max-[768px]:leading-[22px]">Discover a revolution in urban living with Colive, India&apos;s leading rental accommodation provider. Our cutting-edge Colive Hybrid Integrated Pods offer a seamless blend of co-living and work-from-home spaces designed to elevate the lifestyles of modern professionals</p>
           </div>
         </div>
       </div>
@@ -108,15 +106,15 @@ export default function HIPPage() {
       <div className="mx-auto w-[calc(100%-100px)] max-[768px]:w-[calc(100%-50px)]">
         <SectionTitle accent="of HIP">Key benefits</SectionTitle>
         <div className="grid grid-cols-3 text-center">
-          {[[ "Workstations.png","Integrated","Workstations"],["Internet.png","High Speed","Internet"],["Retreat.png","Peaceful","Retreat"]].map(([img,a,b])=><div key={img} className="text-center"><img src={`/assets/images/hip/${img}`} alt={a} className="mx-auto h-auto max-w-full max-[768px]:p-[10%]" /><p className="mt-5 text-[25px] font-medium max-[768px]:mt-[5px] max-[768px]:text-[12px] max-[768px]:font-normal"><>{a}<br />{b}</></p></div>)}
+          {[[ "Workstations.png","Integrated","Workstations"],["Internet.png","High Speed","Internet"],["Retreat.png","Peaceful","Retreat"]].map(([img,a,b])=><div key={img} className="text-center"><img src={`/images/hip/${img}`} alt={a} className="mx-auto h-auto max-w-full max-[768px]:p-[10%]" /><p className="mt-5 text-[25px] font-medium max-[768px]:mt-[5px] max-[768px]:text-[12px] max-[768px]:font-normal"><>{a}<br />{b}</></p></div>)}
         </div>
       </div>
     </section>
 
     <section className="my-[3%]">
       <div className="mx-auto w-[calc(100%-100px)] max-[768px]:w-full">
-        <div className="grid grid-cols-12 items-center">
-          <div className="col-span-5 max-[768px]:col-span-12"><picture><source srcSet="/assets/images/hip/Hybrid.webp" type="image/webp" /><img src="/assets/images/hip/Hybrid.png" alt="introduction" className="h-auto w-full" /></picture></div>
+        <div className="grid grid-cols-12 gap-x-10 items-center">
+          <div className="col-span-5 max-[768px]:col-span-12"><picture><source srcSet="/images/hip/Hybrid.webp" type="image/webp" /><img src="/images/hip/Hybrid.png" alt="introduction" className="h-auto w-full" /></picture></div>
           <div className="col-span-7 flex flex-col justify-center max-[768px]:col-span-12 max-[768px]:mx-auto max-[768px]:-mt-[5%] max-[768px]:w-[calc(100%-50px)] max-[768px]:rounded-[5px] max-[768px]:bg-white max-[768px]:px-4 max-[768px]:pb-[5%] max-[768px]:shadow-[0_4px_40px_rgba(0,0,0,0.10)]">
             <h2 className="pb-[3%] text-[40px] font-semibold max-[768px]:pb-2 max-[768px]:pt-3 max-[768px]:text-center max-[768px]:text-[20px]">Colive Hybrid <span className="text-[#F2006C]"> Integrated Pods </span></h2>
             <ul className="list-disc pl-[25px]"><li className="text-justify text-[20px] leading-[40px] max-[768px]:text-[12px] max-[768px]:leading-[21px]">Explore our latest innovation, the premium Colive Hybrid Integrated Pods. Crafted to cater to the dynamic world of remote work, these spaces provide an ideal setting for individuals and partners alike to strike the perfect balance between work and personal life.</li><li className="text-justify text-[20px] leading-[40px] max-[768px]:text-[12px] max-[768px]:leading-[21px]">Each pod boasts meticulously designed workstations, high-speed internet, ergonomic seating, and a rejuvenation center for breaks</li></ul>
@@ -128,7 +126,7 @@ export default function HIPPage() {
     <section className="my-[3%] bg-[#F6F6F6] max-[768px]:bg-white">
       <div className="grid grid-cols-12">
         <div className="col-span-7 flex flex-col justify-center max-[768px]:col-span-12"><div className="pl-[50px] max-[768px]:pl-[25px]"><h2 className="mb-[2%] mt-[3%] text-[40px] font-semibold max-[768px]:mb-0 max-[768px]:mt-[5%] max-[768px]:pb-0 max-[768px]:text-center max-[768px]:text-[20px]">Features and <span className="text-[#F2006C]">Amenities </span></h2><ul className="list-disc pl-5">{["Stylish and functional workstations with ergonomic seating","Dedicated work-from-home facilities","High-speed, reliable internet connectivity","Comfortable and private living spaces","Thoughtfully curated decor and furnishings","Dedicated meeting rooms, cafes, amenities store, and laundry zone"].map(x=><li key={x} className="text-[18px] leading-[50px] max-[768px]:mb-[10px] max-[768px]:text-[14px] max-[768px]:leading-6">{x}</li>)}</ul></div></div>
-        <div className="col-span-5 p-0 max-[768px]:col-span-12"><picture className="max-[768px]:hidden"><source srcSet="/assets/images/hip/Amenities.webp" type="image/webp" /><img src="/assets/images/hip/Amenities.png" alt="Amenities" className="h-auto w-full" /></picture></div>
+        <div className="col-span-5 p-0 max-[768px]:col-span-12"><picture className="max-[768px]:hidden"><source srcSet="/images/hip/Amenities.webp" type="image/webp" /><img src="/images/hip/Amenities.png" alt="Amenities" className="h-auto w-full" /></picture></div>
       </div>
     </section>
 
@@ -140,7 +138,7 @@ export default function HIPPage() {
             ["AmazingStays.png","Amazing Stays","Deliver branded corporate stays to your employees and wow them during times of recruitment or relocation"],
             ["LifeUpgrades.png","Life Upgrades","Let your employees receive tailor-made deals & offers suited to their lifestyle needs, as long as they're on your payroll."],
             ["RadiusControl.png","Radius Control","Keep your friends close, and your employees closer, in homes that are a stone's throw away from your office premises."],
-          ].map(([img,title,desc])=><div key={title} className="px-3 text-center"><img src={`/assets/images/hip/${img}`} alt="PaP" className="mx-auto h-auto max-w-full" /><h3 className="mb-0 py-3 text-[22px] font-semibold max-[768px]:pt-[17px] max-[768px]:pb-[7px] max-[768px]:text-[16px]">{title}</h3><p className="px-5 text-base max-[768px]:px-0 max-[768px]:text-[13px]">{desc}</p></div>)}
+          ].map(([img,title,desc])=><div key={title} className="px-3 text-center"><img src={`/images/hip/${img}`} alt="PaP" className="mx-auto h-auto max-w-full" /><h3 className="mb-0 py-3 text-[22px] font-semibold max-[768px]:pt-[17px] max-[768px]:pb-[7px] max-[768px]:text-[16px]">{title}</h3><p className="px-5 text-base max-[768px]:px-0 max-[768px]:text-[13px]">{desc}</p></div>)}
           <p className="col-span-3 text-left text-sm max-[768px]:col-span-1"><sup>*</sup>Preferred accommodation Partner</p>
         </div>
       </div>
@@ -150,36 +148,34 @@ export default function HIPPage() {
       <div className="mx-auto w-[calc(100%-100px)] max-[768px]:w-[calc(100%-50px)]">
         <SectionTitle accent="Corporate">Benefits for</SectionTitle>
         <div className="grid grid-cols-4 gap-4 max-[768px]:hidden">
-          {benefits.map(([img,label,color],i)=><div key={img} className={`mb-[8%] rounded-[5px] border border-[#F0F0F0] p-[5%] text-center shadow-[0_4px_40px_rgba(0,0,0,0.05)] ${color==="grey"?"bg-[#E8E8E8]":"bg-[#FDE5F0]"}`}><img src={`/assets/images/hip/${img}`} alt="Benefits" className="mx-auto h-auto max-w-full" /><p className="mt-2 text-[18px] font-medium">{label}</p></div>)}
+          {benefits.map(([img,label,color],i)=><div key={img} className={`mb-[8%] rounded-[5px] border border-[#F0F0F0] p-[5%] text-center shadow-[0_4px_40px_rgba(0,0,0,0.05)] ${color==="grey"?"bg-[#E8E8E8]":"bg-[#FDE5F0]"}`}><img src={`/images/hip/${img}`} alt="Benefits" className="mx-auto h-auto max-w-full" /><p className="mt-2 text-[18px] font-medium">{label}</p></div>)}
         </div>
-        <div className="hidden text-center max-[768px]:block"><picture><source srcSet="/assets/images/hip/benefits.webp" type="image/webp" /><img src="/assets/images/hip/benefits.png" alt="floorplan" className="mx-auto h-auto max-w-full" /></picture></div>
+        <div className="hidden text-center max-[768px]:block"><picture><source srcSet="/images/hip/benefits.webp" type="image/webp" /><img src="/images/hip/benefits.png" alt="floorplan" className="mx-auto h-auto max-w-full" /></picture></div>
       </div>
     </section>
 
     <section className="section8">
       <SectionTitle accent="Plans">Floor</SectionTitle>
-      <div className="grid grid-cols-2 max-[768px]:grid-cols-1">{[1,2].map(n=><div key={n} className="text-center"><picture><source srcSet={`/assets/images/hip/floorplan${n}.webp`} type="image/webp" /><img src={`/assets/images/hip/floorplan${n}.png`} alt="floorplan" className="mx-auto h-auto max-w-full" /></picture></div>)}</div>
+      <div className="grid grid-cols-2 max-[768px]:grid-cols-1">{[1,2].map(n=><div key={n} className="text-center"><picture><source srcSet={`/images/hip/floorplan${n}.webp`} type="image/webp" /><img src={`/images/hip/floorplan${n}.png`} alt="floorplan" className="mx-auto h-auto max-w-full" /></picture></div>)}</div>
     </section>
 
     <section className="my-[3%]">
       <div className="mx-auto w-[calc(100%-100px)] max-[768px]:w-[calc(100%-50px)]">
         <SectionTitle accent="6s Promises">Our</SectionTitle>
         <div className="grid grid-cols-3 gap-5 max-[768px]:flex max-[768px]:snap-x max-[768px]:snap-mandatory max-[768px]:overflow-x-auto">
-          {promises.map(([img,title,desc])=><div key={img} className="relative min-w-0 p-[10px] max-[768px]:w-[76%] max-[768px]:shrink-0 max-[768px]:snap-start max-[768px]:p-[14px]"><picture><source srcSet={`/assets/images/hip/${img}.webp`} type="image/webp" /><img src={`/assets/images/hip/${img}.png`} alt="floorplan" className="h-auto w-full" /></picture><div className="absolute bottom-[25px] z-[1] mx-[10%] w-[75%] rounded-[5px] border border-black bg-[rgba(0,0,0,0.80)] py-[5px] text-center"><h3 className="mb-0 text-[22px] font-semibold text-[#F2006C] max-[768px]:text-[16px]">{title}</h3><p className="mb-[5px] text-white max-[768px]:text-[12px]">{desc}</p></div></div>)}
+          {promises.map(([img,title,desc])=><div key={img} className="relative min-w-0 p-[10px] max-[768px]:w-[76%] max-[768px]:shrink-0 max-[768px]:snap-start max-[768px]:p-[14px]"><picture><source srcSet={`/images/hip/${img}.webp`} type="image/webp" /><img src={`/images/hip/${img}.png`} alt="floorplan" className="h-auto w-full" /></picture><div className="absolute bottom-[25px] z-[1] mx-[10%] w-[75%] rounded-[5px] border border-black bg-[rgba(0,0,0,0.80)] py-[5px] text-center"><h3 className="mb-0 text-[22px] font-semibold text-[#F2006C] max-[768px]:text-[16px]">{title}</h3><p className="mb-[5px] text-white max-[768px]:text-[12px]">{desc}</p></div></div>)}
         </div>
       </div>
     </section>
 
     <section className="my-[3%]">
       <div className="mx-auto w-[calc(100%-100px)] max-[768px]:w-[calc(100%-50px)] max-[768px]:pb-[10%]">
-        <div className="grid grid-cols-12 items-center">
-          <div className="order-2 col-span-7 flex flex-col justify-center max-[768px]:col-span-12 max-[768px]:mb-[5%] max-[768px]:order-2"><h2 className="pb-[3%] text-[40px] font-semibold max-[768px]:px-[5%] max-[768px]:pt-[5%] max-[768px]:text-center max-[768px]:text-[20px]">About <span className="text-[#F2006C]">Colive </span></h2><p className="text-justify text-[20px] leading-[40px] max-[768px]:text-[13px] max-[768px]:leading-[22px]">Colive is at the forefront of redefining rental accommodation. With a vision to be the "Future of Living," we cater to the needs of urban migrants, offering smart, furnished, and managed flexible homes closer to workplaces and educational institutions. Our ethos is built on the principles of <span className="font-semibold text-[#F2006C]">6S - Style, Safety, Smart, Service, Savings, and Social.</span></p></div>
-          <div className="order-1 col-span-5 text-center max-[768px]:col-span-12"><img src="/assets/images/aboutus/rents.png" alt="floorplan" className="mx-auto h-auto w-full max-[768px]:w-1/2" /></div>
+        <div className="grid grid-cols-12 gap-x-8 items-center">
+          <div className="order-1 col-span-7 flex flex-col justify-center max-[768px]:col-span-12 max-[768px]:mb-[5%] max-[768px]:order-2"><h2 className="pb-[3%] text-[40px] font-semibold max-[768px]:px-[5%] max-[768px]:pt-[5%] max-[768px]:text-center max-[768px]:text-[20px]">About <span className="text-[#F2006C]">Colive </span></h2><p className="text-justify text-[20px] leading-[40px] max-[768px]:text-[13px] max-[768px]:leading-[22px]">Colive is at the forefront of redefining rental accommodation. With a vision to be the &quot;Future of Living,&quot; we cater to the needs of urban migrants, offering smart, furnished, and managed flexible homes closer to workplaces and educational institutions. Our ethos is built on the principles of <span className="font-semibold text-[#F2006C]">6S - Style, Safety, Smart, Service, Savings, and Social.</span></p></div>
+          <div className="order-2 w-[71%] col-span-5 text-center max-[768px]:col-span-12"><img src="/images/aboutus/rents.png" alt="floorplan" className="mx-auto h-auto w-full max-[768px]:w-1/2" /></div>
         </div>
       </div>
     </section>
-    {/* Replace this placeholder with the existing shared site footer component. */}
-    <div id="site-footer" data-include="commonfooter/footer" className="footer include relative" />
     <div id="AjaxLoader" className="fixed inset-0 z-[10000000] hidden items-center justify-center bg-[#ffffffba]"><div className="relative flex h-[100px] w-[100px] items-center justify-center"><div className="relative flex h-[35px] w-[35px] justify-center rounded-full border-[6px] border-[#ef0075] border-t-transparent" /><div className="absolute h-[55px] w-[55px] animate-spin rounded-full border-[6px] border-[#ef0075] border-t-transparent" /></div></div>
   </main>;
 }

@@ -2,12 +2,13 @@
 // Safe to import from client components (no server-only code here).
 
 // To add a form: add its name here, its backend path in src/lib/server/formEndpoints.ts and a submit function in formApi.ts
-export type FormEndpoint = "ContactUsInsert" | "leadCapture" | "walkthroughLead";
+export type FormEndpoint = "ContactUsInsert" | "leadCapture" | "walkthroughLead" | "ScheduleVisitsInsert";
 
 export const FORM_ENDPOINTS: readonly FormEndpoint[] = [
   "ContactUsInsert",
   "leadCapture",
   "walkthroughLead",
+  "ScheduleVisitsInsert",
 ];
 
 export const isFormEndpoint = (name: string): name is FormEndpoint =>
@@ -34,6 +35,15 @@ export type ContactFormValues = {
   email: string;
   select: string;
   message: string;
+};
+
+export type ScheduleVisitRequest = {
+  LocationId: string;
+  PickupDate: string;
+  TimeId: number;
+  Name: string;
+  Phone: string;
+  Email: string;
 };
 
 export type FormApiResponse<T = unknown> = {

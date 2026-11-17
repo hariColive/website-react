@@ -21,9 +21,13 @@ export async function POST(request: Request, { params }: RouteContext<"/api/form
   const { api } = await params;
   if (!isFormEndpoint(api)) return reply(false, "Invalid form", 404);
 
-  let payload: Record<string, string>;
+  let payload: Record<string, unknown>;
   try {
-    payload = (await request.json()) as Record<string, string>;
+    const body: unknown = await request.json();
+    if (typeof body !== "object" || body === null || Array.isArray(body)) {
+      return reply(false, "Invalid request body", 400);
+    }
+    payload = Object.fromEntries(Object.entries(body));
   } catch {
     return reply(false, "Invalid request body", 400);
   }
@@ -31,6 +35,18 @@ export async function POST(request: Request, { params }: RouteContext<"/api/form
   const destination = FORM_DESTINATIONS[api];
   const invalid = "validate" in destination ? destination.validate?.(payload) : null;
   if (invalid) return reply(false, invalid, 400);
+
+  let body: string | URLSearchParams;
+  if (destination.encoding === "form") {
+    const fields = new URLSearchParams();
+    for (const [key, value] of Object.entries(payload)) {
+      if (typeof value !== "string") return reply(false, "Invalid form fields", 400);
+      fields.set(key, value);
+    }
+    body = fields;
+  } else {
+    body = JSON.stringify(payload);
+  }
 
   try {
     const site = new URL(getBaseUrl(destination.service));
@@ -43,7 +59,7 @@ export async function POST(request: Request, { params }: RouteContext<"/api/form
         // "origin: https://qa.colive.com" (ApiControllerBase.PostAPICall). Keep the key lowercase: fetch sends it as written.
         origin: site.origin,
       },
-      body: destination.encoding === "form" ? new URLSearchParams(payload) : JSON.stringify(payload),
+      body,
       // The legacy site answers a saved lead with a 302 to its thank-you page; read it instead of following it
       redirect: "manual",
     });

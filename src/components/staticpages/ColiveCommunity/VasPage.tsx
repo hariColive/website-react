@@ -380,7 +380,7 @@ function EnquiryForm() {
 
 export default function VasPage() {
   return (
-    <main className="w-full font-['Inter-Regular',Arial,sans-serif] text-black">
+    <main className="-mt-[8%] w-full font-['Inter-Regular',Arial,sans-serif] text-black">
       {/* Hero section */}
       <section className="section1">
         <div className="mt-[10%] bg-[url('/images/VAS/Banner.webp')] bg-[length:100%_100%] bg-no-repeat max-[767px]:mt-[70px] max-[767px]:bg-[url('/images/VAS/Banner-mob.webp')]">

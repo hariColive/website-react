@@ -130,49 +130,111 @@ export default function ClubColiveHubPage() {
       </section>
 
       <section className="get_free_stay_colive">
-        <div className="get_free_stay_colive_heading relative pt-[12%] text-center max-[768px]:pt-[26%]">
-          <figure className="plus_circle_figure absolute z-[1] mt-[-75px] w-full max-[768px]:mt-[-50px]">
-            <img className="plus_circle_icon mx-auto w-[150px] max-[768px]:w-[100px]" src={asset + "plus_circle.png"} alt="pg in indiranagar for female" loading="lazy" />
+        <div className="get_free_stay_colive_heading relative pt-[12%] text-center max-[768px]:pt-[26%] [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:pt-[15%]">
+          {/* Plus Circle */}
+          <figure className="absolute z-[1] mt-[-75px] mb-0 w-full max-[768px]:mt-[-50px]">
+            <img
+              className="mx-auto w-[150px] max-[768px]:w-[100px]"
+              src="/images/clubcolive/clubcolive_icons/plus_circle.png"
+              alt="pg in indiranagar for female"
+              loading="lazy"
+            />
           </figure>
+
           <div className="container-fluid w-full p-0">
             <div className="row flex flex-wrap">
-              <div className="col w-full p-0 md:w-1/2">
-                <div className="get_free_stay_colive_pink bg-[#FFE2F4] pt-12 pr-0 pb-12 pl-20 max-[768px]:pt-20 max-[768px]:px-8">
-                  <figure className="text-left"><img className="job_loss_now w-[350px] max-[768px]:mx-auto max-[768px]:w-[300px]" src={asset + "jobless_title.png"} alt="pg in indiranagar for male" loading="lazy" /></figure>
+              {/* Pink - Job Loss Benefit */}
+              <div className="col w-full p-0 md:w-1/2 lg:w-1/2">
+                <div className="relative bg-[#FFE2F4] px-0 pt-12 pb-12 pl-20 max-[768px]:px-8 max-[768px]:pt-20 [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:px-8 [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:py-12">
+                  <figure className="mb-0 text-left max-[768px]:text-center [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:text-left">
+                    <img
+                      className="w-[350px] max-[768px]:w-[300px] [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:w-[220px]"
+                      src="/images/clubcolive/clubcolive_icons/jobless_title.png"
+                      alt="pg in indiranagar for male"
+                      loading="lazy"
+                    />
+                  </figure>
+
                   <div className="row flex flex-wrap">
                     <div className="col order-2 w-full md:order-1 md:w-1/2">
-                      <div className="get_free_stay_colive_left py-10">
+                      <div className="px-0 py-[2.7rem] max-[768px]:px-12 max-[768px]:py-4 [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:px-0 [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:py-4">
                         <h6 className="ml-6 text-left text-xl font-semibold">Enrol &amp; Get Free Stay of</h6>
-                        <h2 className="ml-6 text-left text-[70px] font-bold max-[1024px]:text-[44px]">30 <span className="text-[54px] font-medium text-[#F200FF] max-[1024px]:text-2xl">Days</span></h2>
+                        <h2 className="ml-6 text-left text-[70px] font-bold [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:text-[44px]">
+                          30 <span className="text-[54px] font-medium text-[#F200FF] [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:text-2xl">Days</span>
+                        </h2>
                         <p className="ml-6 text-left text-lg font-medium">Upon Job Loss*</p>
                       </div>
                     </div>
+
                     <div className="col order-1 w-1/2 md:order-2 md:w-1/2">
-                      <figure><img className="apply_now_img w-[200px] max-[768px]:mx-auto" src={asset + "jobloss.png"} alt="pg rooms in bangalore" loading="lazy" /></figure>
+                      <figure className="mb-0 text-left max-[768px]:text-center">
+                        <img
+                          className="w-[200px] max-[768px]:ml-12 [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:ml-0 [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:w-[145px]"
+                          src="/images/clubcolive/clubcolive_icons/jobloss.png"
+                          alt="pg rooms in bangalore"
+                          loading="lazy"
+                        />
+                      </figure>
                     </div>
                   </div>
-                  <div className="apply-now-button absolute w-[78%] bg-center max-[768px]:relative max-[768px]:w-full">
-                    <Link target="_blank" href="/pinkslip" className="mt-5 inline-block rounded-full bg-[#4900BF] px-11 py-[18px] text-2xl tracking-wider text-white">Enrol Now</Link>
+
+                  <div className="absolute bottom-[-48px] left-1/2 w-[78%] -translate-x-1/2 bg-center text-center max-[768px]:relative max-[768px]:bottom-auto max-[768px]:left-auto max-[768px]:w-full max-[768px]:translate-x-0">
+                    <a
+                      target="_blank"
+                      href="/pinkslip"
+                      rel="noopener noreferrer"
+                      className="mt-5 inline-block rounded-[50px] bg-[#4900BF] px-11 py-[18px] text-2xl tracking-[1.5px] text-white"
+                    >
+                      Enrol Now
+                    </a>
                   </div>
                 </div>
               </div>
-              <div className="col w-full p-0 md:w-1/2">
-                <div className="get_free_stay_colive_blue bg-[#F3E4FF] pt-12 pr-0 pb-12 pl-20 max-[768px]:px-8">
-                  <figure className="text-left"><img className="job_loss_now w-[350px] max-[768px]:mx-auto max-[768px]:w-[300px]" src={asset + "scholarship_title.png"} alt="pg in btm layout bangalore" loading="lazy" /></figure>
+
+              {/* Blue - Scholarship Benefit */}
+              <div className="col w-full p-0 md:w-1/2 lg:w-1/2">
+                <div className="relative bg-[#F3E4FF] px-0 pt-12 pb-12 pl-20 max-[768px]:px-8 max-[768px]:py-12 [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:px-8 [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:py-12">
+                  <figure className="mb-0 text-left max-[768px]:text-center [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:text-left">
+                    <img
+                      className="w-[350px] max-[768px]:w-[300px] [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:w-[220px]"
+                      src="/images/clubcolive/clubcolive_icons/scholarship_title.png"
+                      alt="pg in btm layout bangalore"
+                      loading="lazy"
+                    />
+                  </figure>
+
                   <div className="row flex flex-wrap">
                     <div className="col order-2 w-full md:order-1 md:w-1/2">
-                      <div className="get_free_stay_colive_right py-10">
-                        <h6 className="ml-2 text-left text-xl font-semibold">Apply &amp; Get Free Stay of</h6>
-                        <h2 className="ml-2 text-left text-[70px] font-bold max-[1024px]:text-[44px]">30 <span className="text-[54px] font-medium text-[#F200FF] max-[1024px]:text-2xl">Days</span></h2>
-                        <p className="ml-2 text-left text-lg font-medium">Upon Selection*</p>
+                      <div className="px-0 py-[2.7rem] max-[768px]:px-12 max-[768px]:py-4 [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:px-0 [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:py-4">
+                        <h6 className="ml-[10px] text-left text-xl font-semibold">Apply &amp; Get Free Stay of</h6>
+                        <h2 className="ml-[10px] text-left text-[70px] font-bold [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:text-[44px]">
+                          30 <span className="text-[54px] font-medium text-[#F200FF] [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:text-2xl">Days</span>
+                        </h2>
+                        <p className="ml-[10px] text-left text-lg font-medium">Upon Selection*</p>
                       </div>
                     </div>
+
                     <div className="col order-1 w-1/2 md:order-2 md:w-1/2">
-                      <figure><img className="apply_now_img w-[220px] max-[768px]:ml-12 max-[768px]:w-[270px]" src={asset + "scholarships.png"} alt="couple pg in bangalore" loading="lazy" /></figure>
+                      <figure className="mb-0 text-left max-[768px]:text-center">
+                        <img
+                          className="w-[220px] max-[768px]:ml-12 max-[768px]:w-[270px] [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:ml-0 [@media_screen_and_(min-device-width:768px)_and_(max-device-width:1024px)_and_(orientation:portrait)]:w-[145px]"
+                          src="/images/clubcolive/clubcolive_icons/scholarships.png"
+                          alt="couple pg in bangalore"
+                          loading="lazy"
+                        />
+                      </figure>
                     </div>
                   </div>
-                  <div className="apply-now-button absolute w-[78%] bg-center max-[768px]:relative max-[768px]:w-full">
-                    <Link target="_blank" href="/scholarship" className="mt-5 inline-block rounded-full bg-[#4900BF] px-11 py-[18px] text-2xl tracking-wider text-white">Apply Now</Link>
+
+                  <div className="absolute bottom-[-48px] left-1/2 w-[78%] -translate-x-1/2 bg-center text-center max-[768px]:relative max-[768px]:bottom-auto max-[768px]:left-auto max-[768px]:w-full max-[768px]:translate-x-0">
+                    <a
+                      target="_blank"
+                      href="/scholarship"
+                      rel="noopener noreferrer"
+                      className="mt-5 inline-block rounded-[50px] bg-[#4900BF] px-11 py-[18px] text-2xl tracking-[1.5px] text-white"
+                    >
+                      Apply Now
+                    </a>
                   </div>
                 </div>
               </div>
@@ -294,24 +356,78 @@ export default function ClubColiveHubPage() {
         </section>
       </article>
 
-      <section className="sectionfive bg-[#010031] py-[5%] pb-[6%]" id="sectionfive">
+      <section
+        className="sectionfive bg-[#010031] px-0 pt-[5%] pb-[6%]"
+        id="sectionfive"
+      >
         <div className="party text-center">
-          <h2 className="mb-[3%] text-[3.5rem] font-bold text-white max-[768px]:mb-[5%] max-[768px]:text-[23px]">Parties at Colive</h2>
-          <Link href="/party" target="_blank" rel="noreferrer" className="my-[8%] inline-block border border-[#F8049C] bg-[#F8049C] p-[7px] text-lg font-medium text-white max-[576px]:p-[5px] max-[576px]:text-[15px]">Check out our parties</Link>
+          <h2 className="mb-[3%] text-[3.5rem] font-bold text-white max-[768px]:mb-[5%] max-[768px]:text-[23px]">
+            Parties at Colive
+          </h2>
+
+          <Link
+            href="/party"
+            target="_blank"
+            rel="noopener noreferrer"
+            className=" inline-block border border-[#F8049C] bg-[#F8049C] px-[7px] py-[7px] text-[18px] font-medium text-white max-[576px]:px-[5px] max-[576px]:py-[5px] max-[576px]:text-[15px]"
+          >
+            Check out our parties
+          </Link>
         </div>
-        <div className="party_image my-[5%] max-[576px]:my-[10%]"><img src="/images/hub/Party-image.png" alt="party" className="w-full" /></div>
-        <div className="row partyat_colive mx-auto flex flex-wrap px-[10%] max-[576px]:px-[3%]">
-          <div className="col party_inform w-full md:w-7/12">
-            <p className="w-[28rem] max-w-full text-base font-medium text-white">We party every weekend at our flagship Club Colive Hubs! Join us to meet, dance, date &amp; network in your Colive community</p>
+
+        <div className="party_image my-[5%] max-[576px]:my-[10%]">
+          <img
+            src="/images/hub/Party-image.png"
+            alt="party"
+            className="w-full"
+          />
+        </div>
+
+        <div className="partyat_colive row mx-0 flex flex-wrap px-[10%] max-[576px]:px-[3%]">
+          <div className="party_inform w-full md:w-7/12">
+            <p className="w-[28rem] max-[992px]:w-full text-[16px] font-medium text-white">
+              We party every weekend at our flagship Club Colive Hubs! Join
+              us to meet, dance, date &amp; network in your Colive community
+            </p>
           </div>
-          <div className="col w-full md:w-5/12">
-            <div className="row amet flex flex-wrap max-[768px]:mt-[30px]">
-              {[[ "4132+", "Singles" ], [ "189+", "Couples" ], [ "70+", "Lawyers+" ], [ "500+", "Techies" ]].map(([count, label]) => (
-                <div className="col w-1/4" key={label}>
-                  <p className="text-lg font-semibold text-white">{count}</p>
-                  <p className="text-lg font-semibold text-[#F8049C] max-[576px]:text-base">{label}</p>
-                </div>
-              ))}
+
+          <div className="w-full md:w-5/12">
+            <div className="amet row flex flex-wrap max-[768px]:mt-[30px]">
+              <div className="w-1/4">
+                <p className="text-[18px] font-semibold text-white max-[576px]:text-[16px]">
+                  4132+
+                </p>
+                <p className="text-[18px] font-semibold text-[#F8049C] max-[576px]:text-[16px]">
+                  Singles
+                </p>
+              </div>
+
+              <div className="w-1/4">
+                <p className="text-[18px] font-semibold text-white max-[576px]:text-[16px]">
+                  189+
+                </p>
+                <p className="text-[18px] font-semibold text-[#F8049C] max-[576px]:text-[16px]">
+                  Couples
+                </p>
+              </div>
+
+              <div className="w-1/4">
+                <p className="text-[18px] font-semibold text-white max-[576px]:text-[16px]">
+                  70+
+                </p>
+                <p className="text-[18px] font-semibold text-[#F8049C] max-[576px]:text-[16px]">
+                  Lawyers+
+                </p>
+              </div>
+
+              <div className="w-1/4">
+                <p className="text-[18px] font-semibold text-white max-[576px]:text-[16px]">
+                  500+
+                </p>
+                <p className="text-[18px] font-semibold text-[#F8049C] max-[576px]:text-[16px]">
+                  Techies
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -321,8 +437,8 @@ export default function ClubColiveHubPage() {
         <div className="video_msg text-center">
           <h2 className="text-[3.5rem] font-bold text-black max-[768px]:text-[23px]">&ldquo;Be Like Aryan&rdquo;</h2>
           <p className="my-[2%] mb-[4%] text-xl leading-[1.33] max-[576px]:text-sm">Share the video message with your friends<br />who are moving into Bangalore soon</p>
-          <div className="videomsg_video">
-            <iframe className="clubcolivevideoFrame w-[560px] max-w-full p-0 max-[768px]:w-full max-[768px]:p-[5%]" width="560" height="315" src="https://www.youtube.com/embed/UXfmL11cJcg" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+          <div className="videomsg_video flex justify-center">
+            <iframe className="clubcolivevideoFrame mx-auto block w-[560px] max-w-full p-0 max-[768px]:w-full max-[768px]:p-[5%]" width="560" height="315" src="https://www.youtube.com/embed/UXfmL11cJcg" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
           </div>
         </div>
       </section>

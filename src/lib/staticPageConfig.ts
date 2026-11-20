@@ -20,7 +20,7 @@ import TermsPage from "@/components/staticpages/terms/TermsPage";
 import PrivacyPage from "@/components/staticpages/Privacy/PrivacyPage";
 import FaqPage from "@/components/staticpages/FAQ/FaqPage";
 import PressPage from "@/components/staticpages/press/PressPage";
-
+import LaunchPage from "@/components/staticpages/newlaunch/LaunchPage";
 
 const staticPageConfig: Record<string, ComponentType> = {
   contactus: ContactUs,
@@ -44,6 +44,7 @@ const staticPageConfig: Record<string, ComponentType> = {
   faq:FaqPage,
   "news-and-press-releases":PressPage,
   offers:Offers,
+  newlaunch:LaunchPage,
 };
 
 export default staticPageConfig;

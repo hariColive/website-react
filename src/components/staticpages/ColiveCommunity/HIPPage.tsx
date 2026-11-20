@@ -74,7 +74,7 @@ function EnquiryForm() {
 }
 
 export default function HIPPage() {
-  return <main className="relative overflow-x-hidden font-['Inter-Regular',Arial,sans-serif] text-black">
+  return <main className="-mt-[8%] relative overflow-x-hidden font-['Inter-Regular',Arial,sans-serif] text-black">
     <section className="section1">
       <div className="mt-[10%] bg-[url('/images/hip/Banner-web.webp')] bg-[length:100%_100%] bg-no-repeat max-[768px]:mt-[50px] max-[768px]:bg-[url('/images/hip/Banner-Mob.webp')] max-[768px]:bg-[length:100%_auto]">
         <div className="mx-auto w-[calc(100%-100px)] max-[768px]:w-[calc(100%-50px)]">

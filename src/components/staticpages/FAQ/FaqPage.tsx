@@ -3,7 +3,7 @@ import React from "react";
 const FaqPage = () => {
   return (
 <>
-      <div className="bg-[#F4F8FB] pt-[80px] pb-0">
+      <div className="-mt-[7%] bg-[#F4F8FB] pt-[80px] pb-0">
         <div className=" w-full px-[4%] bg-[#F4F8FB] pt-[60px] pb-0">
           <div className="flex flex-wrap">
             <div className="w-full px-3 md:w-5/12 pt-[70px] pb-[14px] max-[992px]:pt-0 max-[992px]:pb-[14px] max-[767px]:pt-0 max-[767px]:pb-0">

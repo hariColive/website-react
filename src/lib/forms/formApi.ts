@@ -38,9 +38,10 @@ export function submitLeadCapture(values: LeadCaptureRequest) {
     ...values.tracking,
     first_name: values.name,
     customer_mobile: values.phone,
-    leadSource: "Colive Home Page",
+    ...(values.email ? { customer_email: values.email } : {}),
+    leadSource: values.leadSource ?? "Colive Home Page",
     LandingPageId: "1",
     Mobile_Number_Validated: "false",
-    redirectURL: "/?act=thankyou",
+    redirectURL: values.redirectURL ?? "/?act=thankyou",
   });
 }

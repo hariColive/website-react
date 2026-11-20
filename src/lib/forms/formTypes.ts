@@ -68,6 +68,9 @@ export type WalkthroughLeadResponse = FormResponse;
 export interface LeadCaptureRequest {
   name: string;
   phone: string;
+  email?: string;
   // gclid / utm_* values read from the page URL
   tracking: Record<string, string>;
+  leadSource?: string;
+  redirectURL?: string;
 }

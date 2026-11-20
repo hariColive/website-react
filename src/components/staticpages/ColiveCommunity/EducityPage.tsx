@@ -144,7 +144,7 @@ export default function EducityPage() {
   }, []);
 
   return (
-    <main className="overflow-x-hidden font-['Inter-Regular'] text-[#212529]">
+    <main className="-mt-[8%] overflow-x-hidden font-['Inter-Regular'] text-[#212529]">
       {/* Hero */}
       <section className="section1">
         <div className="mt-[50px] bg-[url('/images/educity/HeroBanner-Mob.webp')] bg-[length:100%_100%] bg-no-repeat md:mt-[10%] md:bg-[url('/images/educity/HeroBanner.webp')]">

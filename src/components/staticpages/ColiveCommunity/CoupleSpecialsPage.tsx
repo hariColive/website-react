@@ -12,10 +12,10 @@ const packages = {
     paymentUrl: "/payments?src=cuddle&pakge=3",
     offerImage: "/images/couple-specials/new-year-offer.png",
     images: [
-      "/images/couple-specials/DN_1.png",
-      "/images/couple-specials/DN_2.png",
-      "/images/couple-specials/DN_3.png",
-      "/images/couple-specials/DN_4.png",
+      "/images/couple-specials/DN_1.webp",
+      "/images/couple-specials/DN_2.webp",
+      "/images/couple-specials/DN_3.webp",
+      "/images/couple-specials/DN_4.webp",
     ],
     inclusions: [
       "Candles",
@@ -37,10 +37,10 @@ const packages = {
     paymentUrl: "/payments?src=cuddle&pakge=4",
     offerImage: "/images/couple-specials/new-year-offer2.png",
     images: [
-      "/images/couple-specials/RP_1.png",
-      "/images/couple-specials/RP_2.png",
-      "/images/couple-specials/RP_3.png",
-      "/images/couple-specials/RP_4.png",
+      "/images/couple-specials/RP_1.webp",
+      "/images/couple-specials/RP_2.webp",
+      "/images/couple-specials/RP_3.webp",
+      "/images/couple-specials/RP_4.webp",
     ],
     inclusions: [
       "Candles",

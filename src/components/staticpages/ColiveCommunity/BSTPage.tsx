@@ -12,7 +12,7 @@ const BSTPage = () => {
   }, []);
 
   return (
-    <main className="overflow-x-hidden font-['Inter-Regular',sans-serif] text-[#212529]">
+    <main className="-mt-[8%] overflow-x-hidden font-['Inter-Regular',sans-serif] text-[#212529]">
       {/* Hero */}
       <section className="mt-[10%] bg-[url('/images/bst/Hero.webp')] bg-[length:100%_100%] bg-no-repeat max-[768px]:mt-[50px] max-[768px]:bg-[url('/images/bst/Hero-mobile.webp')]">
         <div className="mx-auto w-[calc(100%-100px)] max-[768px]:w-[calc(100%-32px)]">

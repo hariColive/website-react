@@ -36,6 +36,12 @@ export const COLIVE_ENDPOINTS = {
     service: "crm",
     path: "CRMapi/PropertyCRM/GetAvailableOccupancyTypeByPropertyId_Factsheet",
   },
+  // Press page
+GetPressCoverage: {
+  method: "POST",
+  service: "crm",
+  path: "CRMapi/PropertyCRM/GetPressCoverage",
+},
   GetScheduleVisitDays: { method: "POST", service: "crm", path: "CRMapi/PropertyCRM/GetScheduleVisitDays" },
   // Home page place search
   GetSuggestionsBasedonSearch: { method: "POST", service: "crm", path: "CRMapi/PropertyCRM/GetSuggestionsBasedonSearch" },

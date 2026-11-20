@@ -145,7 +145,7 @@ const offers = [
 
 const Offers = () => {
   return (
-    <main className="w-full overflow-hidden bg-white text-[#080808]">
+    <main className="-mt-[8%] w-full overflow-hidden bg-white text-[#080808]">
       <style>{`
         @keyframes offersPulse {
           0%, 100% { opacity: 1; }

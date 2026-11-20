@@ -34,6 +34,53 @@ export default function Header() {
           </Link>
 
           <div className="flex items-center gap-1.5 md:gap-4.5">
+
+<div className="hidden items-center gap-2 md:flex">
+        {/* New Launches */}
+        <Link
+          href="/newlaunch"
+          className="relative inline-flex h-10 items-center gap-2 rounded-full border border-black/15 bg-white/80 px-3 text-[13px] font-semibold text-inherit no-underline transition-all duration-150 ease-in-out hover:border-black hover:bg-[#facc15] hover:text-black"
+        >
+          <span className="absolute -right-1.5 -top-2 animate-pulse rounded-full bg-[#111827] px-1.5 py-0.5 text-[8px] font-semibold text-white">
+            New
+          </span>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="lucide lucide-sparkles"
+          >
+            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+            <path d="M20 3v4" />
+            <path d="M22 5h-4" />
+            <path d="M4 17v2" />
+            <path d="M5 18H3" />
+          </svg>
+
+          <span className="hidden min-[1280px]:inline">
+            New Launches
+          </span>
+
+          <span className="inline min-[1280px]:hidden">
+            New Launches
+          </span>
+        </Link>
+      </div>
+              {/* Offers */}
+        <Link
+          href="/offers"
+          className="hidden h-10 items-center rounded-full border border-transparent bg-[#facc15] px-3 text-[13px] font-semibold text-inherit no-underline transition-all duration-150 ease-in-out hover:-translate-y-0.5 hover:bg-[#fef08a] hover:text-black md:inline-flex"
+        >
+          Offers
+        </Link>
+
             {actionButtons.map((button) => (
               <Link
                 key={button.href}

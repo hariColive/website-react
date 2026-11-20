@@ -16,6 +16,10 @@ import HIPPage from "@/components/staticpages/ColiveCommunity/HIPPage";
 import Offers from "@/components/staticpages/offer/Offers";
 import BSTPage from "@/components/staticpages/ColiveCommunity/BSTPage";
 import EducityPage from "@/components/staticpages/ColiveCommunity/EducityPage";
+import TermsPage from "@/components/staticpages/terms/TermsPage";
+import PrivacyPage from "@/components/staticpages/Privacy/PrivacyPage";
+import FaqPage from "@/components/staticpages/FAQ/FaqPage";
+import PressPage from "@/components/staticpages/press/PressPage";
 
 
 const staticPageConfig: Record<string, ComponentType> = {
@@ -35,6 +39,11 @@ const staticPageConfig: Record<string, ComponentType> = {
   hip:HIPPage,
   educity:EducityPage,
   bst:BSTPage,
+  "terms-and-conditions":TermsPage,
+  privacypolicy:PrivacyPage,
+  faq:FaqPage,
+  "news-and-press-releases":PressPage,
+  offers:Offers,
 };
 
 export default staticPageConfig;

@@ -15,7 +15,10 @@ const offeringsSection: SidemenuSection = {
   id: "offerings",
   title: "Our Offerings",
   icon: "/images/sidemenu/offerings.png",
-  links: navigation,
+  links:[ ...navigation,
+    {label: "Offers", href: "/offers",},
+    {label: "New Launches", href: "/newlaunch",},
+],
 };
 
 export default function Sidemenu({ triggerClassName }: { triggerClassName: string }) {
